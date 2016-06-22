@@ -207,12 +207,12 @@
 		<version>5.0.0.Alpha1</version>
 	</dependency>
 	-->
-  		<!--数据库驱动 -->
+  		<!--数据库驱动
 		<dependency>   
 		    <groupId>com.oracle</groupId> 
 		    <artifactId>ojdbc6</artifactId> 
 		    <version>6</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

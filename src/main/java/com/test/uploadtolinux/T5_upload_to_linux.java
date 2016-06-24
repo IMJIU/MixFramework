@@ -20,14 +20,14 @@ import com.test.uploadtolinux.base.FindOperator;
 import com.test.uploadtolinux.base.MoveOperate;
 import com.test.uploadtolinux.base.UploadOperate;
 
-public class T5_upload_to_linux{
+public class T5_upload_to_linux {
 
 	public static void main(String[] args) throws Exception {
-		Base.server=".net";
-		Base.findType="html";// class | html
+		Base.server = ".net";
+		Base.findType = "html";// class | html
 		FindOperator find = new FindOperator();
-//		find.processFile((s) -> MoveOperate.doMoveClass(s));
-//		find.processFile((s) -> UploadOperate.doUploadClass(s));
+		// find.processFile((s) -> MoveOperate.doMoveClass(s));
+		// find.processFile((s) -> UploadOperate.doUploadClass(s));
 		find.processFile((s) -> UploadOperate.findUploadHtmlWriteToFile(s));
 		UploadOperate.doUploadHtmlFileListToLinux();
 	}

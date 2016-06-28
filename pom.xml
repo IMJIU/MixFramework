@@ -150,11 +150,20 @@
 	<artifactId>netty-all</artifactId>
 	<version>4.0.33.Final</version>
 </dependency>
-<!-- <dependency>
-	<groupId>io.netty</groupId>
-	<artifactId>netty-all</artifactId>
-	<version>5.0.0.Alpha2</version>
-</dependency> -->
+      <dependency>
+          <groupId>org.apache.zookeeper</groupId>
+          <artifactId>zookeeper</artifactId>
+          <version>3.4.6</version>
+      </dependency>
+
+      <!-- http://mvnrepository.com/artifact/junit/junit -->
+
+
+      <!-- <dependency>
+          <groupId>io.netty</groupId>
+          <artifactId>netty-all</artifactId>
+          <version>5.0.0.Alpha2</version>
+      </dependency> -->
 <!-- 
 <dependency>
 	<groupId>org.apache.zookeeper</groupId>
@@ -207,12 +216,7 @@
 		<version>5.0.0.Alpha1</version>
 	</dependency>
 	-->
-  		<!--数据库驱动
-		<dependency>   
-		    <groupId>com.oracle</groupId> 
-		    <artifactId>ojdbc6</artifactId> 
-		    <version>6</version>
-		</dependency> -->
+  		<!--数据库驱动 -->
 		<dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -222,7 +226,6 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
-      <scope>test</scope>
     </dependency>
    
 	<dependency>
@@ -250,8 +253,15 @@
 	<artifactId>commons-pool</artifactId>
 	<version>1.6</version>
 </dependency>
+      <!-- http://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+      <dependency>
+          <groupId>javax.servlet</groupId>
+          <artifactId>javax.servlet-api</artifactId>
+          <version>3.0.1</version>
+      </dependency>
 
-<dependency>
+
+      <dependency>
     <groupId>com.aliyun.openservices</groupId>
    <artifactId>ons-client</artifactId>
    <version>1.1.11</version>
@@ -260,7 +270,17 @@
   </dependencies>
   <build>
     <finalName>Self2</finalName>
+          <plugins>
+              <plugin>
+                  <artifactId>maven-compiler-plugin</artifactId>
+                  <configuration>
+                      <source>1.8</source>
+                      <target>1.8</target>
+                  </configuration>
+              </plugin>
+          </plugins>
   </build>
+
   <repositories>
   	<repository>
   	   <id>typesafe</id>

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.json.util.JSONUtils;
 
 import com.framework.httpclient.impl.HttpTestBase;
 
@@ -24,7 +23,6 @@ public class TestUrl extends HttpTestBase {
 	
 	public static String doTest() throws Exception {
 		
-		getDate();
 		open();
 		customer();
 		doctor();
@@ -33,22 +31,7 @@ public class TestUrl extends HttpTestBase {
 		// exe(BASE_URL+"/menu/create?access_token="+TOKEN, POST);
 		return result;
     }
-	
-	private static void getDate() {
-		List<String>datelist = new ArrayList();
-	    int d = Calendar.getInstance().get(Calendar.DATE);
-		int m = Calendar.getInstance().get(Calendar.MONTH)+1;
-		for (int i = 0; i < 24; i++) {
-			for (int j = 1; j < 4; j++) {
-				String hour = String.valueOf(i);
-//				if (i < 10) {
-//					hour = "0" + hour;
-//				}
-				System.out.println(m+"/"+d+" "+hour + ":" + j * 20);
-				datelist.add(m+"/"+d+" "+hour + ":" + j * 20);
-			}
-		}
-    }
+
 	
 	public static void customer() throws Exception{
 		/******************************************* 【病人 】 *****************************************************************************************************/
@@ -99,6 +82,13 @@ public class TestUrl extends HttpTestBase {
 		
 		//获取病人问诊问题
 //		result = exe(net,customer,"/api/customer/getQuestions?doctorId=435",get);
+
+		//获取病人问诊问题
+//		result = exe(local,customer,"/api/customer/getHealthNewsList?pageNo=1&pageSize=10",get);
+
+		//获取服药记录
+		result = exe(local,customer,"/api/customer/getTakeMedicineRecordList?pageNo=1&pageSize=10",get);
+
 		
 	}
 	
@@ -146,7 +136,7 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(local,doctor, "/api/doctor/removeInquiryQuestion?questionId=62&questionContent=dddd", GET);
 		 
 		// v3.0  获取病人简要病案列表
-		 result = exe(net,doctor, "/api/doctor/getCustomerSimpleCaseList?customerId=13&pageNo=1&pageSize=100", GET);
+//		 result = exe(net,doctor, "/api/doctor/getCustomerSimpleCaseList?customerId=13&pageNo=1&pageSize=100", GET);
 
 		// v3.0 开方案  //审核 4139 4123
 //		result = exe(local,doctor,"/api/doctor/addSolution?caseMirrorId=2043&customerId=58&traceRemark=kldfjl&diagnose=dljfa&solutionThinking=dkfajl&recommendDrugType=DRUG_TYPE_CJ&supportDrugType=DRUG_TYPE_CJ;DRUG_TYPE_SW&dosage=2&attention=kldjfa&enjoin=djfla&revisitTime=12312312313&revisitDiscount=3&drugs=[{'drugId':4001,'amount':1},{'drugId':4002,'amount':2}]",post);
@@ -226,7 +216,7 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(local,open,"/api/open/getCopywriterText?group=hints&terminal=1&versionCode=3",get);
 		
 		//字典
-//		result = exe(local,open,"/api/open/getDictionary?pCode=DOCTOR_SKILL_OPTION&terminal=1&versionCode=3",get);
+//		result = exe(net,open,"/api/open/getDictionary?pCode=DOCTOR_SKILL_OPTION&terminal=1&versionCode=3",get);
 //		result = exe(local,open,"/api/open/createTokenByValue?value=82&terminal=1&versionCode=3",get);
 //		result = exe(local,open,"/api/open/createTokenByValue?token=1234&terminal=1&versionCode=3",get);
 		

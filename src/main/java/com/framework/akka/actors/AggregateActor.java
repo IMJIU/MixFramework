@@ -10,7 +10,7 @@ import com.framework.akka.messages.ReduceData;
 
 public class AggregateActor extends UntypedActor {
 
-	private Map<String, Integer> finalReduceMap = new HashMap<>();
+	private Map<String, Integer> finalReduceMap = new HashMap<String, Integer>();
 
 	@Override
 	public void onReceive(Object msg) throws Exception {

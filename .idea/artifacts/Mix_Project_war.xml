@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Mix_Project:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="Self2.war">
+      <element id="artifact" artifact-name="Mix_Project:war exploded" />
+    </root>
+  </artifact>
+</component>

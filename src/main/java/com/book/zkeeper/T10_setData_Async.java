@@ -24,7 +24,13 @@ public class T10_setData_Async implements Watcher {
 
 		System.out.println("zookeeper session established!");
 		zookeeper.create(path, "123".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
-		zookeeper.setData(path, "456".getBytes(), -1,new IStatCallback(),null);
+		zookeeper.setData(path, "456".getBytes(), -1,new AsyncCallback.StatCallback(){
+			public void processResult(int rc, String path, Object ctx, Stat stat) {
+				if(rc == 0 ){
+					System.out.println("SUCCESS");
+				}
+			}
+		},null);
 
 		Thread.sleep(Integer.MAX_VALUE);
 
@@ -42,15 +48,4 @@ public class T10_setData_Async implements Watcher {
 		}
 		System.out.println("why2");
 	}
-}
-
-class IStatCallback implements AsyncCallback.StatCallback {
-
-	@Override
-    public void processResult(int rc, String path, Object ctx, Stat stat) {
-		if(rc == 0 ){
-			System.out.println("SUCCESS");
-		}
-    }
-	
 }

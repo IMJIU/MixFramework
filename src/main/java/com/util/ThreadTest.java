@@ -3,7 +3,6 @@ package com.util;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.sun.xml.internal.ws.resources.HttpserverMessages;
 
 public class ThreadTest {
 
@@ -43,7 +42,6 @@ class ThreadClass implements Runnable{
 		for (int j = 0; j < 10000; j++) {
             int m = j+100*1000/5/122%100;
             m = m*1000*34234/35234%34*1000;
-            new HttpserverMessages();
         }
 		System.out.println("i="+i+" "+(System.currentTimeMillis()-begin));
 	}

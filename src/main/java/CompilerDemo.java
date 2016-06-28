@@ -21,7 +21,7 @@ public class CompilerDemo {
 	 */
 	public static void compiler1() {
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-		int results = compiler.run(null, null, null, new String[]{"MBeanDemo.java"});
+		int results = compiler.run(null, null, null, "MBeanDemo.java");
 		System.out.println("Result code: " + results);
 	}
 

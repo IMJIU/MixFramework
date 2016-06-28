@@ -27,8 +27,10 @@ public class T06_getChildren_Async implements Watcher {
 		
 		zookeeper.create(path+"/c1", "".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
 		zookeeper.create(path+"/c2", "".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
-		
-		zookeeper.getChildren(path, true,new IChildren2Callback(),null);
+
+		zookeeper.getChildren(path, true, (rc, path1, ctx, children, stat) -> {
+			System.out.println("result[responseCode:"+rc+",ctx:"+ctx+",children list:"+children+",stat:"+stat);
+		},null);
 		
 		Thread.sleep(Integer.MAX_VALUE);
 		
@@ -41,13 +43,5 @@ public class T06_getChildren_Async implements Watcher {
 			connectedSemaphore.countDown();
 		}
 	}
-	
-}
-class IChildren2Callback implements AsyncCallback.Children2Callback{
-
-	@Override
-    public void processResult(int rc, String path, Object ctx, List<String> children, Stat stat) {
-		System.out.println("result[responseCode:"+rc+",ctx:"+ctx+",children list:"+children+",stat:"+stat);
-    }
 	
 }

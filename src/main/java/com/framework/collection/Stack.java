@@ -39,5 +39,5 @@ public interface Stack<E> {
 
  
 
-//然后进行利用Java中的数组实现ArrayStack,下面是代码:
+然后进行利用Java中的数组实现ArrayStack,下面是代码:
 

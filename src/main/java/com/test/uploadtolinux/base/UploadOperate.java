@@ -22,18 +22,6 @@ public class UploadOperate extends FindOperator {
 		});
 		System.out.println("finished");
 	}
-
-	public static void uploadFileToLinux(String dir,String file) {
-		loopServer((t) -> {
-			try {
-				_uploadToLinux(dir, file);
-				System.out.println("finished");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-		System.out.println("finished");
-	}
 	/**
 	 * 读取文件中需要上传的文件  上传到linux
 	 */

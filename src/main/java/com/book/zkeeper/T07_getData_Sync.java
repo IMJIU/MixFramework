@@ -59,4 +59,11 @@ public class T07_getData_Sync implements Watcher {
 	}
 	
 }
+class IChildren2Callback implements AsyncCallback.Children2Callback{
 
+	@Override
+    public void processResult(int rc, String path, Object ctx, List<String> children, Stat stat) {
+		System.out.println("result[responseCode:"+rc+",ctx:"+ctx+",children list:"+children+",stat:"+stat);
+    }
+	
+}

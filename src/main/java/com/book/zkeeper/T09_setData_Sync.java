@@ -56,3 +56,12 @@ public class T09_setData_Sync implements Watcher {
 
 }
 
+class IDataCallback implements AsyncCallback.DataCallback {
+
+	@Override
+	public void processResult(int rc, String path, Object ctx, byte[] data, Stat stat) {
+		System.out.println(rc + "," + path + "," + new String(data));
+		System.out.println(stat.getCzxid() + "," + stat.getMzxid() + "," + stat.getVersion());
+	}
+
+}

@@ -14,8 +14,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Test;
+
 /**
  * LockFreeList性能好像不好！！！
+ * 
  * @author root
  *
  */
@@ -33,10 +35,13 @@ public class TestLockFreeList {
 
 		Random r = new Random();
 
-		public AccessListThread() {}
+		public AccessListThread() {
+		}
+
 		public AccessListThread(String name) {
 			this.name = name;
 		}
+
 		@Override
 		public void run() {
 			try {
@@ -62,6 +67,7 @@ public class TestLockFreeList {
 			super(corepoolsize, maxpoolsize, keepalivetime, unit, workQueue);
 			starttime = begin;
 		}
+
 		@Override
 		protected void afterExecute(Runnable r, Throwable t) {
 			int l = count.addAndGet(1);
@@ -77,6 +83,7 @@ public class TestLockFreeList {
 		list.remove(index % list.size());
 		return null;
 	}
+
 	public void initLinkedList() {
 		List l = new ArrayList();
 		for (int i = 0; i < 1000; i++) {
@@ -84,6 +91,7 @@ public class TestLockFreeList {
 		}
 		list = Collections.synchronizedList(new LinkedList(l));
 	}
+
 	public void initVector() {
 		List l = new ArrayList();
 		for (int i = 0; i < 100; i++) {
@@ -91,13 +99,15 @@ public class TestLockFreeList {
 		}
 		list = new Vector(l);
 	}
+
 	public void initFreeLockList() {
 		List l = new ArrayList();
 		for (int i = 0; i < 100; i++) {
 			l.add(i);
 		}
-		list = new LockFreeList(l);
+		list = new TestLockFreeList(l);
 	}
+
 	public void initFreeLockVector() {
 		List l = new LockFreeVector();
 		for (int i = 0; i < 100; i++) {
@@ -105,29 +115,34 @@ public class TestLockFreeList {
 		}
 		list = l;
 	}
+
 	@Test
 	public void testFreeLockList() throws InterruptedException {
 		initFreeLockList();
 		doWork();
 	}
+
 	@Test
 	public void testLinkedList() throws InterruptedException {
 		initLinkedList();
 		doWork();
 	}
+
 	@Test
 	public void testVector() throws InterruptedException {
 		initVector();
 		doWork();
 	}
+
 	@Test
 	public void testFreeLockVector() throws InterruptedException {
 		initFreeLockVector();
 		doWork();
 	}
+
 	private void doWork() throws InterruptedException {
 		CounterPoolExecutor exe = new CounterPoolExecutor(MAX_THREADS, MAX_THREADS, 0l, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(),
-		        System.currentTimeMillis());
+				System.currentTimeMillis());
 		exe.funcname = "testFreeLockList";
 		Runnable t = new AccessListThread();
 		for (int i = 0; i < TASK_COUNT; i++) {
@@ -153,6 +168,7 @@ public class TestLockFreeList {
 		long end = System.currentTimeMillis();
 		System.out.println(end - begin);
 	}
+
 	public static void t2() {
 		Vector<Integer> list = new Vector<Integer>();
 		long begin = System.currentTimeMillis();
@@ -163,6 +179,7 @@ public class TestLockFreeList {
 		long end = System.currentTimeMillis();
 		System.out.println(end - begin);
 	}
+
 	public static void t3() {
 		ArrayList<Integer> a = new ArrayList<Integer>();
 		Collection<Integer> list = Collections.synchronizedCollection(a);
@@ -174,6 +191,7 @@ public class TestLockFreeList {
 		long end = System.currentTimeMillis();
 		System.out.println(end - begin);
 	}
+
 	public static void t4() {
 		LockFreeVector<Integer> list = new LockFreeVector<Integer>();
 		long begin = System.currentTimeMillis();

@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.framework.netty5.client;
+package com.book.netty5.client;
+
+import com.book.netty5.MessageType;
+import com.book.netty5.struct.Header;
+import com.book.netty5.struct.NettyMessage;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
-
-import com.framework.netty5.MessageType;
-import com.framework.netty5.struct.Header;
-import com.framework.netty5.struct.NettyMessage;
 
 /**
  * @author Lilinfeng

@@ -22,7 +22,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import test.self.Worker;
 
 /**
  * The Server accepts connections in non-blocking fashion. A connection when
@@ -59,7 +58,7 @@ public class MultiJabberServer1 {
 						ch = ssc.accept();
 						System.out.println("Accepted connection from:" + ch.socket());
 						ch.configureBlocking(false);
-						_threadPool.execute(new Worker(ch, _threadPool));
+//						_threadPool.execute(new Worker(ch, _threadPool));
 					}
 				}
 			}

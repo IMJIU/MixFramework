@@ -13,7 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.framework.netty5.client;
+package com.book.netty5.client;
+
+import java.net.InetSocketAddress;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+import com.book.netty5.NettyConstant;
+import com.book.netty5.codec.NettyMessageDecoder;
+import com.book.netty5.codec.NettyMessageEncoder;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -24,15 +33,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.ReadTimeoutHandler;
-
-import java.net.InetSocketAddress;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import com.framework.netty5.NettyConstant;
-import com.framework.netty5.codec.NettyMessageDecoder;
-import com.framework.netty5.codec.NettyMessageEncoder;
 
 /**
  * @author Lilinfeng

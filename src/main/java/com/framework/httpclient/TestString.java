@@ -11,11 +11,12 @@ import sun.util.locale.StringTokenIterator;
 
 public class TestString {
 
-
 	public static void main(String[] args) throws Exception {
 		// assert_test();
 		// split();
-		// String l = "/api/open/files/video_image/8ce22f79-67ed-4096-91c9-4af67bd7f5bd.jpg HTTP/1.1 302 -";
+		// String l =
+		// "/api/open/files/video_image/8ce22f79-67ed-4096-91c9-4af67bd7f5bd.jpg
+		// HTTP/1.1 302 -";
 		// System.out.println(l.substring(0,l.indexOf("/",16)));
 
 		// qr_string();
@@ -24,26 +25,27 @@ public class TestString {
 		// System.out.println(s.matches("\\S+-\\d+"));
 
 		// System.out.println("http://www.idongri.net".substring("http://www.idongri.net".indexOf(".")));;
-//		for (int i = 0; i < 100; i++) {
-//			System.out.println(System.currentTimeMillis() / 1000);
-//			Thread.sleep(1000);
-//		}
-		
-//		System.out.println(getCommonString("🚹IM JIU🎤"));
-		
-		System.out.println("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxec2698856db6a0f6&redirect_uri="+URLEncoder.encode("http://weixin.idongri.cn/wx/web/auth/consult.do")+"&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect");
-		
+		// for (int i = 0; i < 100; i++) {
+		// System.out.println(System.currentTimeMillis() / 1000);
+		// Thread.sleep(1000);
+		// }
+
+		// System.out.println(getCommonString("🚹IM JIU🎤"));
+
+		System.out.println("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxec2698856db6a0f6&redirect_uri="
+				+ URLEncoder.encode("http://weixin.idongri.cn/wx/web/auth/consult.do") + "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect");
+
 	}
 
 	public static String getCommonString(String str) {
 		StringBuilder builder = new StringBuilder();
 		Pattern p = Pattern.compile("[\u4e00-\u9fa5]|[a-zA-Z]|[0-9]");
 		for (int i = 0; i < str.length(); i++) {
-			Matcher m = p.matcher(""+str.charAt(i));
+			Matcher m = p.matcher("" + str.charAt(i));
 			if (m.find()) {
 				builder.append(str.charAt(i));
 			}
-        }
+		}
 		return builder.toString();
 	}
 
@@ -68,11 +70,12 @@ public class TestString {
 	}
 
 	private static void split() {
-		String rule4XxsRegEx = "<script| </script|<iframe|</iframe|<frame|</frame|set-cookie|" + "%3cscript|%3c/script|%3ciframe|%3c/iframe|%3cframe| %3c/frame|"
-		        + "<body|</body|%3cbody|%3c/body|eval|<|>|\\|(|)";
+		String rule4XxsRegEx = "<script| </script|<iframe|</iframe|<frame|</frame|set-cookie|"
+				+ "%3cscript|%3c/script|%3ciframe|%3c/iframe|%3cframe| %3c/frame|" + "<body|</body|%3cbody|%3c/body|eval|<|>|\\|(|)";
 		StringTokenIterator token = new StringTokenIterator(rule4XxsRegEx, "\\|");
 		while (token.hasNext()) {
 			System.out.println(token.next());
 		}
 
+	}
 }

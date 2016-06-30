@@ -19,7 +19,7 @@ public class DBTest {
 //		 DBTool.compare(db2, db1, "", "idongri_cn", "idongri_v3",null,"nodiff");//CN-V3
 		 
 		 
-		alterChangeCharset("idongri_cn",1);
+//		alterChangeCharset("idongri_cn",1);
 		
 //		Map<String, Map<String, String>> t1 = DBTool.queryInfo2("select * from tb_menu", 1);	
 //		Map<String, Map<String, String>> t2 = DBTool.queryInfo2("select * from tb_menu", 2);

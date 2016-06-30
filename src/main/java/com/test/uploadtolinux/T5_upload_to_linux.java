@@ -28,8 +28,8 @@ public class T5_upload_to_linux {
 		Base.server = ".net";
 		Base.findType = "class";// class | html
 		FindOperator find = new FindOperator();
-		 find.processFile((s) -> MoveOperate.doMoveClass(s));
-		// find.processFile((s) -> UploadOperate.doUploadClass(s));
+//		 find.processFile((s) -> MoveOperate.doMoveClass(s));
+//		 find.processFile((s) -> UploadOperate.doUploadClass(s));
 //		find.processFile((s) -> UploadOperate.findUploadHtmlWriteToFile(s));
 //		UploadOperate.doUploadHtmlFileListToLinux();
 		
@@ -41,7 +41,7 @@ public class T5_upload_to_linux {
 		
 		//上传jar
 //		UploadOperate.uploadToLinux(Base.linux_lib_Path, Base.moveToDir + Base.dao_jar);
-//		UploadOperate.uploadToLinux(Base.linux_lib_Path, Base.moveToDir + Base.service_jar);
+		UploadOperate.uploadToLinux(Base.linux_lib_Path, Base.moveToDir + Base.service_jar);
 	}
 
 }

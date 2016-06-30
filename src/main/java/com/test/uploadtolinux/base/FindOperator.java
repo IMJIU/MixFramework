@@ -63,7 +63,6 @@ public class FindOperator extends Base {
 	 */
 	private void findFile(File dir, String fileName, Process<String> func) throws Exception {
 		for (File f : dir.listFiles()) {
-			System.out.println(f.getAbsolutePath());
 			if (f.isDirectory()) {
 				findFile(f, fileName, func);
 			} else if (fileName.equals(f.getName())) {

@@ -14,7 +14,7 @@ public class UploadOperate extends FindOperator {
 			try {
 				String tmpFile = classFilePath.substring(classFilePath.indexOf("classes") + 8);
 				String tmpDir = tmpFile.substring(0, tmpFile.lastIndexOf("\\")).replaceAll("\\\\", "/");
-				_uploadToLinux(toPath + tmpDir, classFilePath);
+				_uploadToLinux(linux_class_Path + tmpDir, classFilePath);
 				System.out.println("finished");
 			} catch (Exception e) {
 				e.printStackTrace();

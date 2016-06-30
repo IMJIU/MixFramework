@@ -25,7 +25,7 @@ public class MoveDBScript {
 		// Sort
 		// SortFileContent.sort("E:\\冬日暖阳\\文档\\db_change_log\\v3.0\\export_tables.sql");
 		// DBTool.alterChangeCharset();
-		DBTool.compare(t1, t2, p);
+//		DBTool.compare(t1, t2, p);
 	}
 
 }

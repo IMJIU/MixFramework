@@ -16,6 +16,7 @@ import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
 import com.linux.ftp.SFTP_T01;
 import com.test.uploadtolinux.base.Base;
+import com.test.uploadtolinux.base.DownloadOperator;
 import com.test.uploadtolinux.base.FindOperator;
 import com.test.uploadtolinux.base.MoveOperate;
 import com.test.uploadtolinux.base.UploadOperate;
@@ -24,12 +25,22 @@ public class T5_upload_to_linux {
 
 	public static void main(String[] args) throws Exception {
 		Base.server = ".net";
-		Base.findType = "html";// class | html
+		Base.findType = "class";// class | html
 		FindOperator find = new FindOperator();
 		// find.processFile((s) -> MoveOperate.doMoveClass(s));
 		// find.processFile((s) -> UploadOperate.doUploadClass(s));
-		find.processFile((s) -> UploadOperate.findUploadHtmlWriteToFile(s));
-		UploadOperate.doUploadHtmlFileListToLinux();
+//		find.processFile((s) -> UploadOperate.findUploadHtmlWriteToFile(s));
+//		UploadOperate.doUploadHtmlFileListToLinux();
+		
+
+		
+		//下载jar
+//		DownloadOperator.download(Base.linux_lib_Path, Base.dao_jar, Base.moveToDir);
+//		DownloadOperator.download(Base.linux_lib_Path, Base.service_jar, Base.moveToDir);
+		
+		//上传jar
+		UploadOperate.uploadToLinux(Base.linux_lib_Path, Base.moveToDir + Base.dao_jar);
+		UploadOperate.uploadToLinux(Base.linux_lib_Path, Base.moveToDir + Base.service_jar);
 	}
 
 }

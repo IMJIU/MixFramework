@@ -13,7 +13,7 @@ public class Base {
 	static SFTP_T01 sf = new SFTP_T01();
 	
 	static ChannelSftp sftp = null;
-	static String fromPath = "d:\\svn_code\\idongriV3";
+	static String svn_path = "d:\\svn_code\\idongriV3";
 
 	public final static String toPath = "/root/";
 	public final static String linux_class_Path = "/usr/local/idongri/webapps/idongri/WEB-INF/classes/";
@@ -23,9 +23,11 @@ public class Base {
 	
 	public final static String dao_jar = "common-dao-3.0-SNAPSHOT.jar";
 	public final static String service_jar = "common-service-3.0-SNAPSHOT.jar";
-
-	public final static String classListText = "D:\\git\\MixTest\\src\\main\\resources\\class_list.properties";
-	public final static String htmlListText ="D:\\git\\MixTest\\src\\main\\resources\\html_list.properties";
+    
+	public final static String current_path = Class.class.getClass().getResource("/").getPath();
+	
+	public final static String classListText = current_path + "class_list.properties";
+	public final static String htmlListText = current_path + "html_list.properties";
 	public final static String uploadHtmlFilePath = "D:\\git\\MixTest\\src\\main\\resources\\upload_html_list.txt";
 
 	public final static String moveToDir = "d:\\target\\";

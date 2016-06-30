@@ -22,6 +22,7 @@ public class FindOperator extends Base {
 		} else {
 			filepath = classListText;
 		}
+		System.out.println(filepath);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filepath)));
 		String fileName = null;
 		while ((fileName = reader.readLine()) != null) {
@@ -38,7 +39,7 @@ public class FindOperator extends Base {
 	 * @throws Exception
 	 */
 	private void findFile(String fileName, Process<String> func) throws Exception {
-		File dir = new File(fromPath);
+		File dir = new File(svn_path);
 		for (File f : dir.listFiles()) {
 			if (f.isDirectory()) {
 				File target = null;
@@ -62,6 +63,7 @@ public class FindOperator extends Base {
 	 */
 	private void findFile(File dir, String fileName, Process<String> func) throws Exception {
 		for (File f : dir.listFiles()) {
+			System.out.println(f.getAbsolutePath());
 			if (f.isDirectory()) {
 				findFile(f, fileName, func);
 			} else if (fileName.equals(f.getName())) {

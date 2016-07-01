@@ -1,25 +1,6 @@
-package com.test.uploadtolinux;
+package com.util.upload_to_linux;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-
-import com.book.jdk18.Func;
-import com.book.jdk18.Process;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSchException;
-import com.linux.ftp.SFTPReal;
-import com.test.uploadtolinux.base.Base;
-import com.test.uploadtolinux.base.DownloadOperator;
-import com.test.uploadtolinux.base.FindOperator;
-import com.test.uploadtolinux.base.MoveOperate;
-import com.test.uploadtolinux.base.UploadOperate;
+import com.util.upload_to_linux.base.*;
 
 public class T5_upload_to_linux {
 
@@ -29,7 +10,7 @@ public class T5_upload_to_linux {
 		Base.findType = "class";// class | html
 		
 		/**    【移动文件 】   */
-//		 FindOperator.processFile((s) -> MoveOperate.doMoveClass(s));
+		 FindOperator.processFile((s) -> MoveOperate.doMoveClass(s));
 		
 		/**     【上传class】    */
 //		FindOperator.processFile((s) -> UploadOperate.doUploadClass(s));

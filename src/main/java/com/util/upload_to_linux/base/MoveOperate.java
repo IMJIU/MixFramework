@@ -1,4 +1,4 @@
-package com.test.uploadtolinux.base;
+package com.util.upload_to_linux.base;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

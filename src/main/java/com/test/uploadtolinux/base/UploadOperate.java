@@ -68,8 +68,8 @@ public class UploadOperate extends FindOperator {
 				for (String filePath : Files.readAllLines(Paths.get(uploadHtmlFilePath))) {
 					path = filePath.substring(filePath.indexOf("webapp") + 6).replaceAll("\\\\", "/");
 					path = path.substring(0, path.lastIndexOf("/"));
-					System.out.println(toHtmlPath + path);
-					_uploadToLinux(toHtmlPath + path, filePath,session);
+					System.out.println(linux_webapp_Path + path);
+					_uploadToLinux(linux_webapp_Path + path, filePath,session);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -77,7 +77,7 @@ public class UploadOperate extends FindOperator {
 		});
 		System.out.println("finished");
 	}
-	
+	private static FileOutputStream uploadHtmlListOutput = null;
 	/**
 	 * 搜索需要上传的html
 	 * @param file

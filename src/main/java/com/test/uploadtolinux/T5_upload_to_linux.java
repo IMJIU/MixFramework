@@ -25,7 +25,7 @@ public class T5_upload_to_linux {
 
 	public static void main(String[] args) throws Exception {
 		//配置
-		Base.server = ".net";
+		Base.server = ".cn";
 		Base.findType = "class";// class | html
 		
 		
@@ -39,7 +39,7 @@ public class T5_upload_to_linux {
 		
 		//下载jar
 		DownloadOperator.download(Base.linux_lib_Path, Base.dao_jar, Base.moveToDir);
-		DownloadOperator.download(Base.linux_lib_Path, Base.service_jar, Base.moveToDir);
+//		DownloadOperator.download(Base.linux_lib_Path, Base.service_jar, Base.moveToDir);
 		
 		//上传jar
 //		UploadOperate.uploadToLinux(Base.linux_lib_Path, Base.moveToDir + Base.dao_jar);

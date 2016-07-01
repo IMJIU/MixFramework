@@ -15,9 +15,10 @@ import com.jcraft.jsch.SftpException;
 /**
  * @author YangHua 转载请注明出处：http://www.xfok.net/2009/10/124485.html
  */
-public class SFTP_T01 {
+public class SFTPReal {
+
 	public static void main(String[] args) {
-		SFTP_T01 sf = new SFTP_T01();
+		SFTPReal sf = new SFTPReal();
 		String host = "192.168.99.166";
 		int port = 22;
 		String username = "idongri";
@@ -28,12 +29,12 @@ public class SFTP_T01 {
 		String saveFile = "e:\\tmp\\download.txt";
 		String deleteFile = "delete.txt";
 		ChannelSftp sftp = sf.connect(host, port, username, password);
-//		sf.upload(directory, uploadFile, sftp);
+		// sf.upload(directory, uploadFile, sftp);
 		sf.download(directory, downloadFile, saveFile, sftp);
-//		sf.delete(directory, deleteFile, sftp);
+		// sf.delete(directory, deleteFile, sftp);
 		try {
-//			sftp.cd(directory);
-//			sftp.mkdir("ss");
+			// sftp.cd(directory);
+			// sftp.mkdir("ss");
 			System.out.println("finished");
 		} catch (Exception e) {
 			e.printStackTrace();

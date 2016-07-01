@@ -6,7 +6,7 @@ import com.book.jdk18.Func;
 import com.book.jdk18.Process;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
-import com.linux.ftp.SFTP_T01;
+import com.linux.ftp.SFTPReal;
 
 public class FindOperator extends Base {
 	/**
@@ -18,9 +18,9 @@ public class FindOperator extends Base {
 	public void processFile(Process<String> func) throws Exception {
 		String filepath = null;
 		if (findType.equals("html")) {
-			filepath = htmlListText;
+			filepath = htmlListFilePath;
 		} else {
-			filepath = classListText;
+			filepath = classListFilePath;
 		}
 		System.out.println(filepath);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filepath)));

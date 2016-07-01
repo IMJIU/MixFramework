@@ -1,8 +1,12 @@
 package com.test.uploadtolinux.base;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.function.Predicate;
 
 public class UploadOperate extends FindOperator {
 	/**
@@ -10,11 +14,11 @@ public class UploadOperate extends FindOperator {
 	 * @param classFilePath
 	 */
 	public static void doUploadClass(String classFilePath) {
-		loopServer((t) -> {
+		loopServer((session) -> {
 			try {
 				String tmpFile = classFilePath.substring(classFilePath.indexOf("classes") + 8);
 				String tmpDir = tmpFile.substring(0, tmpFile.lastIndexOf("\\")).replaceAll("\\\\", "/");
-				_uploadToLinux(linux_class_Path + tmpDir, classFilePath);
+				_uploadToLinux(linux_class_Path + tmpDir, classFilePath,session);
 				System.out.println("finished");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -22,10 +26,31 @@ public class UploadOperate extends FindOperator {
 		});
 		System.out.println("finished");
 	}
+	/**
+	 * 上传war
+	 * @param dir
+	 * @param file
+	 */
+	public static void uploadWarToLinux(String dir,String file) {
+		System.out.println(file);
+		try {
+			String war = Files.list(Paths.get(file)).filter(f -> f.getFileName().toString().endsWith("war")).findFirst().get().toString();
+			if (war != null) {
+				uploadToLinux(dir, war);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 上传文件
+	 * @param dir
+	 * @param file
+	 */
 	public static void uploadToLinux(String dir,String file) {
-		loopServer((t) -> {
+		loopServer((session) -> {
 			try {
-				_uploadToLinux(dir,file);
+				_uploadToLinux(dir,file,session);
 				System.out.println("finished");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -37,14 +62,14 @@ public class UploadOperate extends FindOperator {
 	 * 读取文件中需要上传的文件  上传到linux
 	 */
 	public static void doUploadHtmlFileListToLinux() {
-		loopServer((t) -> {
+		loopServer((session) -> {
 			try {
 				String path = null;
 				for (String filePath : Files.readAllLines(Paths.get(uploadHtmlFilePath))) {
 					path = filePath.substring(filePath.indexOf("webapp") + 6).replaceAll("\\\\", "/");
 					path = path.substring(0, path.lastIndexOf("/"));
 					System.out.println(toHtmlPath + path);
-					_uploadToLinux(toHtmlPath + path, filePath);
+					_uploadToLinux(toHtmlPath + path, filePath,session);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -101,7 +101,11 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(net,customer,"/api/customer/getQuestions?doctorId=435",get);
 		
 		//服药记录
-		result = exe(local,customer,"/api/customer/getTakeMedicineRecordList?pageSize=10&pageNo=1",get);
+//		result = exe(local,customer,"/api/customer/getTakeMedicineRecordList?pageSize=10&pageNo=1",get);
+		
+		//获取最近购药重量
+		result = exe(local,customer,"/api/customer/getLatestDrugWeight",get);
+		
 	}
 	
 	public static void doctor() throws Exception{

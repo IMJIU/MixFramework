@@ -59,12 +59,7 @@ public class Base {
 	}
 
 	private static void threadCall(Process<ChannelSftp> callback,ChannelSftp session) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				callback.process(session);
-			}
-		}).start();
+		new Thread(()->callback.process(session)).start();
 	}
 
 	public static ChannelSftp s162() {

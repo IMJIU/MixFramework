@@ -104,7 +104,7 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(local,customer,"/api/customer/getTakeMedicineRecordList?pageSize=10&pageNo=1",get);
 		
 		//获取最近购药重量
-		result = exe(local,customer,"/api/customer/getLatestDrugWeight",get);
+//		result = exe(net,customer,"/api/customer/getLatestDrugWeight",get);
 		
 	}
 	
@@ -222,7 +222,7 @@ public class TestUrl extends HttpTestBase {
 		//义诊列表
 //		result = exe(cn,open,"/api/open/getPromotionServiceList?terminal=1&versionCode=3",get);
 		
-//		result = exe(local,open,"/api/open/getFirst?useType=3&terminal=1&pageNo=1&pageSize=20&versionCode=213&mobileType=1&systemType=ios&imeiCode=123&versionName=123",get);
+		result = exe(net,open,"/api/open/getFirst?useType=3&terminal=1&pageNo=1&pageSize=20&versionCode=213&mobileType=1&systemType=ios&imeiCode=123&versionName=123",get);
 		
 		//获取支持药状
 //		result = exe(net,open,"/api/open/getSupportDrugType?terminal=1&versionCode=3",get);

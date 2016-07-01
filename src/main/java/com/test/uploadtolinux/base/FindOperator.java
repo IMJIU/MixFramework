@@ -15,7 +15,7 @@ public class FindOperator extends Base {
 	 * @param func
 	 * @throws Exception
 	 */
-	public void processFile(Process<String> func) throws Exception {
+	public static void processFile(Process<String> func) throws Exception {
 		String filepath = null;
 		if (findType.equals("html")) {
 			filepath = htmlListFilePath;
@@ -38,7 +38,7 @@ public class FindOperator extends Base {
 	 * @param func
 	 * @throws Exception
 	 */
-	private void findFile(String fileName, Process<String> func) throws Exception {
+	private  static void findFile(String fileName, Process<String> func) throws Exception {
 		File dir = new File(svn_path);
 		for (File f : dir.listFiles()) {
 			if (f.isDirectory()) {
@@ -61,7 +61,7 @@ public class FindOperator extends Base {
 	 * @param func
 	 * @throws Exception
 	 */
-	private void findFile(File dir, String fileName, Process<String> func) throws Exception {
+	private  static void findFile(File dir, String fileName, Process<String> func) throws Exception {
 		for (File f : dir.listFiles()) {
 			if (f.isDirectory()) {
 				findFile(f, fileName, func);

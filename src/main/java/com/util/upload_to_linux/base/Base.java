@@ -20,7 +20,8 @@ public class Base {
 	public final static String current_path = Class.class.getClass().getResource("/").getPath();
 	public final static String classListFilePath = current_path + "class_list.properties";
 	public final static String htmlListFilePath = current_path + "html_list.properties";
-	public final static String uploadHtmlFilePath = current_path + "upload_html_list.txt";
+//	public final static String uploadHtmlFilePath = current_path + "upload_html_list.txt";
+	public final static String uploadHtmlFilePath =  "D:\\git\\bak3\\MixTest\\src\\main\\resources\\upload_html_list.txt";
 
 	public final static String local_platform_war_path = svn_path + "platform\\target\\";
 	public final static String local_admin_war_path = svn_path + "admin\\target\\";

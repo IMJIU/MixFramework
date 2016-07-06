@@ -85,11 +85,13 @@ public class UploadOperate extends FindOperator {
 	 */
 	public static void findUploadHtmlWriteToFile(String file) {
 		try {
-//			System.out.println("i get!"+file);
+			System.out.println(uploadHtmlFilePath);
+			System.out.println("i get!"+file);
 			try {
 				if(uploadHtmlListOutput == null)
 					uploadHtmlListOutput = new FileOutputStream(uploadHtmlFilePath);
 				uploadHtmlListOutput.write((file+"\n").getBytes("utf-8"));
+				uploadHtmlListOutput.flush();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

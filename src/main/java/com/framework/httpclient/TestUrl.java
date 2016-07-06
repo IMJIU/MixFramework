@@ -34,22 +34,6 @@ public class TestUrl extends HttpTestBase {
 		return result;
     }
 	
-	private static void getDate() {
-		List<String>datelist = new ArrayList();
-	    int d = Calendar.getInstance().get(Calendar.DATE);
-		int m = Calendar.getInstance().get(Calendar.MONTH)+1;
-		for (int i = 0; i < 24; i++) {
-			for (int j = 1; j < 4; j++) {
-				String hour = String.valueOf(i);
-//				if (i < 10) {
-//					hour = "0" + hour;
-//				}
-				System.out.println(m+"/"+d+" "+hour + ":" + j * 20);
-				datelist.add(m+"/"+d+" "+hour + ":" + j * 20);
-			}
-		}
-    }
-	
 	public static void customer() throws Exception{
 		/******************************************* 【病人 】 *****************************************************************************************************/
 		
@@ -83,7 +67,7 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(local,customer,"/api/customer/saveAndSendCase?name=zlf&sex=1&birthday=1231231241232&height=170&weight=64&describe=lfdjalsfjd&doctorId=137&caseImageList=['1.jpg','2.jpg']",get);
 		
 		//最新病案
-//		result = exe(cn,customer,"/api/customer/getLatestCase",get);
+//		result = exe(net,customer,"/api/customer/getLatestCase",get);
 
 		//v3.0  发送病案
 //		result = exe(local,customer,"/api/customer/saveAndSendCase?doctorId=0&caseId=9999&name=zlf&sex=1&birthday=190231203712&work=working&height=185&weight=64&describe=zzzz&solution=none&caseImageList=['xxxx.jpg','2222.jpg']&terminal=1&doctorId=137&type=text",get);
@@ -222,7 +206,7 @@ public class TestUrl extends HttpTestBase {
 		//义诊列表
 //		result = exe(cn,open,"/api/open/getPromotionServiceList?terminal=1&versionCode=3",get);
 		
-		result = exe(net,open,"/api/open/getFirst?useType=3&terminal=1&pageNo=1&pageSize=20&versionCode=213&mobileType=1&systemType=ios&imeiCode=123&versionName=123",get);
+		result = exe(cn,open,"/api/open/getFirst?useType=2&terminal=1&pageNo=1&pageSize=20&versionCode=213&mobileType=1&systemType=ios&imeiCode=123&versionName=123",get);
 		
 		//获取支持药状
 //		result = exe(net,open,"/api/open/getSupportDrugType?terminal=1&versionCode=3",get);

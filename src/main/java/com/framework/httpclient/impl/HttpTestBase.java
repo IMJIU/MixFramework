@@ -82,7 +82,10 @@ public  class HttpTestBase {
 		http = "http://localhost";
 		else if (env == cn)
 //			http = "http://www.idongri.cn";
-			http = "http://121.40.224.236:8080";
+//			http = "http://121.40.224.236:8080";
+		http = "http://120.55.88.162:8080";
+//		http = "http://121.43.99.112:8080";
+		
     }
 	public static String exe(String url, boolean isPost) throws Exception {
 		if (isPost) return executePost(url, true);

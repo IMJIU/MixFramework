@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.book.jdk18.Process;
 import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSchException;
 import com.linux.ftp.SFTPReal;
 
 public class Base {
@@ -119,6 +120,11 @@ public class Base {
 	public static void closeChannel(){
 		for (Integer server : channelMap.keySet()) {
 			ChannelSftp ch = channelMap.get(server);
+			try {
+				ch.getSession().disconnect();
+			} catch (JSchException e) {
+				e.printStackTrace();
+			}
 			ch.disconnect();
 			ch.exit();
 		}

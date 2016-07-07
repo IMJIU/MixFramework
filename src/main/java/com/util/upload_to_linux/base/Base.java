@@ -1,13 +1,18 @@
 package com.util.upload_to_linux.base;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
 import com.book.jdk18.Process;
 import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.ChannelShell;
 import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
 import com.linux.ftp.SFTPReal;
+
+import expect4j.Expect4j;
 
 public class Base {
 
@@ -39,43 +44,31 @@ public class Base {
 	public final static String core_jar = "common-core-3.0-SNAPSHOT.jar";
 	public final static String util_jar = "common-util-3.0-SNAPSHOT.jar";
 
-	static SFTPReal sftpReal = new SFTPReal();
+	private static SFTPReal sftpReal = new SFTPReal();
 	static ChannelSftp channel;
-	static Map<Integer,ChannelSftp> channelMap = new HashMap<>();
 
+	public static void executeCommand(String host,String command){
+		sftpReal.executeCommand(host, command);
+	}
 	static void _uploadToLinux(String dir, String file, ChannelSftp session) throws Exception {
 		System.out.print("【dir】:" + dir + "\n【file】:" + file);
 		sftpReal.upload(dir, file, session);
-//		session.getSession().disconnect();
-//		session.disconnect();
-//		session.exit();
+		// session.getSession().disconnect();
+		// session.disconnect();
+		// session.exit();
 		System.out.println("->upload over");
 	}
 
 	static HashSet<String> set = new HashSet<String>();
 
-	static void _mkDir(String dir) {
-		loopServer((session) -> {
-			try {
-				if (!set.contains(dir)) {
-					System.out.print("mkdir " + dir);
-					sftpReal.executeCommand("mkdir " + dir);
-					System.out.println("->mk finished");
-					set.add(dir);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-
-	}
-
+	
+		
 	static void _downloadFromLinux(String dir, String file, String to, ChannelSftp session) throws Exception {
 		System.out.print("【from】:" + dir + file + "\n【to】:" + to);
 		sftpReal.download(dir, file, to, session);
 		session.getSession().disconnect();
-//		session.disconnect();
-//		session.exit();
+		// session.disconnect();
+		// session.exit();
 		System.out.println("->download over");
 	}
 
@@ -93,33 +86,40 @@ public class Base {
 		new Thread(() -> callback.process(session)).start();
 	}
 
-	public static ChannelSftp s162() {
-		if (channelMap.get(162) == null)
-			channelMap.put(162,sftpReal.connect("120.55.88.162", 22, "root", "Idongri2016"));
-		return channelMap.get(162);
-	}
-
+	public static final String host162 = "120.55.88.162";
+	public static final String host112 = "121.43.99.112";
+	public static final String host236 = "121.40.224.236";
+	public static final String host187 = "121.40.150.187";
+	
+	
 	public static ChannelSftp s112() {
-		if (channelMap.get(112) == null)
-			channelMap.put(112,sftpReal.connect("121.43.99.112", 22, "root", "DRny2015"));
-		return channelMap.get(112);
+		if (sftpReal.getSftpChannel(host112) == null)
+			sftpReal.connect(host112, 22, "root", "DRny2015");
+		return sftpReal.getSftpChannel(host112);
 	}
 
 	public static ChannelSftp s236() {
-		if (channelMap.get(236) == null)
-			channelMap.put(236,sftpReal.connect("121.40.224.236", 22, "root", "DRny2015"));
-		return channelMap.get(236);
-	}
-
-	public static ChannelSftp s187() {
-		if (channelMap.get(187) == null)
-			channelMap.put(187,sftpReal.connect("121.40.150.187", 22, "root", "Idongri2015"));
-		return channelMap.get(187);
+		if (sftpReal.getSftpChannel(host236) == null)
+			sftpReal.connect(host236, 22, "root", "DRny2015");
+		return sftpReal.getSftpChannel(host236);
 	}
 	
-	public static void closeChannel(){
-		for (Integer server : channelMap.keySet()) {
-			ChannelSftp ch = channelMap.get(server);
+	public static ChannelSftp s162() {
+		if (sftpReal.getSftpChannel(host162) == null)
+			sftpReal.connect(host162, 22, "root", "Idongri2016");
+		return sftpReal.getSftpChannel(host162);
+	}
+
+	
+	public static ChannelSftp s187() {
+		if (sftpReal.getSftpChannel(host187) == null)
+			sftpReal.connect(host187, 22, "root", "Idongri2015");
+		return sftpReal.getSftpChannel(host187);
+	}
+
+	public static void closeChannel() {
+		for (String server : sftpReal.getChannelMap().keySet()) {
+			ChannelSftp ch = sftpReal.getChannelMap().get(server);
 			try {
 				ch.getSession().disconnect();
 			} catch (JSchException e) {
@@ -130,4 +130,5 @@ public class Base {
 		}
 	}
 
+	
 }

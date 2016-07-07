@@ -14,11 +14,11 @@ public class UploadOperate extends FindOperator {
 	 * @param classFilePath
 	 */
 	public static void doUploadClass(String classFilePath) {
-		loopServer((session) -> {
+		loopServer((channelSftp) -> {
 			try {
 				String tmpFile = classFilePath.substring(classFilePath.indexOf("classes") + 8);
 				String tmpDir = tmpFile.substring(0, tmpFile.lastIndexOf("\\")).replaceAll("\\\\", "/");
-				_uploadToLinux(linux_class_Path + tmpDir, classFilePath,session);
+				_uploadToLinux(linux_class_Path + tmpDir, classFilePath,channelSftp);
 				System.out.println("finished");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -41,6 +41,21 @@ public class UploadOperate extends FindOperator {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	static void _mkDir(String dir) {
+		loopServer((channelSftp) -> {
+			try {
+				if (!set.contains(dir)) {
+					System.out.print("mkdir " + dir);
+					executeCommand(channelSftp.getSession().getHost(),"mkdir " + dir);
+					System.out.println("->mk finished");
+					set.add(dir);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+
 	}
 	/**
 	 * 上传war
@@ -74,9 +89,9 @@ public class UploadOperate extends FindOperator {
 	 * @param file
 	 */
 	public static void uploadToLinux(String dir,String file) {
-		loopServer((session) -> {
+		loopServer((channelSftp) -> {
 			try {
-				_uploadToLinux(dir,file,session);
+				_uploadToLinux(dir,file,channelSftp);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

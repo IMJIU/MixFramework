@@ -20,12 +20,10 @@ public class UploadOperate extends FindOperator {
 				String tmpFile = classFilePath.substring(classFilePath.indexOf("classes") + 8);
 				String tmpDir = tmpFile.substring(0, tmpFile.lastIndexOf("\\")).replaceAll("\\\\", "/");
 				_uploadToLinux(linux_class_Path + tmpDir, classFilePath, channelSftp);
-				System.out.println("finished");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		});
-		System.out.println("finished");
 	}
 
 	/**
@@ -53,7 +51,7 @@ public class UploadOperate extends FindOperator {
 				if (!set.contains(host + dir)) {
 					System.out.print("mkdir " + dir);
 					executeCommand(host, "mkdir " + dir);
-					System.out.println("->mk finished");
+					System.out.println("->mkdir over");
 					set.add(host + dir);
 				}
 			} catch (Exception e) {
@@ -126,7 +124,6 @@ public class UploadOperate extends FindOperator {
 				e.printStackTrace();
 			}
 		});
-		System.out.println("finished");
 	}
 
 	private static FileOutputStream uploadHtmlListOutput = null;
@@ -139,7 +136,7 @@ public class UploadOperate extends FindOperator {
 	 */
 	public static void findUploadHtmlWriteToFile(String file) {
 		try {
-			System.out.println(uploadHtmlFilePath);
+//			System.out.println(uploadHtmlFilePath);
 			System.out.println("i get!" + file);
 			try {
 				if (uploadHtmlListOutput == null)

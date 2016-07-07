@@ -65,6 +65,7 @@ public class Shell {
 		this.port = port;
 		this.user = user;
 		this.password = password;
+		log.info("why");
 		expect = getExpect();
 	}
 
@@ -92,7 +93,7 @@ public class Shell {
 	// 获得Expect4j对象，该对用可以往SSH发送命令请求
 	private Expect4j getExpect() {
 		try {
-			log.debug(String.format("Start logging to %s@%s:%s", user, ip, port));
+			log.info(String.format("Start logging to %s@%s:%s", user, ip, port));
 			JSch jsch = new JSch();
 			session = jsch.getSession(user, ip, port);
 			session.setPassword(password);
@@ -105,7 +106,7 @@ public class Shell {
 			channel = (ChannelShell) session.openChannel("shell");
 			Expect4j expect = new Expect4j(channel.getInputStream(), channel.getOutputStream());
 			channel.connect();
-			log.debug(String.format("Logging to %s@%s:%s successfully!", user, ip, port));
+			log.info(String.format("Logging to %s@%s:%s successfully!", user, ip, port));
 			return expect;
 		} catch (Exception ex) {
 			log.error("Connect to " + ip + ":" + port + "failed,please check your username and password!");
@@ -127,21 +128,19 @@ public class Shell {
 			return false;
 		}
 
-		log.debug("----------Running commands are listed as follows:----------");
+		log.info("----------Running commands are listed as follows:----------");
 		for (String command : commands) {
-			log.debug(command);
+			log.info(command);
 		}
-		log.debug("----------End----------");
+		log.info("----------End----------");
 
 		Closure closure = new Closure() {
-
 			public void run(ExpectState expectState) throws Exception {
 				buffer.append(expectState.getBuffer());// buffer is string
-				                                       // buffer for appending
-				                                       // output of executed
-				                                       // command
+														// buffer for appending
+														// output of executed
+														// command
 				expectState.exp_continue();
-
 			}
 		};
 		List<Match> lstPattern = new ArrayList<Match>();
@@ -149,9 +148,9 @@ public class Shell {
 		if (regEx != null && regEx.length > 0) {
 			synchronized (regEx) {
 				for (String regexElement : regEx) {// list of regx like, :>, />
-					                               // etc. it is possible
-					                               // command prompts of your
-					                               // remote machine
+													// etc. it is possible
+													// command prompts of your
+													// remote machine
 					try {
 						RegExpMatch mat = new RegExpMatch(regexElement, closure);
 						lstPattern.add(mat);
@@ -161,13 +160,16 @@ public class Shell {
 						return false;
 					}
 				}
-				lstPattern.add(new EofMatch(new Closure() { // should cause // entire page to be
-					                                        // collected
-					        public void run(ExpectState state) {}
-				        }));
+				lstPattern.add(new EofMatch(new Closure() { // should cause //
+															// entire page to be
+															// collected
+					public void run(ExpectState state) {
+					}
+				}));
 				lstPattern.add(new TimeoutMatch(defaultTimeOut, new Closure() {
 
-					public void run(ExpectState state) {}
+					public void run(ExpectState state) {
+					}
 				}));
 			}
 		}
@@ -181,6 +183,7 @@ public class Shell {
 
 			// 找不到错误信息标示成功
 			String response = buffer.toString().toLowerCase();
+			log.info(response);
 			for (String msg : errorMsg) {
 				if (response.indexOf(msg) > -1) {
 					return false;
@@ -248,6 +251,11 @@ public class Shell {
 		public void showMessage(String message) {
 
 		}
+	}
+
+	public static void main(String[] args) {
+		Shell shell = new Shell("121.40.150.187", 22, "root", "Idongri2015");
+		shell.executeCommands(new String[] { "free", "df -h" });
 	}
 
 }

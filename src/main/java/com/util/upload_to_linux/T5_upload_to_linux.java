@@ -1,15 +1,20 @@
 package com.util.upload_to_linux;
 
+import java.io.File;
+
 import org.junit.Test;
 
 import com.util.upload_to_linux.base.*;
 
 public class T5_upload_to_linux {
-
-	public static void main(String[] args) throws Exception {
+	
+	static{
 		// 配置
-		Base.server = ".cn";
-		Base.findType = "html";// class | html
+		Base.server = ".net";
+		Base.findType = "class";// class | html
+	}
+	
+	public static void main(String[] args) throws Exception {
 
 		/** 【移动文件 】 */
 //		FindOperator.processFile((s) -> MoveOperate.doMoveClass(s));
@@ -21,7 +26,7 @@ public class T5_upload_to_linux {
 //		 FindOperator.processFile((s) -> UploadOperate.findUploadHtmlWriteToFile(s));
 
 		/** 【上传html文件】 */
-		 UploadOperate.doUploadHtmlFileListToLinux();
+//		 UploadOperate.doUploadHtmlFileListToLinux();
 
 		/** 【下载jar】 */
 		// DownloadOperator.download(Base.linux_lib_Path, Base.dao_jar,
@@ -36,6 +41,11 @@ public class T5_upload_to_linux {
 		// Base.service_jar);
 		// UploadOperate.uploadWarToLinux(Base.linux_idongri_Path,
 		// Base.local_platform_war_path);
+		
+		//上传文件夹
+		UploadOperate.uploadDirToLinux(Base.linux_webapp_Path, new File(Base.local_platform_webapp_Path+"html/card"));
+		
+		Base.closeChannel();
 	}
 
 	/** 【移动文件 】 */

@@ -43,6 +43,32 @@ public class UploadOperate extends FindOperator {
 		}
 	}
 	/**
+	 * 上传war
+	 * @param dir
+	 * @param file
+	 */
+	public static void uploadDirToLinux(String baseDir,File file) {
+		String name1 = baseDir+file.getAbsolutePath().replace(Base.local_platform_webapp_Path, "").replaceAll("\\\\", "/");
+		String path1 = name1.substring(0, name1.lastIndexOf("/"));
+//		System.out.println("path1 : "+path1+" dir:"+file.isDirectory());
+		if(file.isDirectory()){
+			_mkDir(path1);
+			for (File f : file.listFiles()) {
+				String name = baseDir+f.getAbsolutePath().replace(Base.local_platform_webapp_Path, "").replaceAll("\\\\", "/");
+				String path = name.substring(0, name.lastIndexOf("/"));
+//				System.out.println("path : "+path+" dir:"+f.isDirectory());
+				_mkDir(path);
+				if(f.isDirectory()){
+					uploadDirToLinux(baseDir, f);
+				}else{
+					uploadToLinux(path, f.getAbsolutePath());
+				}
+			}
+		}else{
+			uploadToLinux(path1, file.getAbsolutePath());
+		}
+	}
+	/**
 	 * 上传文件
 	 * @param dir
 	 * @param file
@@ -51,12 +77,10 @@ public class UploadOperate extends FindOperator {
 		loopServer((session) -> {
 			try {
 				_uploadToLinux(dir,file,session);
-				System.out.println("finished");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		});
-		System.out.println("finished");
 	}
 	/**
 	 * 读取文件中需要上传的文件  上传到linux

@@ -3,19 +3,44 @@ package com.linux.ftp;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
+import org.apache.oro.text.regex.MalformedPatternException;
+
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.ChannelShell;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
+import com.linux.ftp.Shell.localUserInfo;
 
-/**
- * @author YangHua 转载请注明出处：http://www.xfok.net/2009/10/124485.html
- */
+import expect4j.Closure;
+import expect4j.Expect4j;
+import expect4j.ExpectState;
+import expect4j.matches.EofMatch;
+import expect4j.matches.Match;
+import expect4j.matches.RegExpMatch;
+import expect4j.matches.TimeoutMatch;
+
+
 public class SFTPReal {
+	private static Logger log = Logger.getLogger(SFTPReal.class);
+	private Session session;
+	private Expect4j expect = null;
+	private ChannelShell channel;
+	private StringBuffer buffer = new StringBuffer();
+	private static final long defaultTimeOut = 1000;
+	public static final int COMMAND_EXECUTION_SUCCESS_OPCODE = -2;
+	public static String[] errorMsg = new String[] { "could not acquire the config lock " };
+	// 正则匹配，用于处理服务器返回的结果
+	public static String[] linuxPromptRegEx = new String[] { "~]#", "~#", "#", ":~#", "/$", ">" };
 
 	public static void main(String[] args) {
 		SFTPReal sf = new SFTPReal();
@@ -24,10 +49,10 @@ public class SFTPReal {
 		String username = "idongri";
 		String password = "idongri";
 		String directory = "/home/idongri/";
-		String uploadFile = "e:\\tmp\\a.txt";
+//		String uploadFile = "e:\\tmp\\a.txt";
 		String downloadFile = "mysql-bin.log";
 		String saveFile = "e:\\tmp\\download.txt";
-		String deleteFile = "delete.txt";
+//		String deleteFile = "delete.txt";
 		ChannelSftp sftp = sf.connect(host, port, username, password);
 		// sf.upload(directory, uploadFile, sftp);
 		sf.download(directory, downloadFile, saveFile, sftp);
@@ -56,6 +81,7 @@ public class SFTPReal {
 			JSch jsch = new JSch();
 			jsch.getSession(username, host, port);
 			Session sshSession = jsch.getSession(username, host, port);
+			session = sshSession;
 			System.out.println("Session created.");
 			sshSession.setPassword(password);
 			Properties sshConfig = new Properties();
@@ -72,6 +98,21 @@ public class SFTPReal {
 			e.printStackTrace();
 		}
 		return sftp;
+	}
+
+	// 获得Expect4j对象，该对用可以往SSH发送命令请求
+	private Expect4j getExpect() {
+		try {
+			channel = (ChannelShell) session.openChannel("shell");
+			Expect4j expect = new Expect4j(channel.getInputStream(), channel.getOutputStream());
+			channel.connect();
+			log.info(String.format("Logging shell successfully!"));
+			return expect;
+		} catch (Exception ex) {
+			log.error("failed,please check your username and password!");
+			ex.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -140,5 +181,25 @@ public class SFTPReal {
 		return sftp.ls(directory);
 	}
 
-	
+	/**
+	 * 执行配置命令
+	 * 
+	 * @param commands
+	 *            要执行的命令，为字符数组
+	 * @return 执行是否成功
+	 */
+	public void executeCommand(String command) {
+		if (expect == null) {
+			expect = getExpect();
+		}
+		log.debug("----------Running commands are listed as follows:----------");
+		log.debug(command);
+		try {
+			expect.send(command);
+			expect.send("\r");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		log.debug("----------End----------");
+	}
 }

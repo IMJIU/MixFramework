@@ -206,8 +206,8 @@ public class TestUrl extends HttpTestBase {
 		//义诊列表
 //		result = exe(cn,open,"/api/open/getPromotionServiceList?terminal=1&versionCode=3",get);
 		
-		result = exe(cn,open,"/api/open/getFirst?useType=2&terminal=1&pageNo=1&pageSize=20&versionCode=213&mobileType=1&systemType=ios&imeiCode=123&versionName=123",get);
-		
+//		result = exe(cn,open,"/api/open/getFirst?useType=2&terminal=1&pageNo=1&pageSize=20&versionCode=213&mobileType=1&systemType=ios&imeiCode=123&versionName=123",get);
+//		result = exe(local,open,"/api/open/createServiceOrderV36?customerPhone=13645041346",get);
 		//获取支持药状
 //		result = exe(net,open,"/api/open/getSupportDrugType?terminal=1&versionCode=3",get);
 		
@@ -223,6 +223,9 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(local,open,"/api/open/getValueByToken",toMap2("token=^\"6^$:U/F)=*H~7!;+<^T]&<T,G[H[%9ZQU]_^A-:.I&6'>&&terminal=1&&versionCode=3"));
 		
 //		result = exe(local,open,"/api/open/addFollowUpCustomer",toMap("token=^\"6^$:U/F)=*H~7!;+<^T]&<T,G[H[%9ZQU]_^A-:.I&6'>&&phoneNumber=18559229820&&name=jj"));
+		
+		//医生活动-收件
+		result = exe(local,open,"/api/open/addReceiveAddress?doctorId=13&style=样式1&address=street01",post);
 		
 	}
 

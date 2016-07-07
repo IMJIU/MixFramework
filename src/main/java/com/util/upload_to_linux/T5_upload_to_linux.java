@@ -46,12 +46,12 @@ public class T5_upload_to_linux {
 		
 		/** 【上传文件夹】*/
 		UploadOperate.uploadDirToLinux(Base.linux_webapp_Path, new File(Base.local_platform_webapp_Path + "html/card"));
-		Base.closeChannel();
+		Base.closeSession();
 	}
 
 	@After
 	public void close() {
-		Base.closeChannel();
+		Base.closeSession();
 	}
 
 	/** 【移动文件 】 */

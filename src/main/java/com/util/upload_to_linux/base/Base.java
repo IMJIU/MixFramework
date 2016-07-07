@@ -9,8 +9,10 @@ import com.linux.ftp.SSHConnector;
 
 public class Base {
 
-	public static String server = ".net";
+	public static String server = ".cn";
 	public static String findType = "html";// class | html
+
+	public static boolean isThread = false;
 
 	public final static String svn_path = "d:\\svn_code\\idongriV3\\";
 	public final static String moveToDir = "d:\\target\\";
@@ -49,23 +51,17 @@ public class Base {
 		connector.executeCommand(host, command);
 	}
 
-	static void _uploadToLinux(String dir, String file, ChannelSftp session) throws Exception {
+	static void _uploadToLinux(String dir, String file, ChannelSftp ftpChannel) throws Exception {
 		System.out.print("【dir】:" + dir + "\n【file】:" + file);
-		connector.upload(dir, file, session);
-		// session.getSession().disconnect();
-		// session.disconnect();
-		// session.exit();
+		connector.upload(dir, file, ftpChannel);
 		System.out.println("->upload over");
 	}
 
 	static HashSet<String> set = new HashSet<String>();
 
-	static void _downloadFromLinux(String dir, String file, String to, ChannelSftp session) throws Exception {
+	static void _downloadFromLinux(String dir, String file, String to, ChannelSftp ftpChannel) throws Exception {
 		System.out.print("【from】:" + dir + file + "\n【to】:" + to);
-		connector.download(dir, file, to, session);
-		session.getSession().disconnect();
-		// session.disconnect();
-		// session.exit();
+		connector.download(dir, file, to, ftpChannel);
 		System.out.println("->download over");
 	}
 
@@ -73,14 +69,17 @@ public class Base {
 		if (server.equals(".net")) {
 			callback.process(s187());
 		} else {
-			threadCall(callback, s162());
-			threadCall(callback, s112());
-			threadCall(callback, s236());
+			threadCall(callback, s162(), isThread);
+			threadCall(callback, s112(), isThread);
+			threadCall(callback, s236(), isThread);
 		}
 	}
 
-	private static void threadCall(Process<ChannelSftp> callback, ChannelSftp session) {
-		new Thread(() -> callback.process(session)).start();
+	private static void threadCall(Process<ChannelSftp> callback, ChannelSftp ftpChannel, boolean isThread) {
+		if (isThread)
+			new Thread(() -> callback.process(ftpChannel)).start();
+		else
+			callback.process(ftpChannel);
 	}
 
 	public static ChannelSftp s112() {

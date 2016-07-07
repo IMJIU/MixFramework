@@ -11,8 +11,9 @@ public class T5_upload_to_linux {
 
 	static {
 		// 配置
-		Base.server = ".net";
+		Base.server = ".cn";
 		Base.findType = "class";// class | html
+		Base.isThread = false;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -97,6 +98,8 @@ public class T5_upload_to_linux {
 	/** 【上传文件夹】 */
 	@Test
 	public void t7_upload_dir() throws Exception {
-		UploadOperate.uploadDirToLinux(Base.linux_webapp_Path, new File(Base.local_platform_webapp_Path + "html/card"));
+//		UploadOperate.uploadDirToLinux(Base.linux_webapp_Path, new File(Base.local_platform_webapp_Path + "html/card"));
+		UploadOperate.uploadDirToLinux(Base.linux_webapp_Path, new File(Base.local_platform_webapp_Path + "html/activity"),"decocti\\S+");
+		UploadOperate.uploadDirToLinux(Base.linux_webapp_Path, new File(Base.local_platform_webapp_Path + "images/activity"),"decocti\\S+");
 	}
 }

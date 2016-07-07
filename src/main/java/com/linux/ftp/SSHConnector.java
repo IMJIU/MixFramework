@@ -13,7 +13,15 @@ import com.jcraft.jsch.SftpException;
 import expect4j.Expect4j;
 
 public class SSHConnector {
+	
+	private Map<String, Session> sessionMap = new HashMap<>();
+	
+	private Map<String, ChannelSftp> sftpChannelMap = new HashMap<>();
+	
+	private Map<String, ChannelShell> shellChannelMap = new HashMap<>();
+
 	private static Logger log = Logger.getLogger(SSHConnector.class);
+	
 	// private Session session;
 	// private Expect4j expect = null;
 	// private ChannelShell channel;
@@ -49,10 +57,6 @@ public class SSHConnector {
 			e.printStackTrace();
 		}
 	}
-
-	private Map<String, Session> sessionMap = new HashMap<>();
-	private Map<String, ChannelSftp> sftpChannelMap = new HashMap<>();
-	private Map<String, ChannelShell> shellChannelMap = new HashMap<>();
 
 	public Session getSession(String host) {
 		return sessionMap.get(host);

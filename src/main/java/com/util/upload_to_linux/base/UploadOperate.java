@@ -10,7 +10,8 @@ import java.util.function.Predicate;
 
 public class UploadOperate extends FindOperator {
 	/**
-	 * 读取文件中需要上传的文件  上传到linux
+	 * 读取文件中需要上传的文件 上传到linux
+	 * 
 	 * @param classFilePath
 	 */
 	public static void doUploadClass(String classFilePath) {
@@ -18,7 +19,7 @@ public class UploadOperate extends FindOperator {
 			try {
 				String tmpFile = classFilePath.substring(classFilePath.indexOf("classes") + 8);
 				String tmpDir = tmpFile.substring(0, tmpFile.lastIndexOf("\\")).replaceAll("\\\\", "/");
-				_uploadToLinux(linux_class_Path + tmpDir, classFilePath,channelSftp);
+				_uploadToLinux(linux_class_Path + tmpDir, classFilePath, channelSftp);
 				System.out.println("finished");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -26,12 +27,14 @@ public class UploadOperate extends FindOperator {
 		});
 		System.out.println("finished");
 	}
+
 	/**
 	 * 上传war
+	 * 
 	 * @param dir
 	 * @param file
 	 */
-	public static void uploadWarToLinux(String dir,String file) {
+	public static void uploadWarToLinux(String dir, String file) {
 		System.out.println(file);
 		try {
 			String war = Files.list(Paths.get(file)).filter(f -> f.getFileName().toString().endsWith("war")).findFirst().get().toString();
@@ -42,14 +45,16 @@ public class UploadOperate extends FindOperator {
 			e.printStackTrace();
 		}
 	}
+
 	static void _mkDir(String dir) {
 		loopServer((channelSftp) -> {
 			try {
-				if (!set.contains(dir)) {
+				String host = channelSftp.getSession().getHost();
+				if (!set.contains(host + dir)) {
 					System.out.print("mkdir " + dir);
-					executeCommand(channelSftp.getSession().getHost(),"mkdir " + dir);
+					executeCommand(host, "mkdir " + dir);
 					System.out.println("->mk finished");
-					set.add(dir);
+					set.add(host + dir);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -57,58 +62,65 @@ public class UploadOperate extends FindOperator {
 		});
 
 	}
+
+	public static void uploadDirToLinux(String baseDir, File file) {
+		uploadDirToLinux(baseDir, file, null);
+	}
+
 	/**
 	 * 上传war
+	 * 
 	 * @param dir
 	 * @param file
 	 */
-	public static void uploadDirToLinux(String baseDir,File file) {
-		String name1 = baseDir+file.getAbsolutePath().replace(Base.local_platform_webapp_Path, "").replaceAll("\\\\", "/");
+	public static void uploadDirToLinux(String baseDir, File file, String regex) {
+		String name1 = baseDir + file.getAbsolutePath().replace(Base.local_platform_webapp_Path, "").replaceAll("\\\\", "/");
 		String path1 = name1.substring(0, name1.lastIndexOf("/"));
-//		System.out.println("path1 : "+path1+" dir:"+file.isDirectory());
-		if(file.isDirectory()){
+		if (file.isDirectory()) {
 			_mkDir(path1);
 			for (File f : file.listFiles()) {
-				String name = baseDir+f.getAbsolutePath().replace(Base.local_platform_webapp_Path, "").replaceAll("\\\\", "/");
+				String name = baseDir + f.getAbsolutePath().replace(Base.local_platform_webapp_Path, "").replaceAll("\\\\", "/");
 				String path = name.substring(0, name.lastIndexOf("/"));
-//				System.out.println("path : "+path+" dir:"+f.isDirectory());
 				_mkDir(path);
-				if(f.isDirectory()){
-					uploadDirToLinux(baseDir, f);
-				}else{
+				if (f.isDirectory()) {
+					uploadDirToLinux(baseDir, f, regex);
+				} else if (regex != null && f.getName().matches(regex)) {
 					uploadToLinux(path, f.getAbsolutePath());
 				}
 			}
-		}else{
+		} else {
 			uploadToLinux(path1, file.getAbsolutePath());
 		}
 	}
+
 	/**
 	 * 上传文件
+	 * 
 	 * @param dir
 	 * @param file
 	 */
-	public static void uploadToLinux(String dir,String file) {
+	public static void uploadToLinux(String dir, String file) {
 		loopServer((channelSftp) -> {
 			try {
-				_uploadToLinux(dir,file,channelSftp);
+				_uploadToLinux(dir, file, channelSftp);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		});
 	}
+
 	/**
-	 * 读取文件中需要上传的文件  上传到linux
+	 * 读取文件中需要上传的文件 上传到linux
 	 */
 	public static void doUploadHtmlFileListToLinux() {
-		loopServer((session) -> {
+		loopServer((channelSftp) -> {
 			try {
 				String path = null;
 				for (String filePath : Files.readAllLines(Paths.get(uploadHtmlFilePath))) {
 					path = filePath.substring(filePath.indexOf("webapp") + 6).replaceAll("\\\\", "/");
 					path = path.substring(0, path.lastIndexOf("/"));
 					System.out.println(linux_webapp_Path + path);
-					_uploadToLinux(linux_webapp_Path + path, filePath,session);
+					_uploadToLinux(linux_webapp_Path + path, filePath, channelSftp);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -116,20 +128,23 @@ public class UploadOperate extends FindOperator {
 		});
 		System.out.println("finished");
 	}
+
 	private static FileOutputStream uploadHtmlListOutput = null;
+
 	/**
 	 * 搜索需要上传的html
+	 * 
 	 * @param file
 	 * @return
 	 */
 	public static void findUploadHtmlWriteToFile(String file) {
 		try {
 			System.out.println(uploadHtmlFilePath);
-			System.out.println("i get!"+file);
+			System.out.println("i get!" + file);
 			try {
-				if(uploadHtmlListOutput == null)
+				if (uploadHtmlListOutput == null)
 					uploadHtmlListOutput = new FileOutputStream(uploadHtmlFilePath);
-				uploadHtmlListOutput.write((file+"\n").getBytes("utf-8"));
+				uploadHtmlListOutput.write((file + "\n").getBytes("utf-8"));
 				uploadHtmlListOutput.flush();
 			} catch (Exception e) {
 				e.printStackTrace();

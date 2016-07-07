@@ -5,7 +5,7 @@ import java.util.HashSet;
 import com.book.jdk18.Process;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
-import com.linux.ftp.SFTPReal;
+import com.linux.ftp.SSHConnector;
 
 public class Base {
 
@@ -42,16 +42,16 @@ public class Base {
 	public static final String host236 = "121.40.224.236";
 	public static final String host187 = "121.40.150.187";
 
-	private static SFTPReal sftpReal = new SFTPReal();
+	private static SSHConnector connector = new SSHConnector();
 	static ChannelSftp channel;
 
 	public static void executeCommand(String host, String command) {
-		sftpReal.executeCommand(host, command);
+		connector.executeCommand(host, command);
 	}
 
 	static void _uploadToLinux(String dir, String file, ChannelSftp session) throws Exception {
 		System.out.print("【dir】:" + dir + "\n【file】:" + file);
-		sftpReal.upload(dir, file, session);
+		connector.upload(dir, file, session);
 		// session.getSession().disconnect();
 		// session.disconnect();
 		// session.exit();
@@ -62,7 +62,7 @@ public class Base {
 
 	static void _downloadFromLinux(String dir, String file, String to, ChannelSftp session) throws Exception {
 		System.out.print("【from】:" + dir + file + "\n【to】:" + to);
-		sftpReal.download(dir, file, to, session);
+		connector.download(dir, file, to, session);
 		session.getSession().disconnect();
 		// session.disconnect();
 		// session.exit();
@@ -84,32 +84,32 @@ public class Base {
 	}
 
 	public static ChannelSftp s112() {
-		if (sftpReal.getSftpChannel(host112) == null)
-			sftpReal.connect(host112, 22, "root", "DRny2015");
-		return sftpReal.getSftpChannel(host112);
+		if (connector.getSftpChannel(host112) == null)
+			connector.connect(host112, 22, "root", "DRny2015");
+		return connector.getSftpChannel(host112);
 	}
 
 	public static ChannelSftp s236() {
-		if (sftpReal.getSftpChannel(host236) == null)
-			sftpReal.connect(host236, 22, "root", "DRny2015");
-		return sftpReal.getSftpChannel(host236);
+		if (connector.getSftpChannel(host236) == null)
+			connector.connect(host236, 22, "root", "DRny2015");
+		return connector.getSftpChannel(host236);
 	}
 
 	public static ChannelSftp s162() {
-		if (sftpReal.getSftpChannel(host162) == null)
-			sftpReal.connect(host162, 22, "root", "Idongri2016");
-		return sftpReal.getSftpChannel(host162);
+		if (connector.getSftpChannel(host162) == null)
+			connector.connect(host162, 22, "root", "Idongri2016");
+		return connector.getSftpChannel(host162);
 	}
 
 	public static ChannelSftp s187() {
-		if (sftpReal.getSftpChannel(host187) == null)
-			sftpReal.connect(host187, 22, "root", "Idongri2015");
-		return sftpReal.getSftpChannel(host187);
+		if (connector.getSftpChannel(host187) == null)
+			connector.connect(host187, 22, "root", "Idongri2015");
+		return connector.getSftpChannel(host187);
 	}
 
 	public static void closeSession() {
-		for (String server : sftpReal.getSessionMap().keySet()) {
-			sftpReal.getSession(server).disconnect();
+		for (String server : connector.getSessionMap().keySet()) {
+			connector.getSession(server).disconnect();
 		}
 	}
 

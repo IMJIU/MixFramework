@@ -12,8 +12,8 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 import expect4j.Expect4j;
 
-public class SFTPReal {
-	private static Logger log = Logger.getLogger(SFTPReal.class);
+public class SSHConnector {
+	private static Logger log = Logger.getLogger(SSHConnector.class);
 	// private Session session;
 	// private Expect4j expect = null;
 	// private ChannelShell channel;
@@ -27,7 +27,7 @@ public class SFTPReal {
 	// "#", ":~#", "/$", ">" };
 
 	public static void main(String[] args) {
-		SFTPReal sf = new SFTPReal();
+		SSHConnector sf = new SSHConnector();
 		String host = "192.168.99.166";
 		int port = 22;
 		String username = "idongri";

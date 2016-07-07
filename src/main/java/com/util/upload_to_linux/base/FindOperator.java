@@ -6,7 +6,7 @@ import com.book.jdk18.Func;
 import com.book.jdk18.Process;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
-import com.linux.ftp.SFTPReal;
+import com.linux.ftp.SSHConnector;
 
 public class FindOperator extends Base {
 	/**

@@ -11,9 +11,9 @@ public class T5_upload_to_linux {
 
 	static {
 		// 配置
-		Base.server = ".cn";
-		Base.findType = "class";// class | html
-		Base.isThread = false;
+		BaseContext.server = ".cn";
+		BaseContext.findType = "class";// class | html
+		BaseContext.isThread = false;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -46,13 +46,13 @@ public class T5_upload_to_linux {
 		// Base.local_platform_war_path);
 		
 		/** 【上传文件夹】*/
-		UploadOperate.uploadDirToLinux(Base.linux_webapp_Path, new File(Base.local_platform_webapp_Path + "html/card"));
-		Base.closeSession();
+		UploadOperate.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_platform_webapp_Path + "html/card"));
+		BaseContext.closeSession();
 	}
 
 	@After
 	public void close() {
-		Base.closeSession();
+		BaseContext.closeSession();
 	}
 
 	/** 【移动文件 】 */
@@ -82,15 +82,15 @@ public class T5_upload_to_linux {
 	/** 【下载jar】 */
 	@Test
 	public void t5_download() throws Exception {
-		DownloadOperator.download(Base.linux_lib_Path, Base.dao_jar, Base.moveToDir);
-		DownloadOperator.download(Base.linux_lib_Path, Base.service_jar, Base.moveToDir);
+		DownloadOperator.download(BaseContext.linux_lib_Path, BaseContext.dao_jar, BaseContext.moveToDir);
+		DownloadOperator.download(BaseContext.linux_lib_Path, BaseContext.service_jar, BaseContext.moveToDir);
 	}
 
 	/** 【上传jar】 */
 	@Test
 	public void t6_upload() throws Exception {
-		UploadOperate.uploadToLinux(Base.linux_lib_Path, Base.moveToDir + Base.dao_jar);
-		UploadOperate.uploadToLinux(Base.linux_lib_Path, Base.moveToDir + Base.service_jar);
+		UploadOperate.uploadToLinux(BaseContext.linux_lib_Path, BaseContext.moveToDir + BaseContext.dao_jar);
+		UploadOperate.uploadToLinux(BaseContext.linux_lib_Path, BaseContext.moveToDir + BaseContext.service_jar);
 		// UploadOperate.uploadWarToLinux(Base.linux_idongri_Path,
 		// Base.local_platform_war_path);
 	}
@@ -99,7 +99,7 @@ public class T5_upload_to_linux {
 	@Test
 	public void t7_upload_dir() throws Exception {
 //		UploadOperate.uploadDirToLinux(Base.linux_webapp_Path, new File(Base.local_platform_webapp_Path + "html/card"));
-		UploadOperate.uploadDirToLinux(Base.linux_webapp_Path, new File(Base.local_platform_webapp_Path + "html/activity"),"decocti\\S+");
-		UploadOperate.uploadDirToLinux(Base.linux_webapp_Path, new File(Base.local_platform_webapp_Path + "images/activity"),"decocti\\S+");
+		UploadOperate.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_platform_webapp_Path + "html/activity"),"decocti\\S+");
+		UploadOperate.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_platform_webapp_Path + "images/activity"),"decocti\\S+");
 	}
 }

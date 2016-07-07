@@ -8,7 +8,7 @@ import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
 import com.linux.ftp.SSHConnector;
 
-public class FindOperator extends Base {
+public class FindOperator extends BaseContext {
 	/**
 	 * 处理文件入口-实调用搜索，回调处理
 	 * 

@@ -7,7 +7,7 @@ import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
 import com.linux.ftp.SSHConnector;
 
-public class Base {
+public class BaseContext {
 
 	public static String server = ".cn";
 	public static String findType = "html";// class | html

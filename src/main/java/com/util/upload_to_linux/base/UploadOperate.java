@@ -74,12 +74,12 @@ public class UploadOperate extends FindOperator {
 	 * @param file
 	 */
 	public static void uploadDirToLinux(String baseDir, File file, String regex) {
-		String name1 = baseDir + file.getAbsolutePath().replace(Base.local_platform_webapp_Path, "").replaceAll("\\\\", "/");
+		String name1 = baseDir + file.getAbsolutePath().replace(BaseContext.local_platform_webapp_Path, "").replaceAll("\\\\", "/");
 		String path1 = name1.substring(0, name1.lastIndexOf("/"));
 		if (file.isDirectory()) {
 			_mkDir(path1);
 			for (File f : file.listFiles()) {
-				String name = baseDir + f.getAbsolutePath().replace(Base.local_platform_webapp_Path, "").replaceAll("\\\\", "/");
+				String name = baseDir + f.getAbsolutePath().replace(BaseContext.local_platform_webapp_Path, "").replaceAll("\\\\", "/");
 				String path = name.substring(0, name.lastIndexOf("/"));
 				_mkDir(path);
 				if (f.isDirectory()) {

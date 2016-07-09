@@ -22,7 +22,7 @@ public class T06_getChildren_Async implements Watcher {
 		System.out.println(zookeeper.getState());
 		connectedSemaphore.await();
 		
-		System.out.println("zookeeper session established!");
+		System.out.println("zookeeper session established!"); 
 		zookeeper.create(path, "".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
 		
 		zookeeper.create(path+"/c1", "".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);

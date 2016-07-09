@@ -21,7 +21,7 @@ public class T04_CreateAPIAsync implements Watcher {
 		System.out.println("zookeeper session established!");
 		IStringCallback b = new IStringCallback();
 		zookeeper.create("/t01-ephemeral", "".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL, b ,"dfasfdas");
-		
+		Thread.sleep(Integer.MAX_VALUE);
 	}
 
 	@Override

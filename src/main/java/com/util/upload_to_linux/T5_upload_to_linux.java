@@ -11,8 +11,8 @@ public class T5_upload_to_linux {
 
 	static {
 		// 配置
-		BaseContext.server = ".cn";
-		BaseContext.findType = "class";// class | html
+		BaseContext.server = ".net";
+		BaseContext.findType = "html";// class | html
 		BaseContext.isThread = false;
 	}
 

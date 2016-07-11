@@ -16,8 +16,8 @@ public class TestUrl extends HttpTestBase {
 	static void login() throws Exception {
 		if (userType == 2) {// 医生 11111111115 12088888888 12988888888 13159637313 13084935126 13793899137 13645041346
 			exe(http + "/api/open/doctorLogin2?terminal=1&versionCode=1&phoneNumber=13645041346&password=123456", GET);
-		} else {// 病人18650450008 13645041346 13011111111 
-			exe(http + "/api/open/customerLogin2?phoneNumber=13645041346&password=123456&terminal=12&versionCode=10&version=12", GET);
+		} else {// 病人18650450008 13645041346 13011111111 13099999999
+			exe(http + "/api/open/customerLogin2?phoneNumber=13099999999&password=123456&terminal=12&versionCode=10&version=12", GET);
 		}
 	}
 	
@@ -40,7 +40,10 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(cn,customer,"/api/customer/getDrugsPrice?terminal=1&versionCode=3003&versionName=3.0&systemType=9&mobileType=x86&imeiCode=245&drugs=[{drugId:4001,amount:100.0},{drugId:4002,amount:200.0}]",post);
 		
 		//开方详情
-		exe(net,customer,"/api/customer/getSolutionDetail?solutionId=729", GET);
+//		exe(net,customer,"/api/customer/getSolutionDetail?solutionId=729", GET);
+		
+		//开方详情
+		exe(net,customer,"/api/customer/getLatestDrugWeight", GET);
 		
 		// 追加评分
 //		result = exe(local,customer,"/api/customer/publishAppendScore?commentId=556&appendScore=4",get);

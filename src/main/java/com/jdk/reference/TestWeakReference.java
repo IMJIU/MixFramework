@@ -1,19 +1,27 @@
 package com.jdk.reference;
 
+import java.lang.ref.PhantomReference;
+import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import expect4j.ExpectEmulation.SleepCommand;
+
 /**
  * @author wison
  */
 public class TestWeakReference {
-	public static void main(String[] args) {
+	private static ReferenceQueue<VeryBig> rq = new ReferenceQueue<VeryBig>();
+	
+	
+	public static void main(String[] args) throws Exception{
 		// t1();
 		// t2();
-//		t3();
-		t4();
+//		t3_WeakReference();
+//		t4_SoftReference();
+		t5_PhantomReference();
 	}
 
 	private static void t1() {
@@ -51,7 +59,7 @@ public class TestWeakReference {
 		}
 	}
 
-	private static void t3() {
+	private static void t3_WeakReference() {
 		List<WeakReference<Car>> list = new ArrayList<>();
 		for (int i = 0; i < 100; i++) {
 			Car car = new Car(i, "silver");
@@ -63,17 +71,13 @@ public class TestWeakReference {
 		while (true) {
 			if (list.size() > 0) {
 				System.out.println(list.size()+"-"+list.get(0).get());
-//				for (WeakReference<Car> weakReference : list) {
-//					System.out.println(weakReference);
-//					System.out.println(weakReference.get());
-//				}
 			} else {
 				System.out.println("collected.");
 				break;
 			}
 		}
 	}
-	private static void t4() {
+	private static void t4_SoftReference() {
 		List<SoftReference<Car>> list = new ArrayList<>();
 		for (int i = 0; i < 100; i++) {
 			Car car = new Car(i, "silver");
@@ -84,18 +88,24 @@ public class TestWeakReference {
 
 		while (true) {
 			if (list.size() > 0) {
-				System.out.println(list.size()+"-"+list.get(0).get());
-//				for (WeakReference<Car> weakReference : list) {
-//					System.out.println(weakReference);
-//					System.out.println(weakReference.get());
-//				}
+				System.out.println(list.size()+"\t"+list.get(list.size()-1).get());
 			} else {
 				System.out.println("collected.");
 				break;
 			}
 		}
 	}
-	
+	private static void t5_PhantomReference() throws InterruptedException {
+		List<PhantomReference<Car>> list = new ArrayList<>();
+		for (int i = 0; i < 100; i++) {
+			Car car = new Car(i, "silver");
+			PhantomReference<Car> weakCar = new PhantomReference(car, rq);
+			list.add(weakCar);
+			System.out.println(list.get(i));;
+			System.out.println(rq.poll());
+			System.out.println("============");
+		}
+	}
 }
 class Car {
 	int _n = 0;

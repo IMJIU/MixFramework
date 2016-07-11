@@ -57,14 +57,14 @@ public class CanonicalMapping {
 		}
 		System.gc();
 		System.out.println("======="+map.size());
-//		TreeMap<String, String> tree =  new TreeMap<>();
-//		for (Key key : map.keySet()) {
-//	        tree.put(key.toString(),map.get(key).toString());
-//        }
+		TreeMap<String, String> tree =  new TreeMap<>();
+		for (Key key : map.keySet()) {
+	        tree.put(key.toString(),map.get(key).toString());
+        }
 //		for (String key : tree.keySet()) {
-////	        System.out.println(key);
+//	        System.out.println(key);
 //        }
-//		System.out.println(map.size());
-//		System.out.println(tree.size());
+		System.out.println("MAP:"+map.size());
+		System.out.println("TREE:"+tree.size());
 	}
 } /* (Execute to see output) */// :~

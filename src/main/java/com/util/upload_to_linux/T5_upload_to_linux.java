@@ -89,16 +89,15 @@ public class T5_upload_to_linux {
 	/** 【上传jar】 */
 	@Test
 	public void t6_upload() throws Exception {
-		UploadOperate.uploadToLinux(BaseContext.linux_lib_Path, BaseContext.moveToDir + BaseContext.dao_jar);
-		UploadOperate.uploadToLinux(BaseContext.linux_lib_Path, BaseContext.moveToDir + BaseContext.service_jar);
-		// UploadOperate.uploadWarToLinux(Base.linux_idongri_Path,
-		// Base.local_platform_war_path);
+//		UploadOperate.uploadToLinux(BaseContext.linux_lib_Path, BaseContext.moveToDir + BaseContext.dao_jar);
+//		UploadOperate.uploadToLinux(BaseContext.linux_lib_Path, BaseContext.moveToDir + BaseContext.service_jar);
+		UploadOperate.uploadWarToLinux(BaseContext.linux_idongri_Path, BaseContext.local_platform_war_path);
 	}
 
 	/** 【上传文件夹】 */
 	@Test
 	public void t7_upload_dir() throws Exception {
-//		UploadOperate.uploadDirToLinux(Base.linux_webapp_Path, new File(Base.local_platform_webapp_Path + "html/card"));
+//		UploadOperate.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_platform_webapp_Path + "html/card"));
 		UploadOperate.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_platform_webapp_Path + "html/activity"),"decocti\\S+");
 		UploadOperate.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_platform_webapp_Path + "images/activity"),"decocti\\S+");
 	}

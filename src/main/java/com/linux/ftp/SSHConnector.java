@@ -10,18 +10,20 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
+import com.jcraft.jsch.SftpProgressMonitor;
+
 import expect4j.Expect4j;
 
 public class SSHConnector {
-	
+
 	private Map<String, Session> sessionMap = new HashMap<>();
-	
+
 	private Map<String, ChannelSftp> sftpChannelMap = new HashMap<>();
-	
+
 	private Map<String, ChannelShell> shellChannelMap = new HashMap<>();
 
 	private static Logger log = Logger.getLogger(SSHConnector.class);
-	
+
 	// private Session session;
 	// private Expect4j expect = null;
 	// private ChannelShell channel;
@@ -142,7 +144,36 @@ public class SSHConnector {
 		try {
 			sftp.cd(directory);
 			File file = new File(uploadFile);
-			sftp.put(new FileInputStream(file), file.getName());
+			long total = file.length();
+			SftpProgressMonitor m = new SftpProgressMonitor() {
+				long process = 0l;
+				volatile boolean go = true;
+				volatile int cnt = 0;
+				@Override
+				public void init(int op, String src, String dest, long max) {
+					System.out.println("op:" + op);
+					System.out.println("src:" + src);
+					System.out.println("dest:" + dest);
+					System.out.println("max:" + max);
+				}
+
+				@Override
+				public void end() {
+					go = false;
+					System.out.println((Math.round(((double)process/total)*100))+"%");
+				}
+
+				@Override
+				public boolean count(long count) {
+					cnt+=1;
+					process += count;
+					if(cnt%40==0){
+						System.out.println((Math.round(((double)process/total)*100))+"%");
+					}
+					return go;
+				}
+			};
+			sftp.put(new FileInputStream(file), file.getName(), m);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

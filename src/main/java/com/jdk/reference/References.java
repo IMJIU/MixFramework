@@ -39,7 +39,7 @@ public class References {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		int size = 10;
 		// Or, choose size via the command line:
 		if (args.length > 0)
@@ -70,6 +70,7 @@ public class References {
 			System.out.println("Just created: " + pa.getLast());
 			checkQueue();
 		}
+		Thread.sleep(3000);
 	}
 } /* (Execute to see output) */// :~
 /**

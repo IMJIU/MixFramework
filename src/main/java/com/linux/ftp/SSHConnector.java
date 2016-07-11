@@ -151,10 +151,10 @@ public class SSHConnector {
 				volatile int cnt = 0;
 				@Override
 				public void init(int op, String src, String dest, long max) {
-					System.out.println("op:" + op);
-					System.out.println("src:" + src);
-					System.out.println("dest:" + dest);
-					System.out.println("max:" + max);
+//					System.out.println("op:" + op);
+//					System.out.println("src:" + src);
+//					System.out.println("dest:" + dest);
+//					System.out.println("max:" + max);
 				}
 
 				@Override

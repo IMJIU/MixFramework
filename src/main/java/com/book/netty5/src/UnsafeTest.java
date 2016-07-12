@@ -1,4 +1,4 @@
-package com.framework.netty5.src;
+package com.book.netty5.src;
 
 import io.netty.buffer.AbstractReferenceCountedByteBuf;
 import io.netty.util.internal.PlatformDependent;
@@ -101,3 +101,4 @@ public class UnsafeTest{
 	}
 
 }
+			

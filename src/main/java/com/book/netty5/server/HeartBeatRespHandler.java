@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.framework.netty5.server;
+package com.book.netty5.server;
 
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
-import com.framework.netty5.MessageType;
-import com.framework.netty5.struct.Header;
-import com.framework.netty5.struct.NettyMessage;
+import com.book.netty5.MessageType;
+import com.book.netty5.struct.Header;
+import com.book.netty5.struct.NettyMessage;
 
 /**
  * @author Lilinfeng
@@ -29,7 +29,6 @@ import com.framework.netty5.struct.NettyMessage;
  */
 public class HeartBeatRespHandler extends ChannelHandlerAdapter {
 
-	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		NettyMessage message = (NettyMessage) msg;
 		// 返回心跳应答消息

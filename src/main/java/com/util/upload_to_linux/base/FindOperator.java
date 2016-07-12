@@ -10,6 +10,22 @@ import com.linux.ftp.SSHConnector;
 
 public class FindOperator extends BaseContext {
 	/**
+	 * 迭代处理文件
+	 * 
+	 * @param fileName
+	 * @param func
+	 * @throws Exception
+	 */
+	public  void localProcessFile(File dir, Process<File> func) throws Exception {
+		for (File f : dir.listFiles()) {
+			if (f.isDirectory()) {
+				localProcessFile(f, func);
+			}else{
+				func.process(f);
+			}
+		}
+	}
+	/**
 	 * 处理文件入口-实调用搜索，回调处理
 	 * 
 	 * @param func

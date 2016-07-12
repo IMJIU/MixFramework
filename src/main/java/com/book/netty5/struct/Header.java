@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.framework.netty5.struct;
+package com.book.netty5.struct;
 
 import java.util.HashMap;
 import java.util.Map;

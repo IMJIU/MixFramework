@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.framework.netty5.codec;
+package com.book.netty5.codec;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -22,7 +22,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
 import java.io.IOException;
 import java.util.Map;
 
-import com.framework.netty5.struct.NettyMessage;
+import com.book.netty5.struct.NettyMessage;
 
 /**
  * @author Lilinfeng

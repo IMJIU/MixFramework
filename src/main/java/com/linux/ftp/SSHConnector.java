@@ -160,7 +160,7 @@ public class SSHConnector {
 				@Override
 				public void end() {
 					go = false;
-					System.out.println((Math.round(((double)process/total)*100))+"%");
+					System.out.print("."+(Math.round(((double)process/total)*100))+"%");
 				}
 
 				@Override
@@ -168,7 +168,7 @@ public class SSHConnector {
 					cnt+=1;
 					process += count;
 					if(cnt%40==0){
-						System.out.println((Math.round(((double)process/total)*100))+"%");
+						System.out.print("."+(Math.round(((double)process/total)*100))+"%");
 					}
 					return go;
 				}

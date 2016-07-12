@@ -43,7 +43,7 @@ public class TestUrl extends HttpTestBase {
 //		exe(net,customer,"/api/customer/getSolutionDetail?solutionId=729", GET);
 		
 		//开方详情
-		exe(net,customer,"/api/customer/getLatestDrugWeight", GET);
+//		exe(net,customer,"/api/customer/getLatestDrugWeight", GET);
 		
 		// 追加评分
 //		result = exe(local,customer,"/api/customer/publishAppendScore?commentId=556&appendScore=4",get);
@@ -209,7 +209,8 @@ public class TestUrl extends HttpTestBase {
 		//义诊列表
 //		result = exe(cn,open,"/api/open/getPromotionServiceList?terminal=1&versionCode=3",get);
 		
-//		result = exe(cn,open,"/api/open/getFirst?useType=2&terminal=1&pageNo=1&pageSize=20&versionCode=213&mobileType=1&systemType=ios&imeiCode=123&versionName=123",get);
+//		result = exe(net,open,"/api/open/getFirst?useType=2&terminal=2&pageNo=1&pageSize=20&versionCode=213&mobileType=1&systemType=ios&imeiCode=123&versionName=123",get);
+		
 //		result = exe(local,open,"/api/open/createServiceOrderV36?customerPhone=13645041346",get);
 		//获取支持药状
 //		result = exe(net,open,"/api/open/getSupportDrugType?terminal=1&versionCode=3",get);

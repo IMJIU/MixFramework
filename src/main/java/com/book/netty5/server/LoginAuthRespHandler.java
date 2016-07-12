@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.framework.netty5.server;
+package com.book.netty5.server;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerAdapter;
@@ -24,9 +24,9 @@ import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.framework.netty5.MessageType;
-import com.framework.netty5.struct.Header;
-import com.framework.netty5.struct.NettyMessage;
+import com.book.netty5.MessageType;
+import com.book.netty5.struct.Header;
+import com.book.netty5.struct.NettyMessage;
 
 /**
  * @author Lilinfeng
@@ -44,7 +44,6 @@ public class LoginAuthRespHandler extends ChannelHandlerAdapter {
 	 * 
 	 * Sub-classes may override this method to change behavior.
 	 */
-	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		NettyMessage message = (NettyMessage) msg;
 

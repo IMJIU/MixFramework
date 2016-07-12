@@ -21,9 +21,9 @@ import io.netty.channel.ChannelHandlerContext;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import com.framework.netty5.MessageType;
-import com.framework.netty5.struct.Header;
-import com.framework.netty5.struct.NettyMessage;
+import com.book.netty5.MessageType;
+import com.book.netty5.struct.Header;
+import com.book.netty5.struct.NettyMessage;
 
 /**
  * @author Lilinfeng
@@ -34,7 +34,6 @@ public class HeartBeatReqHandler extends ChannelHandlerAdapter {
 
 	private volatile ScheduledFuture<?> heartBeat;
 
-	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		NettyMessage message = (NettyMessage) msg;
 		// 握手成功，主动发送心跳消息

@@ -37,7 +37,6 @@ public class LoginAuthReqHandler extends ChannelHandlerAdapter {
 	 * 
 	 * Sub-classes may override this method to change behavior.
 	 */
-	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		ctx.writeAndFlush(buildLoginReq());
 	}
@@ -48,7 +47,6 @@ public class LoginAuthReqHandler extends ChannelHandlerAdapter {
 	 * 
 	 * Sub-classes may override this method to change behavior.
 	 */
-	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		NettyMessage message = (NettyMessage) msg;
 

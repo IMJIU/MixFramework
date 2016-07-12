@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.framework.netty5.server;
+package com.book.netty5.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -28,9 +28,9 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 
 import java.io.IOException;
 
-import com.framework.netty5.NettyConstant;
-import com.framework.netty5.codec.NettyMessageDecoder;
-import com.framework.netty5.codec.NettyMessageEncoder;
+import com.book.netty5.NettyConstant;
+import com.book.netty5.codec.NettyMessageDecoder;
+import com.book.netty5.codec.NettyMessageEncoder;
 
 /**
  * @author Lilinfeng

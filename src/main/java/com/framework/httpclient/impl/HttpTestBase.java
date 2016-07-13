@@ -49,6 +49,9 @@ public  class HttpTestBase {
 	public static final int com = 2;
 	public static final int open = 3;
 	public static final int cn = 4;
+	public static final int s162 = 5;
+	public static final int s236 = 6;
+	public static final int s112 = 7;
 	public static String http="";
 	public static String exe(int en,int uType,String url, Map<String,String>kv) throws Exception {
 		initEnv(en, uType);
@@ -73,18 +76,31 @@ public  class HttpTestBase {
 	private static void initEnv(int en, int uType) {
 	    userType = uType;
 		env = en;
-		if (env == com)
+		switch (env) {
+		case com:
 			http = "http://www.idongri.com";
-		else if (env == net)
+			break;
+		case net:
 			http = "http://www.idongri.net";
-		else if (env == local)
-//			http = "http://192.168.99.92:8089";
-		http = "http://localhost";
-		else if (env == cn)
-//			http = "http://www.idongri.cn";
-//			http = "http://121.40.224.236:8080";
-		http = "http://120.55.88.162:8080";
-//		http = "http://121.43.99.112:8080";
+			break;
+		case cn:
+			http = "http://www.idongri.cn";
+			break;
+		case local:
+			http = "http://localhost";
+			break;
+		case s162:
+			http = "http://120.55.88.162:8080";
+			break;
+		case s112:
+			http = "http://121.43.99.112:8080";
+			break;
+		case s236:
+			http = "http://121.40.224.236:8080";
+			break;
+		default:
+			break;
+		}
 		
     }
 	public static String exe(String url, boolean isPost) throws Exception {

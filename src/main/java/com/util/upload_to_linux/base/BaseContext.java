@@ -9,11 +9,11 @@ import com.linux.ftp.SSHConnector;
 
 public class BaseContext {
 
-	public  static String server = ".net";
-	public  static String app = "platform";
-	public  static String findType = "html";// class | html
+	public static String server = ".net";
+	public static String app = "platform";
+	public static String findType = "html";// class | html
 
-	public  static boolean isThread = false;
+	public static boolean isThread = false;
 
 	public final static String svn_path = "d:\\svn_code\\idongriV3\\";
 	public final static String moveToDir = "d:\\target\\";
@@ -46,10 +46,10 @@ public class BaseContext {
 	public static final String host187 = "121.40.150.187";
 	public static final String host115 = "120.26.92.115";
 	public static final String host71 = "121.41.55.71";
-	public final Vector<Thread> threadList = new Vector();
+
+	public final Vector<Thread> threadList = new Vector<Thread>();
 
 	private SSHConnector connector = new SSHConnector();
-	static ChannelSftp channel;
 
 	public void executeCommand(String host, String command) {
 		connector.executeCommand(host, command);
@@ -81,13 +81,13 @@ public class BaseContext {
 				threadCall(callback, s162(), isThread);
 				threadCall(callback, s112(), isThread);
 				threadCall(callback, s236(), isThread);
-				System.out.println(threadList.size());
-				for (Thread t : threadList) {
-					try {
+				try {
+					Thread.sleep(10);
+					for (Thread t : threadList) {
 						t.join();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
 					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
 		}

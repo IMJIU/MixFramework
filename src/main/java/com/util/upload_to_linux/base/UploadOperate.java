@@ -121,7 +121,7 @@ public class UploadOperate extends FindOperator {
 				for (String filePath : Files.readAllLines(Paths.get(uploadHtmlFilePath))) {
 					path = filePath.substring(filePath.indexOf("webapp") + 6).replaceAll("\\\\", "/");
 					path = path.substring(1, path.lastIndexOf("/"));
-					// System.out.println(linux_webapp_Path + path);
+					 System.out.println(linux_webapp_Path +"00000"+ path);
 					_uploadToLinux(linux_webapp_Path + path, filePath, channelSftp);
 				}
 			} catch (Exception e) {

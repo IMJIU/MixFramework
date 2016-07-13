@@ -14,7 +14,7 @@ public class T5_upload_to_linux {
 	static {
 		// 配置
 		BaseContext.server = ".cn";    /** .net|.cn       */
-		BaseContext.app = "platform"; 	/** admin|platform */
+		BaseContext.app = "admin"; 	/** admin|idongri */
 		BaseContext.findType = "html";	/** class | html   */
 		BaseContext.isThread = true;
 	}

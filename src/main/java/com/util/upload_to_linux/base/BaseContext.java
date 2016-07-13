@@ -56,14 +56,14 @@ public class BaseContext {
 	}
 
 	void _uploadToLinux(String dir, String file, ChannelSftp ftpChannel) throws Exception {
-		System.out.print("【dir】:" + dir + "\n【file】:" + file);
+		System.out.println("【dir】:" + dir + "\n【file】:" + file);
 		connector.upload(dir, file, ftpChannel);
 	}
 
 	static HashSet<String> set = new HashSet<String>();
 
 	void _downloadFromLinux(String dir, String file, String to, ChannelSftp ftpChannel) throws Exception {
-		System.out.print("【from】:" + dir + file + "\n【to】:" + to);
+		System.out.println("【from】:" + dir + file + "\n【to】:" + to);
 		connector.download(dir, file, to, ftpChannel);
 	}
 

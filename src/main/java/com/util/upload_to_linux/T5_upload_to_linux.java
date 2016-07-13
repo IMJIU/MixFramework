@@ -15,7 +15,7 @@ public class T5_upload_to_linux {
 		// 配置
 		BaseContext.server = ".cn";    /** .net|.cn       */
 		BaseContext.app = "platform"; 	/** admin|platform */
-		BaseContext.findType = "class";	/** class | html   */
+		BaseContext.findType = "html";	/** class | html   */
 		BaseContext.isThread = true;
 	}
 	
@@ -78,8 +78,8 @@ public class T5_upload_to_linux {
 	@Test
 	public void t7_upload_dir() throws Exception {
 //		UploadOperate.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_platform_webapp_Path + "html/card"));
-		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_platform_webapp_Path + "html/activity"),"decocti\\S+");
-		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_platform_webapp_Path + "images/activity"),"decocti\\S+");
+//		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_platform_webapp_Path + "html/activity"),"decocti\\S+");
+		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_platform_webapp_Path + "images/activity"),"daily\\S+");
 		/** 【上传文件夹】*/
 //		UploadOperate.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_platform_webapp_Path + "html/card"));
 	}

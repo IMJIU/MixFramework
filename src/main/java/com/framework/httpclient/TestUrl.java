@@ -209,7 +209,7 @@ public class TestUrl extends HttpTestBase {
 		//义诊列表
 //		result = exe(cn,open,"/api/open/getPromotionServiceList?terminal=1&versionCode=3",get);
 		
-//		result = exe(net,open,"/api/open/getFirst?useType=2&terminal=2&pageNo=1&pageSize=20&versionCode=213&mobileType=1&systemType=ios&imeiCode=123&versionName=123",get);
+		result = exe(net,open,"/api/open/getFirst?useType=2&terminal=2&pageNo=1&pageSize=20&versionCode=213&mobileType=1&systemType=ios&imeiCode=123&versionName=123",get);
 		
 //		result = exe(local,open,"/api/open/createServiceOrderV36?customerPhone=13645041346",get);
 		//获取支持药状

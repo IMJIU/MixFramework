@@ -37,7 +37,9 @@ public class UploadOperate extends FindOperator {
 		try {
 			String war = Files.list(Paths.get(file)).filter(f -> f.getFileName().toString().endsWith("war")).findFirst().get().toString();
 			if (war != null) {
-				uploadToLinux(dir, war);
+				String rename = war.replaceAll("-test\\.war", "\\.war").replaceAll("-prod\\.war", "\\.war");
+				new File(war).renameTo(new File(rename));
+				uploadToLinux(dir, rename);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -100,6 +102,7 @@ public class UploadOperate extends FindOperator {
 	public static void uploadToLinux(String dir, String file) {
 		loopServer((channelSftp) -> {
 			try {
+				//System.out.println(file+"-"+channelSftp.getSession().getHost());
 				_uploadToLinux(dir, file, channelSftp);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -117,7 +120,7 @@ public class UploadOperate extends FindOperator {
 				for (String filePath : Files.readAllLines(Paths.get(uploadHtmlFilePath))) {
 					path = filePath.substring(filePath.indexOf("webapp") + 6).replaceAll("\\\\", "/");
 					path = path.substring(1, path.lastIndexOf("/"));
-//					System.out.println(linux_webapp_Path + path);
+					// System.out.println(linux_webapp_Path + path);
 					_uploadToLinux(linux_webapp_Path + path, filePath, channelSftp);
 				}
 			} catch (Exception e) {
@@ -136,7 +139,7 @@ public class UploadOperate extends FindOperator {
 	 */
 	public static void findUploadHtmlWriteToFile(String file) {
 		try {
-//			System.out.println(uploadHtmlFilePath);
+			// System.out.println(uploadHtmlFilePath);
 			System.out.println("i get!" + file);
 			try {
 				if (uploadHtmlListOutput == null)

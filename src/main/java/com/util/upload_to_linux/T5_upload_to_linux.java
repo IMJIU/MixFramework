@@ -11,7 +11,8 @@ public class T5_upload_to_linux {
 
 	static {
 		// 配置
-		BaseContext.server = ".net";
+		BaseContext.server = ".cn";
+		BaseContext.app = "admin";
 		BaseContext.findType = "class";// class | html
 		BaseContext.isThread = false;
 	}
@@ -90,8 +91,8 @@ public class T5_upload_to_linux {
 	@Test
 	public void t6_upload() throws Exception {
 //		UploadOperate.uploadToLinux(BaseContext.linux_lib_Path, BaseContext.moveToDir + BaseContext.dao_jar);
-		UploadOperate.uploadToLinux(BaseContext.linux_lib_Path, BaseContext.moveToDir + BaseContext.service_jar);
-//		UploadOperate.uploadWarToLinux(BaseContext.linux_idongri_Path, BaseContext.local_platform_war_path);
+//		UploadOperate.uploadToLinux(BaseContext.linux_lib_Path, BaseContext.moveToDir + BaseContext.service_jar);
+		UploadOperate.uploadWarToLinux(BaseContext.linux_idongri_Path, BaseContext.local_admin_war_path);
 	}
 
 	/** 【上传文件夹】 */

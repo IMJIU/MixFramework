@@ -10,6 +10,7 @@ import com.linux.ftp.SSHConnector;
 public class BaseContext {
 
 	public static String server = ".cn";
+	public static String app = "admin";
 	public static String findType = "html";// class | html
 
 	public static boolean isThread = false;
@@ -43,6 +44,8 @@ public class BaseContext {
 	public static final String host112 = "121.43.99.112";
 	public static final String host236 = "121.40.224.236";
 	public static final String host187 = "121.40.150.187";
+	public static final String host115 = "120.26.92.115";
+	public static final String host71 = "121.41.55.71";
 
 	private static SSHConnector connector = new SSHConnector();
 	static ChannelSftp channel;
@@ -66,13 +69,22 @@ public class BaseContext {
 	}
 
 	public static void loopServer(Process<ChannelSftp> callback) {
-		if (server.equals(".net")) {
-			callback.process(s187());
-		} else {
-			threadCall(callback, s162(), isThread);
-			threadCall(callback, s112(), isThread);
-			threadCall(callback, s236(), isThread);
+		if(app.equals("admin")){
+			if (server.equals(".net")) {
+				callback.process(s71());
+			} else {
+				callback.process(s115());
+			}
+		}else{
+			if (server.equals(".net")) {
+				callback.process(s187());
+			} else {
+				threadCall(callback, s162(), isThread);
+				threadCall(callback, s112(), isThread);
+				threadCall(callback, s236(), isThread);
+			}
 		}
+		
 	}
 
 	private static void threadCall(Process<ChannelSftp> callback, ChannelSftp ftpChannel, boolean isThread) {
@@ -87,13 +99,17 @@ public class BaseContext {
 			connector.connect(host112, 22, "root", "DRny2015");
 		return connector.getSftpChannel(host112);
 	}
-
+	public static ChannelSftp s115() {
+		if (connector.getSftpChannel(host115) == null)
+			connector.connect(host115, 22, "root", "Idongri2016");
+		return connector.getSftpChannel(host115);
+	}
 	public static ChannelSftp s236() {
 		if (connector.getSftpChannel(host236) == null)
 			connector.connect(host236, 22, "root", "DRny2015");
 		return connector.getSftpChannel(host236);
 	}
-
+	
 	public static ChannelSftp s162() {
 		if (connector.getSftpChannel(host162) == null)
 			connector.connect(host162, 22, "root", "Idongri2016");
@@ -105,7 +121,11 @@ public class BaseContext {
 			connector.connect(host187, 22, "root", "Idongri2015");
 		return connector.getSftpChannel(host187);
 	}
-
+	public static ChannelSftp s71() {
+		if (connector.getSftpChannel(host71) == null)
+			connector.connect(host71, 22, "root", "Drny2015");
+		return connector.getSftpChannel(host71);
+	}
 	public static void closeSession() {
 		for (String server : connector.getSessionMap().keySet()) {
 			connector.getSession(server).disconnect();

@@ -2,6 +2,8 @@ package com.linux.ftp;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.log4j.Logger;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
@@ -11,6 +13,7 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 import com.jcraft.jsch.SftpProgressMonitor;
+import com.util.upload_to_linux.base.BaseContext;
 
 import expect4j.Expect4j;
 
@@ -132,7 +135,7 @@ public class SSHConnector {
 		sftp = (ChannelSftp) channel;
 		return sftp;
 	}
-
+	Map<String,File>fmap = new ConcurrentHashMap<String,File>();
 	/**
 	 * 上传文件
 	 * 
@@ -143,32 +146,46 @@ public class SSHConnector {
 	public void upload(String directory, String uploadFile, ChannelSftp sftp) {
 		try {
 			sftp.cd(directory);
-			File file = new File(uploadFile);
+			File file = fmap.get(uploadFile);
+			if(file == null){
+				 file = new File(uploadFile);
+				 fmap.put(uploadFile, file);
+			}
+			final String host = sftp.getSession().getHost();
 			long total = file.length();
 			SftpProgressMonitor m = new SftpProgressMonitor() {
 				long process = 0l;
 				volatile boolean go = true;
 				volatile int cnt = 0;
+
 				@Override
 				public void init(int op, String src, String dest, long max) {
-//					System.out.println("op:" + op);
-//					System.out.println("src:" + src);
-//					System.out.println("dest:" + dest);
-//					System.out.println("max:" + max);
+					// System.out.println("op:" + op);
+					// System.out.println("src:" + src);
+					// System.out.println("dest:" + dest);
+					// System.out.println("max:" + max);
 				}
 
 				@Override
 				public void end() {
 					go = false;
-					System.out.print("."+(Math.round(((double)process/total)*100))+"%");
+					if(BaseContext.isThread){
+						System.out.println(host+"-" + (Math.round(((double) process / total) * 100)) + "%->upload over");
+					}else{
+						System.out.println("." + (Math.round(((double) process / total) * 100)) + "%->upload over");
+					}
 				}
 
 				@Override
 				public boolean count(long count) {
-					cnt+=1;
+					cnt += 1;
 					process += count;
-					if(cnt%40==0){
-						System.out.print("."+(Math.round(((double)process/total)*100))+"%");
+					if (cnt % 100 == 0) {
+						if(BaseContext.isThread){
+							System.out.println(host+"-" + (Math.round(((double) process / total) * 100)) + "%");
+						}else{
+							System.out.print("." + (Math.round(((double) process / total) * 100)) + "%");
+						}
 					}
 					return go;
 				}

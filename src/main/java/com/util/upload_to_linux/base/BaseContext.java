@@ -1,19 +1,19 @@
 package com.util.upload_to_linux.base;
 
 import java.util.HashSet;
+import java.util.Vector;
 
 import com.book.jdk18.Process;
 import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSchException;
 import com.linux.ftp.SSHConnector;
 
 public class BaseContext {
 
-	public static String server = ".cn";
-	public static String app = "admin";
-	public static String findType = "html";// class | html
+	public  static String server = ".net";
+	public  static String app = "platform";
+	public  static String findType = "html";// class | html
 
-	public static boolean isThread = false;
+	public  static boolean isThread = false;
 
 	public final static String svn_path = "d:\\svn_code\\idongriV3\\";
 	public final static String moveToDir = "d:\\target\\";
@@ -46,87 +46,100 @@ public class BaseContext {
 	public static final String host187 = "121.40.150.187";
 	public static final String host115 = "120.26.92.115";
 	public static final String host71 = "121.41.55.71";
+	public final Vector<Thread> threadList = new Vector();
 
-	private static SSHConnector connector = new SSHConnector();
+	private SSHConnector connector = new SSHConnector();
 	static ChannelSftp channel;
 
-	public static void executeCommand(String host, String command) {
+	public void executeCommand(String host, String command) {
 		connector.executeCommand(host, command);
 	}
 
-	static void _uploadToLinux(String dir, String file, ChannelSftp ftpChannel) throws Exception {
+	void _uploadToLinux(String dir, String file, ChannelSftp ftpChannel) throws Exception {
 		System.out.print("【dir】:" + dir + "\n【file】:" + file);
 		connector.upload(dir, file, ftpChannel);
-		System.out.println("->upload over");
 	}
 
 	static HashSet<String> set = new HashSet<String>();
 
-	static void _downloadFromLinux(String dir, String file, String to, ChannelSftp ftpChannel) throws Exception {
+	void _downloadFromLinux(String dir, String file, String to, ChannelSftp ftpChannel) throws Exception {
 		System.out.print("【from】:" + dir + file + "\n【to】:" + to);
 		connector.download(dir, file, to, ftpChannel);
-		System.out.println("->download over");
 	}
 
-	public static void loopServer(Process<ChannelSftp> callback) {
-		if(app.equals("admin")){
+	public void loopServer(Process<ChannelSftp> callback) {
+		if (app.equals("admin")) {
 			if (server.equals(".net")) {
 				callback.process(s71());
 			} else {
 				callback.process(s115());
 			}
-		}else{
+		} else {
 			if (server.equals(".net")) {
 				callback.process(s187());
 			} else {
 				threadCall(callback, s162(), isThread);
 				threadCall(callback, s112(), isThread);
 				threadCall(callback, s236(), isThread);
+				System.out.println(threadList.size());
+				for (Thread t : threadList) {
+					try {
+						t.join();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
-		
+
 	}
 
-	private static void threadCall(Process<ChannelSftp> callback, ChannelSftp ftpChannel, boolean isThread) {
-		if (isThread)
-			new Thread(() -> callback.process(ftpChannel)).start();
-		else
+	private void threadCall(Process<ChannelSftp> callback, ChannelSftp ftpChannel, boolean isThread) {
+		if (isThread) {
+			Thread t = new Thread(() -> callback.process(ftpChannel));
+			t.start();
+			threadList.add(t);
+		} else
 			callback.process(ftpChannel);
 	}
 
-	public static ChannelSftp s112() {
+	public ChannelSftp s112() {
 		if (connector.getSftpChannel(host112) == null)
 			connector.connect(host112, 22, "root", "DRny2015");
 		return connector.getSftpChannel(host112);
 	}
-	public static ChannelSftp s115() {
+
+	public ChannelSftp s115() {
 		if (connector.getSftpChannel(host115) == null)
 			connector.connect(host115, 22, "root", "Idongri2016");
 		return connector.getSftpChannel(host115);
 	}
-	public static ChannelSftp s236() {
+
+	public ChannelSftp s236() {
 		if (connector.getSftpChannel(host236) == null)
 			connector.connect(host236, 22, "root", "DRny2015");
 		return connector.getSftpChannel(host236);
 	}
-	
-	public static ChannelSftp s162() {
+
+	public ChannelSftp s162() {
 		if (connector.getSftpChannel(host162) == null)
 			connector.connect(host162, 22, "root", "Idongri2016");
 		return connector.getSftpChannel(host162);
 	}
 
-	public static ChannelSftp s187() {
+	public ChannelSftp s187() {
 		if (connector.getSftpChannel(host187) == null)
 			connector.connect(host187, 22, "root", "Idongri2015");
 		return connector.getSftpChannel(host187);
 	}
-	public static ChannelSftp s71() {
+
+	public ChannelSftp s71() {
 		if (connector.getSftpChannel(host71) == null)
 			connector.connect(host71, 22, "root", "Drny2015");
 		return connector.getSftpChannel(host71);
 	}
-	public static void closeSession() {
+
+	public void closeSession() {
 		for (String server : connector.getSessionMap().keySet()) {
 			connector.getSession(server).disconnect();
 		}

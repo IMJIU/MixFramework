@@ -14,7 +14,7 @@ public class UploadOperate extends FindOperator {
 	 * 
 	 * @param classFilePath
 	 */
-	public static void doUploadClass(String classFilePath) {
+	public  void doUploadClass(String classFilePath) {
 		loopServer((channelSftp) -> {
 			try {
 				String tmpFile = classFilePath.substring(classFilePath.indexOf("classes") + 8);
@@ -32,8 +32,8 @@ public class UploadOperate extends FindOperator {
 	 * @param dir
 	 * @param file
 	 */
-	public static void uploadWarToLinux(String dir, String file) {
-		System.out.println(file);
+	public  void uploadWarToLinux(String dir, String file) {
+//		System.out.println(file);
 		try {
 			String war = Files.list(Paths.get(file)).filter(f -> f.getFileName().toString().endsWith("war")).findFirst().get().toString();
 			if (war != null) {
@@ -46,7 +46,7 @@ public class UploadOperate extends FindOperator {
 		}
 	}
 
-	static void _mkDir(String dir) {
+	 void _mkDir(String dir) {
 		loopServer((channelSftp) -> {
 			try {
 				String host = channelSftp.getSession().getHost();
@@ -63,7 +63,7 @@ public class UploadOperate extends FindOperator {
 
 	}
 
-	public static void uploadDirToLinux(String baseDir, File file) {
+	public  void uploadDirToLinux(String baseDir, File file) {
 		uploadDirToLinux(baseDir, file, null);
 	}
 
@@ -73,7 +73,7 @@ public class UploadOperate extends FindOperator {
 	 * @param dir
 	 * @param file
 	 */
-	public static void uploadDirToLinux(String baseDir, File file, String regex) {
+	public  void uploadDirToLinux(String baseDir, File file, String regex) {
 		String name1 = baseDir + file.getAbsolutePath().replace(BaseContext.local_platform_webapp_Path, "").replaceAll("\\\\", "/");
 		String path1 = name1.substring(0, name1.lastIndexOf("/"));
 		if (file.isDirectory()) {
@@ -99,7 +99,7 @@ public class UploadOperate extends FindOperator {
 	 * @param dir
 	 * @param file
 	 */
-	public static void uploadToLinux(String dir, String file) {
+	public  void uploadToLinux(String dir, String file) {
 		loopServer((channelSftp) -> {
 			try {
 				//System.out.println(file+"-"+channelSftp.getSession().getHost());
@@ -108,12 +108,13 @@ public class UploadOperate extends FindOperator {
 				e.printStackTrace();
 			}
 		});
+		
 	}
 
 	/**
 	 * 读取文件中需要上传的文件 上传到linux
 	 */
-	public static void doUploadHtmlFileListToLinux() {
+	public  void doUploadHtmlFileListToLinux() {
 		loopServer((channelSftp) -> {
 			try {
 				String path = null;

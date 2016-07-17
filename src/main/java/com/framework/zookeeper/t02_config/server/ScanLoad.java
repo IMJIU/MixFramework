@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.TypeVariable;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.JarURLConnection;
 import java.net.URL;
@@ -357,7 +358,12 @@ service=/api/open/test3.do
 //			JarEntry entry = entries.nextElement();
 //			System.out.println(entry.getName());
 //		}
-		ScanLoad load = new ScanLoad("com.framework.zookeeper.t02_config","localhost:2181","userCenter");
-		load.init();
+//		ScanLoad load = new ScanLoad("com.framework.zookeeper.t02_config","localhost:2181","userCenter");
+//		load.init();
+
+		String ip = InetAddress.getLocalHost().getHostAddress().toString();
+		System.out.println(ip);
+		System.out.println(InetAddress.getLocalHost().getHostAddress());
+		System.out.println(new String(Inet4Address.getLocalHost().getAddress()));
     }
 }

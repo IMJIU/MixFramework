@@ -118,10 +118,8 @@ public class LockUtil {
 						.withACL(Ids.OPEN_ACL_UNSAFE)
 						.forPath("/ShardLockDemo/" + nodeName);
 				logger.info("创建节点:"+selfNodeName);
-			List<String> lockChildrens = client.getChildren().forPath(
-					"/ShardLockDemo");
-			if (!canGetLock(lockChildrens, type,
-					nodeName.substring(0, nodeName.length() - 1),false)) {
+			List<String> lockChildrens = client.getChildren().forPath("/ShardLockDemo");
+			if (!canGetLock(lockChildrens, type,nodeName.substring(0, nodeName.length() - 1),false)) {
 				shardLocklatch.await();
 			}
 			// return;// 获得锁成功就返回
@@ -134,12 +132,10 @@ public class LockUtil {
 		return true;
 	}
 
-	private static boolean canGetLock(List<String> childrens, int type,
-			String identity,boolean reps) {
+	private static boolean canGetLock(List<String> childrens, int type,String identity,boolean reps) {
 		boolean res = false;
 		if(childrens.size()<=0)
 			return true;
-		
 		try {
 			String currentSeq = null;
 			List<String> seqs = new ArrayList<String>();
@@ -225,21 +221,17 @@ public class LockUtil {
 	}
 	public static void addChildWatcher(String path) throws Exception {
 		@SuppressWarnings("resource")
-		final PathChildrenCache cache = new PathChildrenCache(client, path,
-				true);
+		final PathChildrenCache cache = new PathChildrenCache(client, path,true);
 		cache.start(StartMode.POST_INITIALIZED_EVENT);// ppt中需要讲StartMode
 		// System.out.println(cache.getCurrentData().size());
 		cache.getListenable().addListener(new PathChildrenCacheListener() {
 			public void childEvent(CuratorFramework client,
 					PathChildrenCacheEvent event) throws Exception {
-				if (event.getType().equals(
-						PathChildrenCacheEvent.Type.INITIALIZED)) {
+				if (event.getType().equals(PathChildrenCacheEvent.Type.INITIALIZED)) {
 
-				} else if (event.getType().equals(
-						PathChildrenCacheEvent.Type.CHILD_ADDED)) {
+				} else if (event.getType().equals(PathChildrenCacheEvent.Type.CHILD_ADDED)) {
 
-				} else if (event.getType().equals(
-						PathChildrenCacheEvent.Type.CHILD_REMOVED)) {
+				} else if (event.getType().equals(PathChildrenCacheEvent.Type.CHILD_REMOVED)) {
 					String path = event.getData().getPath();
 					System.out.println("收到监听"+path);
 					if(path.contains("ExclusiveLockDemo")){
@@ -250,14 +242,13 @@ public class LockUtil {
 						//收到自己的通知就不处理
 						if(path.contains(selfIdentity))
 							return;
-						List<String> lockChildrens = client.getChildren().forPath(
-								"/ShardLockDemo");
+						List<String> lockChildrens = client.getChildren().forPath("/ShardLockDemo");
 						boolean isLock = false;
 						try{
-						if(selfIdentity.startsWith("R"))
-							isLock = canGetLock(lockChildrens,0,selfIdentity.substring(0, selfIdentity.length() - 1),true);
-						else if(selfIdentity.startsWith("W"))
-							isLock = canGetLock(lockChildrens,1,selfIdentity.substring(0, selfIdentity.length() - 1),true);
+							if(selfIdentity.startsWith("R"))
+								isLock = canGetLock(lockChildrens,0,selfIdentity.substring(0, selfIdentity.length() - 1),true);
+							else if(selfIdentity.startsWith("W"))
+								isLock = canGetLock(lockChildrens,1,selfIdentity.substring(0, selfIdentity.length() - 1),true);
 						}catch(Exception e){
 							e.printStackTrace();
 						}
@@ -268,9 +259,7 @@ public class LockUtil {
 							shardLocklatch.countDown();
 						}
 					}
-				} else if (event.getType().equals(
-						PathChildrenCacheEvent.Type.CHILD_UPDATED)) {
-
+				} else if (event.getType().equals(PathChildrenCacheEvent.Type.CHILD_UPDATED)) {
 				}
 			}
 		});

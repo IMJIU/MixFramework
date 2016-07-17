@@ -18,7 +18,7 @@
     		<value>com.web</value>
     	</constructor-arg>
     	<constructor-arg>
-    	<value>localhost:2181,localhost:2182,localhost:2183</value>
+    	<value>localhost:2181</value><!-- 2181,localhost:2182,localhost:2183 -->
     	</constructor-arg>
     	<constructor-arg>
     	<value>userCenter</value>

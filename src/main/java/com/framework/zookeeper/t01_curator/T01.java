@@ -33,6 +33,7 @@ public class T01 {
 			// t.createNode("/curator/test/node1", "t1-data".getBytes());// /base/curator/test
 			// t.addNodeDataWather("/curator/test/node1");
 			t.deleteNode("/webServiceCenter", 99);
+			t.deleteNode("/lock_path", 99);
 			// t.readNode("/curator/test");
 			// t.updateNode("/curator/test/node1", "zzzz".getBytes(), -1);
 			// t.addChildWather("/curator/test");

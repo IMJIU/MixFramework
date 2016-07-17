@@ -43,7 +43,7 @@ public class ServiceConsumer {
 	}
 	public static void main(String[] args) throws InterruptedException {
 		ServiceConsumer sc = new ServiceConsumer();
-		sc.getServices("userCenter");
+		sc.initServicesMap("userCenter");
 		for(int i=0;i<100;i++){
 			sc.accessService();
 			Thread.sleep(10000);
@@ -52,7 +52,7 @@ public class ServiceConsumer {
 	}
 
 	
-	public Map<String,Set<String>> getServices(String bizCode){
+	public Map<String,Set<String>> initServicesMap(String bizCode){
 		try {
 			List<String> children = client.getChildren().forPath("/"+bizCode);
 			System.out.println("-----------services----------");
@@ -60,6 +60,7 @@ public class ServiceConsumer {
 				String servicepath = bizCh;
 				addChildWatcher("/"+bizCode+"/"+bizCh);
 				//System.out.println("-------bizCh-----------"+bizCh);
+				System.out.println("-------servicepath-----------"+servicepath);
 				if(servicepath.endsWith(".do")){
 					servicepath = servicepath.replace(".", "/");
 					servicepath = servicepath.replace("/do", ".do");
@@ -174,6 +175,7 @@ provider list-------192.168.199.222
 		cache.getListenable().addListener(new PathChildrenCacheListener() {
 			public void childEvent(CuratorFramework client,
 					PathChildrenCacheEvent event) throws Exception {
+				System.out.println("update:"+path+",eventType:"+PathChildrenCacheEvent.Type.INITIALIZED);
 				if(event.getType().equals(PathChildrenCacheEvent.Type.INITIALIZED)){
 					System.out.println("客户端子节点cache初始化数据完成");
 					System.out.println("size="+cache.getCurrentData().size());

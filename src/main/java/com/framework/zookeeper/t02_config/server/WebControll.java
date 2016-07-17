@@ -8,20 +8,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/tc/dd") 
+@RequestMapping("/api/open") 
 public class WebControll {
 
-	@RequestMapping("test.do")
+	@RequestMapping("test1.do")
 	public void testM(HttpServletResponse response) {
 		outputData(response,"测试成功");
 		System.out.println("----------test.do-----------");
 	}
-	@RequestMapping("testtwo.do")
+	@RequestMapping("test2.do")
 	public void sample(HttpServletResponse response) {
 		outputData(response,"测试成功testtwo.do");
 		System.out.println("--------testtwo.do-------------");
 	}
-	@RequestMapping("testthree.do")
+	@RequestMapping("test3.do")
 	public void three(HttpServletResponse response) {
 		outputData(response,"测试成功testthree.do");
 		System.out.println("--------testthree.do-------------");

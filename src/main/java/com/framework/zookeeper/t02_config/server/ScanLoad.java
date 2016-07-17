@@ -39,11 +39,46 @@ public class ScanLoad {
 	private String bizCode = "sampleweb";
 
 	public ScanLoad(String path, String connectString, String bizcode) {
-		scanPath = path;
-		this.connectString = connectString;
-		this.bizCode = bizcode;
+//		scanPath = path;					//com.web
+		scanPath = "com.framework.zookeeper.t02_config";
+		this.connectString = connectString;	//localhost:2181,localhost:2182,localhost:2183
+		this.bizCode = bizcode;				//userCenter
 		System.out.println(scanPath + "--" + connectString + "---" + bizCode);
 	}
+	
+
+	public void init() {
+		try {
+			System.out.println("扫描初始化------");
+			//初始化zk客户端
+			buildZKclient();//initZkClient
+			registBiz();	//createPath /usrCenter
+			
+			//扫描所有action类和方法
+			Set classes = getClasses(scanPath);
+			if (classes.size() < 1)
+				return;
+			
+			//通过注解得到服务地址
+			List<String> services = getServicePath(classes);
+			for (String s : services)
+				System.out.println("service=" + s);
+			System.out.println("------------------size=");
+			/**
+			 * service=/api/open/test1.do
+service=/api/open/test2.do
+service=/api/open/test3.do
+------------------size=
+			 */
+			
+			
+			//把服务注册到zk
+			registBizServices(services);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	private void buildZKclient() {
 		RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
@@ -74,8 +109,7 @@ public class ScanLoad {
 		Enumeration<URL> dirs;
 		System.out.println("packageDirName=" + packageDirName);
 		try {
-			dirs = Thread.currentThread().getContextClassLoader()
-					.getResources(packageDirName);
+			dirs = Thread.currentThread().getContextClassLoader().getResources(packageDirName);
 			// 循环迭代下去
 			while (dirs.hasMoreElements()) {
 				// 获取下一个元素
@@ -89,8 +123,7 @@ public class ScanLoad {
 					// 获取包的物理路径
 					String filePath = URLDecoder.decode(url.getFile(), "UTF-8");
 					// 以文件的方式扫描整个包下的文件 并添加到集合中
-					findAndAddClassesInPackageByFile(packageName, filePath,
-							recursive, classes);
+					findAndAddClassesInPackageByFile(packageName, filePath,recursive, classes);
 				} else if ("jar".equals(protocol)) {
 					// 如果是jar包文件
 					// 定义一个JarFile
@@ -98,8 +131,7 @@ public class ScanLoad {
 					JarFile jar;
 					try {
 						// 获取jar
-						jar = ((JarURLConnection) url.openConnection())
-								.getJarFile();
+						jar = ((JarURLConnection) url.openConnection()).getJarFile();
 						// 从此jar包 得到一个枚举类
 						Enumeration<JarEntry> entries = jar.entries();
 						// 同样的进行循环迭代
@@ -118,23 +150,17 @@ public class ScanLoad {
 								// 如果以"/"结尾 是一个包
 								if (idx != -1) {
 									// 获取包名 把"/"替换成"."
-									packageName = name.substring(0, idx)
-											.replace('/', '.');
+									packageName = name.substring(0, idx).replace('/', '.');
 								}
 								// 如果可以迭代下去 并且是一个包
 								if ((idx != -1) || recursive) {
 									// 如果是一个.class文件 而且不是目录
-									if (name.endsWith(".class")
-											&& !entry.isDirectory()) {
+									if (name.endsWith(".class")&& !entry.isDirectory()) {
 										// 去掉后面的".class" 获取真正的类名
-										String className = name.substring(
-												packageName.length() + 1,
-												name.length() - 6);
+										String className = name.substring(packageName.length() + 1,name.length() - 6);
 										try {
 											// 添加到classes
-											classes.add(Class
-													.forName(packageName + '.'
-															+ className));
+											classes.add(Class.forName(packageName + '.'+ className));
 										} catch (ClassNotFoundException e) {
 											// log
 											// .error("添加用户自定义视图类错误 找不到此类的.class文件");
@@ -157,8 +183,7 @@ public class ScanLoad {
 		return classes;
 	}
 
-	public void findAndAddClassesInPackageByFile(String packageName,
-			String packagePath, final boolean recursive, Set<Class<?>> classes) {
+	public void findAndAddClassesInPackageByFile(String packageName,String packagePath, final boolean recursive, Set<Class<?>> classes) {
 		// 获取此包的目录 建立一个File
 		File dir = new File(packagePath);
 		// 如果不存在或者 也不是目录就直接返回
@@ -170,28 +195,23 @@ public class ScanLoad {
 		File[] dirfiles = dir.listFiles(new FileFilter() {
 			// 自定义过滤规则 如果可以循环(包含子目录) 或则是以.class结尾的文件(编译好的java类文件)
 			public boolean accept(File file) {
-				return (recursive && file.isDirectory())
-						|| (file.getName().endsWith(".class"));
+				return (recursive && file.isDirectory())|| (file.getName().endsWith(".class"));
 			}
 		});
 		// 循环所有文件
 		for (File file : dirfiles) {
 			// 如果是目录 则继续扫描
 			if (file.isDirectory()) {
-				findAndAddClassesInPackageByFile(
-						packageName + "." + file.getName(),
-						file.getAbsolutePath(), recursive, classes);
+				findAndAddClassesInPackageByFile(packageName + "." + file.getName(),file.getAbsolutePath(), recursive, classes);
 			} else {
 				// 如果是java类文件 去掉后面的.class 只留下类名
-				String className = file.getName().substring(0,
-						file.getName().length() - 6);
+				String className = file.getName().substring(0,file.getName().length() - 6);
 				try {
 					// 添加到集合中去
 					// classes.add(Class.forName(packageName + '.' +
 					// className));
 					// 经过回复同学的提醒，这里用forName有一些不好，会触发static方法，没有使用classLoader的load干净
-					classes.add(Thread.currentThread().getContextClassLoader()
-							.loadClass(packageName + '.' + className));
+					classes.add(Thread.currentThread().getContextClassLoader().loadClass(packageName + '.' + className));
 				} catch (ClassNotFoundException e) {
 					// log.error("添加用户自定义视图类错误 找不到此类的.class文件");
 					e.printStackTrace();
@@ -200,29 +220,6 @@ public class ScanLoad {
 		}
 	}
 
-	public void init() {
-		try {
-			System.out.println("扫描初始化------");
-			//初始化zk客户端
-			buildZKclient();
-			registBiz();
-			
-			//扫描所有action类和方法
-			Set classes = getClasses(scanPath);
-			if (classes.size() < 1)
-				return;
-			
-			//通过注解得到服务地址
-			List<String> services = getServicePath(classes);
-			for (String s : services)
-				System.out.println("service=" + s);
-			System.out.println("------------------size=");
-			//把服务注册到zk
-			registBizServices(services);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	private void registBiz() {
 		try {
@@ -248,18 +245,30 @@ public class ScanLoad {
 				if(temp.startsWith("."))
 					temp = temp.substring(1);
 				if (client.checkExists().forPath("/" + bizCode +"/"+ temp) == null) {
+					String path = "/" + bizCode +"/"+ temp;
+					System.out.println("path:"+path);
 					client.create().creatingParentsIfNeeded()
 							.withMode(CreateMode.PERSISTENT)
 							.withACL(Ids.OPEN_ACL_UNSAFE)
-							.forPath("/" + bizCode +"/"+ temp, ("1").getBytes());
+							.forPath(path, ("1").getBytes());
 				}
+				String path = "/" + bizCode +"/"+ temp + "/" + ip;
+				System.out.println("path="+path);
 				client.create()
 						.creatingParentsIfNeeded()
 						.withMode(CreateMode.EPHEMERAL)
 						.withACL(Ids.OPEN_ACL_UNSAFE)
-						.forPath("/" + bizCode +"/"+ temp + "/" + ip, ("1").getBytes());
+						.forPath(path, ("1").getBytes());
 
 			}
+			/**
+			 * 	path:/userCenter/api.open.test1.do
+				path=/userCenter/api.open.test1.do/192.168.199.222
+				path:/userCenter/api.open.test2.do
+				path=/userCenter/api.open.test2.do/192.168.199.222
+				path:/userCenter/api.open.test3.do
+				path=/userCenter/api.open.test3.do/192.168.199.222
+			 */
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -337,4 +346,18 @@ public class ScanLoad {
 				return null;
 		}
 	}
+	
+	public static void main(String[] args) throws IOException {
+//		JarFile jar = new JarFile("d:\\target\\common-core-3.0-SNAPSHOT.jar");
+//		// 从此jar包 得到一个枚举类
+//		Enumeration<JarEntry> entries = jar.entries();
+//		// 同样的进行循环迭代
+//		while (entries.hasMoreElements()) {
+//			// 获取jar里的一个实体 可以是目录 和一些jar包里的其他文件 如META-INF等文件
+//			JarEntry entry = entries.nextElement();
+//			System.out.println(entry.getName());
+//		}
+		ScanLoad load = new ScanLoad("com.framework.zookeeper.t02_config","localhost:2181","userCenter");
+		load.init();
+    }
 }

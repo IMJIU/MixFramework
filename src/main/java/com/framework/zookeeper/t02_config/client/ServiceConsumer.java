@@ -20,7 +20,7 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 
 
 public class ServiceConsumer {
-	private String connectString ="localhost:2181,localhost:2182,localhost:2183";
+	private String connectString ="localhost:2181";
 	private CuratorFramework client = null;
 	Map<String,Set<String>> services = new HashMap<String,Set<String>>();
 	Map<String,Set<String>> servicesByP = new HashMap<String,Set<String>>();
@@ -28,8 +28,8 @@ public class ServiceConsumer {
 		RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
 		client = CuratorFrameworkFactory.builder()
 				.connectString(connectString)
-				.sessionTimeoutMs(10000).
-				retryPolicy(retryPolicy)
+				.sessionTimeoutMs(10000)
+				.retryPolicy(retryPolicy)
 				.namespace("webServiceCenter").build();
 		client.start();		
 //		try {
@@ -41,10 +41,134 @@ public class ServiceConsumer {
 //		}
 		
 	}
+	public static void main(String[] args) throws InterruptedException {
+		ServiceConsumer sc = new ServiceConsumer();
+		sc.getServices("userCenter");
+		for(int i=0;i<100;i++){
+			sc.accessService();
+			Thread.sleep(10000);
+		}	
+		Thread.sleep(1000000);
+	}
 
+	
+	public Map<String,Set<String>> getServices(String bizCode){
+		try {
+			List<String> children = client.getChildren().forPath("/"+bizCode);
+			System.out.println("-----------services----------");
+			for(String bizCh : children){
+				String servicepath = bizCh;
+				addChildWatcher("/"+bizCode+"/"+bizCh);
+				//System.out.println("-------bizCh-----------"+bizCh);
+				if(servicepath.endsWith(".do")){
+					servicepath = servicepath.replace(".", "/");
+					servicepath = servicepath.replace("/do", ".do");
+					if(!servicepath.startsWith("/"))
+						servicepath="/"+servicepath;
+				}else{
+					servicepath = servicepath.replace(".", "/");
+				}
+				if(!services.containsKey(servicepath))
+					services.put(servicepath, new HashSet<String>());
+				//System.out.println("------------------"+servicepath);
+
+				List<String> providers = client.getChildren().forPath(bizCode+"/"+bizCh);
+				for(String p : providers){
+					//System.out.println("------------------------"+p);
+					services.get(servicepath).add(p);
+					if(!servicesByP.containsKey(p)){
+						servicesByP.put(p, new HashSet<String>());
+					}
+					servicesByP.get(p).add(servicepath);
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		printService();
+		return services;
+	}
+	/**
+	 * -----------services----------
+service list-------/api/open/test1.do
+     --------192.168.199.222
+service list-------/api/open/test3.do
+     --------192.168.199.222
+service list-------/api/open/test2.do
+     --------192.168.199.222
+provider list-------192.168.199.222
+     ----------/api/open/test1.do
+     ----------/api/open/test3.do
+     ----------/api/open/test2.do
+access path=http://192.168.199.222:8081/configManagement/api/open/test1.do
+service list-------/api/open/test1.do
+     --------192.168.199.222
+service list-------/api/open/test3.do
+     --------192.168.199.222
+service list-------/api/open/test2.do
+     --------192.168.199.222
+provider list-------192.168.199.222
+     ----------/api/open/test1.do
+     ----------/api/open/test3.do
+     ----------/api/open/test2.do
+客户端子节点cache初始化数据完成
+service list-------/api/open/test1.do
+     --------192.168.199.222
+service list-------/api/open/test3.do
+     --------192.168.199.222
+service list-------/api/open/test2.do
+     --------192.168.199.222
+provider list-------192.168.199.222
+     ----------/api/open/test1.do
+     ----------/api/open/test3.do
+     ----------/api/open/test2.do
+客户端子节点cache初始化数据完成
+service list-------/api/open/test1.do
+     --------192.168.199.222
+service list-------/api/open/test3.do
+     --------192.168.199.222
+service list-------/api/open/test2.do
+     --------192.168.199.222
+provider list-------192.168.199.222
+     ----------/api/open/test1.do
+     ----------/api/open/test3.do
+     ----------/api/open/test2.do
+客户端子节点cache初始化数据完成
+	 * @author zlf 
+	 * @date 2016年7月17日 下午4:59:46
+	 */
+	private void accessService(){
+		String spath = null;
+		Set<String> srs = services.keySet();
+		List<String> srsadds =null;
+		for(String sr :srs){
+			if(services.get(sr)!=null && services.get(sr).size()>0){
+				srsadds = new ArrayList<String>();
+				srsadds.addAll(services.get(sr));
+				Collections.shuffle(srsadds);
+				spath ="http://"+srsadds.get(0)+":8081/configManagement"+sr;
+				System.out.println("access path="+spath);
+				String res ="";
+				try {
+					res = HttpClientUtil.getMethod(spath);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("res="+res);
+			}else{
+				System.out.println("access path "+sr+",没有服务提供者");
+			}
+		}
+	}
+	
 	public void addChildWatcher(String path) throws Exception {
-		final PathChildrenCache cache = new PathChildrenCache(this.client,
-				path, true);
+		final PathChildrenCache cache = new PathChildrenCache(this.client,path, true);
 		cache.start(StartMode.POST_INITIALIZED_EVENT);//ppt中需要讲StartMode
 		//System.out.println(cache.getCurrentData().size());
 		cache.getListenable().addListener(new PathChildrenCacheListener() {
@@ -52,19 +176,22 @@ public class ServiceConsumer {
 					PathChildrenCacheEvent event) throws Exception {
 				if(event.getType().equals(PathChildrenCacheEvent.Type.INITIALIZED)){
 					System.out.println("客户端子节点cache初始化数据完成");
-					//System.out.println("size="+cache.getCurrentData().size());
+					System.out.println("size="+cache.getCurrentData().size());
+				/** 新增 **/
 				}else if(event.getType().equals(PathChildrenCacheEvent.Type.CHILD_ADDED)){
-					//System.out.println("添加子节点:"+event.getData().getPath());
-					//System.out.println("修改子节点数据:"+new String(event.getData().getData()));
+					System.out.println("添加子节点:"+event.getData().getPath());
+					System.out.println("修改子节点数据:"+new String(event.getData().getData()));
 					updateLocalService(event.getData().getPath(),0);
+					/** 删除 **/
 				}else if(event.getType().equals(PathChildrenCacheEvent.Type.CHILD_REMOVED)){
 					System.out.println("删除子节点:"+event.getData().getPath());
 					//if(services.containsKey(event.getData().getPath()))
 					//servicesByP.containsKey(event.getData().)
 					updateLocalService(event.getData().getPath(),1);
+					/** 修改 (服务节点只涉及新增和删除，修改好像没意义)**/
 				}else if(event.getType().equals(PathChildrenCacheEvent.Type.CHILD_UPDATED)){
-					//System.out.println("修改子节点数据:"+event.getData().getPath());
-					//System.out.println("修改子节点数据:"+new String(event.getData().getData()));
+					System.out.println("修改子节点数据:"+event.getData().getPath());
+					System.out.println("修改子节点数据:"+new String(event.getData().getData()));
 				}
 			}
 		});
@@ -84,6 +211,7 @@ public class ServiceConsumer {
 		}else{
 			serviceName = serviceName.replace(".", "/");
 		}		
+		/**  (服务节点只涉及新增和删除，修改好像没意义)**/
 		if(dOrAdd==0){
 			//创建节点
 			if(!services.containsKey(serviceName)){
@@ -123,83 +251,6 @@ public class ServiceConsumer {
 				System.out.println("     ----------"+val);
 			}
 		}		
-	}
-	public Map<String,Set<String>> getServices(String bizCode){
-		try {
-			List<String> children = client.getChildren().forPath("/"+bizCode);
-			System.out.println("-----------services----------");
-			for(String bizCh : children){
-				String servicepath = bizCh;
-				addChildWatcher("/"+bizCode+"/"+bizCh);
-				//System.out.println("-------bizCh-----------"+bizCh);
-				if(servicepath.endsWith(".do")){
-					servicepath = servicepath.replace(".", "/");
-					servicepath = servicepath.replace("/do", ".do");
-					if(!servicepath.startsWith("/"))
-						servicepath="/"+servicepath;
-				}else{
-					servicepath = servicepath.replace(".", "/");
-				}
-				if(!services.containsKey(servicepath))
-					services.put(servicepath, new HashSet<String>());
-				//System.out.println("------------------"+servicepath);
-
-				List<String> providers = client.getChildren().forPath(bizCode+"/"+bizCh);
-				for(String p : providers){
-					//System.out.println("------------------------"+p);
-					services.get(servicepath).add(p);
-					if(!servicesByP.containsKey(p)){
-						servicesByP.put(p, new HashSet<String>());
-					}
-					servicesByP.get(p).add(servicepath);
-				}
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		printService();
-		return services;
-	}
-	
-	private void accessService(){
-		String spath = null;
-		Set<String> srs = services.keySet();
-		List<String> srsadds =null;
-		for(String sr :srs){
-			if(services.get(sr)!=null && services.get(sr).size()>0){
-				srsadds = new ArrayList<String>();
-				srsadds.addAll(services.get(sr));
-				Collections.shuffle(srsadds);
-				spath ="http://"+srsadds.get(0)+":8081/configManagement"+sr;
-				System.out.println("access path="+spath);
-				String res ="";
-				try {
-					res = HttpClientUtil.getMethod(spath);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				System.out.println("res="+res);
-			}else{
-				System.out.println("access path "+sr+",没有服务提供者");
-			}
-		}
-	}
-	
-	   	
-	public static void main(String[] args) throws InterruptedException {
-		ServiceConsumer sc = new ServiceConsumer();
-		sc.getServices("userCenter");
-		for(int i=0;i<100;i++){
-			sc.accessService();
-			Thread.sleep(10000);
-		}	
-		Thread.sleep(1000000);
 	}
 
 }

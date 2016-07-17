@@ -26,9 +26,31 @@ public class T01 {
 
 	private CuratorFramework client;
 
-	public T01() {
+	public static void main(String[] args) {
+		T01 t = null;
+		try {
+			t = new T01(null);
+			// t.createNode("/curator/test/node1", "t1-data".getBytes());// /base/curator/test
+			// t.addNodeDataWather("/curator/test/node1");
+			t.deleteNode("/webServiceCenter", 99);
+			// t.readNode("/curator/test");
+			// t.updateNode("/curator/test/node1", "zzzz".getBytes(), -1);
+			// t.addChildWather("/curator/test");
+			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			t.closeClient();
+		}
+	}
+
+	public T01(String base) {
 		RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
-		client = CuratorFrameworkFactory.builder().connectString("localhost:2181").sessionTimeoutMs(1000).retryPolicy(retryPolicy).namespace("base").build();
+		if (base != null) {
+			client = CuratorFrameworkFactory.builder().connectString("localhost:2181").sessionTimeoutMs(1000).retryPolicy(retryPolicy).namespace(base).build();
+		} else {
+			client = CuratorFrameworkFactory.builder().connectString("localhost:2181").sessionTimeoutMs(1000).retryPolicy(retryPolicy).build();
+		}
 		client.start();
 	}
 
@@ -61,7 +83,7 @@ public class T01 {
 	public void addChildWather(String path) throws Exception {
 		final PathChildrenCache node = new PathChildrenCache(client, path, true);
 		node.start(StartMode.BUILD_INITIAL_CACHE);
-//		node.start(StartMode.NORMAL);
+		// node.start(StartMode.NORMAL);
 		System.out.println(node.getCurrentData().size());
 		node.getListenable().addListener(new PathChildrenCacheListener() {
 
@@ -103,28 +125,11 @@ public class T01 {
 	}
 	public void deleteNode(String path, int version) throws Exception {
 		// 递归删除
-		client.delete().guaranteed().deletingChildrenIfNeeded().withVersion(version).inBackground(new DeleteCallBack()).forPath(path);
+		client.delete().guaranteed().deletingChildrenIfNeeded().inBackground(new DeleteCallBack()).forPath(path);
 		// 不递归
 		// client.delete().guaranteed().withVersion(version).inBackground(new DeleteCallBack()).forPath(path);
 	}
 
-	public static void main(String[] args) {
-		T01 t = null;
-		try {
-			t = new T01();
-			// t.createNode("/curator/test/node1", "t1-data".getBytes());// /base/curator/test
-			// t.addNodeDataWather("/curator/test/node1");
-			// t.deleteNode("/curator/test", 0);
-			// t.readNode("/curator/test");
-			// t.updateNode("/curator/test/node1", "zzzz".getBytes(), -1);
-			t.addChildWather("/curator/test");
-			Thread.sleep(3000);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			t.closeClient();
-		}
-	}
 }
 
 class DeleteCallBack implements BackgroundCallback {
@@ -135,7 +140,7 @@ class DeleteCallBack implements BackgroundCallback {
 		System.out.println(event.getPath() + ",data=" + event.getData());
 		System.out.println("type:" + event.getType());
 		System.out.println("code:" + event.getResultCode());
-
+		// org.apache.zookeeper.KeeperException.Code
 	}
 
 }

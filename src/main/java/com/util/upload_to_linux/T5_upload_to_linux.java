@@ -23,12 +23,12 @@ public class T5_upload_to_linux {
 	@Before
 	public void init(){
 		// 配置
-		BaseContext.server = ".cn";    /** .net|.cn       */
+		BaseContext.server = ".net";    /** .net|.cn       */
 		BaseContext.app = "idongri"; 	/** admin|idongri */
 		BaseContext.findType = "html";	/** class | html   */
 		BaseContext.isThread = true;
 		
-		BaseContext.svn_path = "G:\\svn\\idongriV3\\";
+		BaseContext.svn_path = "D:\\svn_code\\idongriV3\\";//D:\\svn_code\\idongriV3\\  G:\\svn\\idongriV3\\
 		BaseContext.moveToDir = "d:\\target\\";
 		BaseContext.init();
 		

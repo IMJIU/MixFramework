@@ -94,7 +94,17 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(net,customer,"/api/customer/getLatestDrugWeight",get);
 		
 		//推荐医生列表
-		result = exe(s236,customer,"/api/customer/getRecommendDoctorWithVideo?pageSize=10&pageNo=1",get);
+//		result = exe(s236,customer,"/api/customer/getRecommendDoctorWithVideo?pageSize=10&pageNo=1",get);
+		
+		//流程信息
+//		result = exe(local,customer,"/api/customer/getPlanFlowInfo?pageSize=10&pageNo=1",get);
+		
+		//申请表信息
+//		result = exe(local,customer,"/api/customer/getApplicationInfo",get);
+		
+		//项目列表
+		result = exe(net,customer,"/api/customer/plan/getPlanProjectList",get);
+		
 	}
 	
 	public static void doctor() throws Exception{
@@ -265,7 +275,7 @@ public class TestUrl extends HttpTestBase {
 
 	public static void redo() throws Exception {
 		System.out.println("result"+result);
-		if (result == null || "".equals(result) || "null".equals(result)|| result.indexOf("<html>")!=-1) {
+		if (result == null || "".equals(result) || "null".equals(result)|| result.indexOf("<html>")!=-1||result.indexOf("code\"")!=-1) {
 			System.out.println("#### error ####\n" + result);
 			login();
 			System.out.println("relogin... relogin..................");

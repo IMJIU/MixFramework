@@ -10,31 +10,50 @@ import com.linux.ftp.SSHConnector;
 public abstract class BaseContext {
 
 	public static String server = ".net";
-	public static String app = "admin";
+	public static String app = "idongri";
 	public static String findType = "html";// class | html
-	
+
 	public static boolean isThread = false;
 
-//	public final static String svn_path = "d:\\svn_code\\idongriV3\\";
-	public final static String svn_path = "G:\\svn\\idongriV3\\";
-	public final static String moveToDir = "d:\\target\\";
-
+	// public final static String svn_path = "d:\\svn_code\\idongriV3\\";
+	public  static String svn_path = "G:\\svn\\idongriV3\\";
+	public  static String moveToDir = "d:\\target\\";
 
 	public final static String linux_idongri_Path = "/usr/local/idongri/";
-	public final static String linux_webapp_Path = linux_idongri_Path + "webapps/"+app+"/";
-	public final static String linux_class_Path = linux_idongri_Path + "webapps/"+app+"/WEB-INF/classes/";
-	public final static String linux_lib_Path = linux_idongri_Path + "webapps/"+app+"/WEB-INF/lib/";
+	public static String linux_webapp_Path = linux_idongri_Path + "webapps/" + app + "/";
+	public static String linux_class_Path = linux_idongri_Path + "webapps/" + app + "/WEB-INF/classes/";
+	public static String linux_lib_Path = linux_idongri_Path + "webapps/" + app + "/WEB-INF/lib/";
 
 	public final static String current_path = Class.class.getClass().getResource("/").getPath();
-	public final static String classListFilePath = current_path + "class_list.properties";
-	public final static String htmlListFilePath = current_path + "html_list.properties";
+	public static String classListFilePath = current_path + "class_list.properties";
+	public static String htmlListFilePath = current_path + "html_list.properties";
 	// public final static String uploadHtmlFilePath = current_path +
 	// "upload_html_list.txt";
-	public final static String uploadHtmlFilePath = "g:\\github\\MixTest\\src\\main\\resources\\upload_html_list.txt";
-//	public final static String uploadHtmlFilePath = "D:\\git\\bak3\\MixTest\\src\\main\\resources\\upload_html_list.txt";
-	public final static String local_platform_webapp_Path = "D:\\svn_code\\idongriV3\\platform\\src\\main\\webapp\\";
-	public final static String local_platform_war_path = svn_path + "platform\\target\\";
-	public final static String local_admin_war_path = svn_path + "admin\\target\\";
+	public static String uploadHtmlFilePath = "g:\\github\\MixTest\\src\\main\\resources\\upload_html_list.txt";
+	// public final static String uploadHtmlFilePath =
+	// "D:\\git\\bak3\\MixTest\\src\\main\\resources\\upload_html_list.txt";
+	public  static String local_platform_webapp_Path =  svn_path + "platform\\src\\main\\webapp\\";
+	public static String local_platform_war_path = svn_path + "platform\\target\\";
+	public static String local_admin_war_path = svn_path + "admin\\target\\";
+
+	public static void main(String[] args) {
+		BaseContext.init();
+		System.out.println(BaseContext.uploadHtmlFilePath);
+	}
+
+	public static void init() {
+		linux_webapp_Path = linux_idongri_Path + "webapps/" + app + "/";
+		linux_class_Path = linux_idongri_Path + "webapps/" + app + "/WEB-INF/classes/";
+		linux_lib_Path = linux_idongri_Path + "webapps/" + app + "/WEB-INF/lib/";
+		
+		local_platform_war_path = svn_path + "platform\\target\\";
+		local_admin_war_path = svn_path + "admin\\target\\";
+		local_platform_webapp_Path =  svn_path + "platform\\src\\main\\webapp\\";
+		
+		classListFilePath = current_path + "class_list.properties";
+		htmlListFilePath = current_path + "html_list.properties";
+		uploadHtmlFilePath = current_path + "../../src/main/resources/upload_html_list.txt";
+	}
 
 	public final static String dao_jar = "common-dao-3.0-SNAPSHOT.jar";
 	public final static String service_jar = "common-service-3.0-SNAPSHOT.jar";

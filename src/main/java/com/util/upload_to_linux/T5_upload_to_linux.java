@@ -9,14 +9,12 @@ import org.springframework.context.annotation.Bean;
 
 import com.util.upload_to_linux.base.*;
 
+import scala.util.regexp.Base;
+
 public class T5_upload_to_linux {
 
 	static {
-		// 配置
-		BaseContext.server = ".cn";    /** .net|.cn       */
-		BaseContext.app = "admin"; 	/** admin|idongri */
-		BaseContext.findType = "html";	/** class | html   */
-		BaseContext.isThread = true;
+		
 	}
 	
 	UploadOperate upload;
@@ -24,6 +22,16 @@ public class T5_upload_to_linux {
 	
 	@Before
 	public void init(){
+		// 配置
+		BaseContext.server = ".cn";    /** .net|.cn       */
+		BaseContext.app = "idongri"; 	/** admin|idongri */
+		BaseContext.findType = "html";	/** class | html   */
+		BaseContext.isThread = true;
+		
+		BaseContext.svn_path = "G:\\svn\\idongriV3\\";
+		BaseContext.moveToDir = "d:\\target\\";
+		BaseContext.init();
+		
 		upload = new UploadOperate();
 		download = new DownloadOperator();
 	}

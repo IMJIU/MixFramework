@@ -11,7 +11,7 @@ import com.util.upload_to_linux.base.*;
 
 import scala.util.regexp.Base;
 
-public class T5_upload_to_linux {
+public class Upload_Download_With_Linux {
 
 	static {
 		

@@ -3,7 +3,7 @@ package com.data_structure;
 import java.util.*;
 import java.util.Map.Entry;
 
-import com.util.MD5;
+import com.util.lib.MD5;
 
 public class ConsistentHash<T> {
 

@@ -32,14 +32,14 @@ public class Upload_Download_With_Linux {
 		// 配置
 		BaseContext.server = ".net"; /** .net|.cn */
 		BaseContext.app = "idongri"; /** admin|idongri */
-		BaseContext.findType = "class"; /** class | html */
+		BaseContext.findType = "html"; /** class | html */
 		BaseContext.isThread = true;
 
 		BaseContext.svn_path = "D:\\svn_code\\idongriV3\\";// D:\\svn_code\\idongriV3
 															// G:\\svn\\idongriV3\\
 		BaseContext.moveToDir = "d:\\target\\";
 		BaseContext.init();
-
+		
 		upload = new UploadOperate();
 		download = new DownloadOperator();
 	}
@@ -64,12 +64,14 @@ public class Upload_Download_With_Linux {
 	/** 【扫描需要上传的html】 */
 	@Test
 	public void t3_scan_html() throws Exception {
+		BaseContext.findType = "html"; /** class | html */
 		FindOperator.processFile((s) -> UploadOperate.findUploadHtmlWriteToFile(s));
 	}
 
 	/** 【上传html文件】 */
 	@Test
 	public void t4_upload_html() throws Exception {
+		BaseContext.findType = "html"; /** class | html */
 		upload.doUploadHtmlFileListToLinux();
 	}
 

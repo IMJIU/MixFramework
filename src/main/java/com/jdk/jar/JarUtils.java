@@ -30,7 +30,7 @@ public class JarUtils {
 	final static Logger log = Logger.getLogger("jarUtils");
 
 	public static void main(String[] args) {
-		cpJar();
+		cpJar(path1,path2,null);
 	}
 
 	public static String path1 = "d://target//common-service-3.0-SNAPSHOT.jar";

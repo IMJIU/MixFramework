@@ -49,7 +49,7 @@ public abstract class BaseContext {
 		
 		classListFilePath = current_path + "class_list.properties";
 		htmlListFilePath = current_path + "html_list.properties";
-		uploadHtmlFilePath = current_path + "../../src/main/resources/upload_html_list.txt";
+		uploadHtmlFilePath = System.getProperty("user.dir") + "\\src\\main\\resources\\upload_html_list.txt";
 	}
 
 	public final static String dao_jar = "common-dao-3.0-SNAPSHOT.jar";

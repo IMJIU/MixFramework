@@ -60,7 +60,7 @@ public class UploadOperate extends FindOperator {
 			try {
 				String host = channelSftp.getSession().getHost();
 				if (!dirSet.contains(host + dir)) {
-					System.out.print("mkdir " + dir);
+					System.out.print("host:"+host+" mkdir " + dir);
 					executeCommand(host, "mkdir " + dir);
 					System.out.println("->mkdir over");
 					dirSet.add(host + dir);
@@ -130,7 +130,8 @@ public class UploadOperate extends FindOperator {
 				for (String filePath : Files.readAllLines(Paths.get(uploadHtmlFilePath))) {
 					path = filePath.substring(filePath.indexOf("webapp") + 6).replaceAll("\\\\", "/");
 					path = path.substring(1, path.lastIndexOf("/"));
-					System.out.println(linux_webapp_Path + "00000" + path);
+//					System.out.println(linux_webapp_Path + "00000" + path);
+					_mkDir(linux_webapp_Path + path);
 					_uploadToLinux(linux_webapp_Path + path, filePath, channelSftp);
 				}
 			} catch (Exception e) {

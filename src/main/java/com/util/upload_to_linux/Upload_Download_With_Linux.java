@@ -35,7 +35,7 @@ public class Upload_Download_With_Linux {
 		BaseContext.findType = "class"; /** class | html */
 		BaseContext.isThread = true;
 
-		BaseContext.svn_path = "D:\\svn_code\\idongriV3\\";// D:\\svn_code\\idongriV3\\
+		BaseContext.svn_path = "D:\\svn_code\\idongriV3\\";// D:\\svn_code\\idongriV3
 															// G:\\svn\\idongriV3\\
 		BaseContext.moveToDir = "d:\\target\\";
 		BaseContext.init();
@@ -86,18 +86,18 @@ public class Upload_Download_With_Linux {
 	public void t6_upload() throws Exception {
 		// upload.uploadToLinux(BaseContext.linux_lib_Path,
 		// BaseContext.moveToDir + BaseContext.dao_jar);
-		// upload.uploadToLinux(BaseContext.linux_lib_Path,
-		// BaseContext.moveToDir + BaseContext.service_jar);
+		upload.uploadToLinux(BaseContext.linux_lib_Path, BaseContext.moveToDir + BaseContext.service_jar);
 		// upload.uploadWarToLinux(BaseContext.linux_idongri_Path,
 		// BaseContext.local_admin_war_path);
-		upload.uploadWarToLinux(BaseContext.linux_idongri_Path, BaseContext.local_platform_war_path);
+		// upload.uploadWarToLinux(BaseContext.linux_idongri_Path,
+		// BaseContext.local_platform_war_path);
 
 	}
 
 	/** 【上传jar】 */
 	@Test
 	public void t7_upload_jar() throws Exception {
-		upload.uploadJarToLinux(BaseContext.moveToDir + BaseContext.host187 + "-" + BaseContext.service_jar, BaseContext.moveToDir + BaseContext.service_jar);
+		upload.uploadJarToLinux(BaseContext.moveToDir + BaseContext.host236 + "-" + BaseContext.service_jar, BaseContext.moveToDir + BaseContext.service_jar);
 	}
 
 	/** 【上传文件夹】 */

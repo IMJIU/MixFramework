@@ -103,10 +103,12 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(local,customer,"/api/customer/getApplicationInfo",get);
 		
 		//项目列表
-		result = exe(net,customer,"/api/customer/plan/getPlanProjectList",get);
+//		result = exe(net,customer,"/api/customer/plan/getPlanProjectList",get);
 		
 		//项目列表
 //		result = exe(local,customer,"/api/customer/addPrivateAssistantComment?privateAssistantId=1&replySpeedScore=1.5&attitudeScore=5.0&msg=kldfjladsfd",get);
+		
+		result = exe(net,customer,"/api/customer/plan/getPlanFlowInfo",get);
 		
 	}
 	

@@ -15,7 +15,6 @@ public abstract class BaseContext {
 
 	public static boolean isThread = false;
 
-	// public final static String svn_path = "d:\\svn_code\\idongriV3\\";
 	public  static String svn_path = "G:\\svn\\idongriV3\\";
 	public  static String moveToDir = "d:\\target\\";
 
@@ -27,11 +26,9 @@ public abstract class BaseContext {
 	public final static String current_path = Class.class.getClass().getResource("/").getPath();
 	public static String classListFilePath = current_path + "class_list.properties";
 	public static String htmlListFilePath = current_path + "html_list.properties";
-	// public final static String uploadHtmlFilePath = current_path +
-	// "upload_html_list.txt";
+
 	public static String uploadHtmlFilePath = "g:\\github\\MixTest\\src\\main\\resources\\upload_html_list.txt";
-	// public final static String uploadHtmlFilePath =
-	// "D:\\git\\bak3\\MixTest\\src\\main\\resources\\upload_html_list.txt";
+
 	public  static String local_platform_webapp_Path =  svn_path + "platform\\src\\main\\webapp\\";
 	public static String local_platform_war_path = svn_path + "platform\\target\\";
 	public static String local_admin_war_path = svn_path + "admin\\target\\";
@@ -81,7 +78,6 @@ public abstract class BaseContext {
 		connector.upload(dir, file, ftpChannel);
 	}
 
-	static HashSet<String> set = new HashSet<String>();
 
 	void _downloadFromLinux(String dir, String file, String to, ChannelSftp ftpChannel) throws Exception {
 		System.out.println("【from】:" + dir + file + "\n【to】:" + to);

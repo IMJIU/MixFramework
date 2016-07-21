@@ -7,14 +7,17 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
 
+import com.jdk.jar.JarUtils;
 import com.jdk.jar.ZipFileUtil;
 
 public class UploadOperate extends FindOperator {
+	private static HashSet<String> dirSet = new HashSet<String>();
 	/**
 	 * 读取文件中需要上传的文件 上传到linux
 	 * 
@@ -56,11 +59,11 @@ public class UploadOperate extends FindOperator {
 		loopServer((channelSftp) -> {
 			try {
 				String host = channelSftp.getSession().getHost();
-				if (!set.contains(host + dir)) {
+				if (!dirSet.contains(host + dir)) {
 					System.out.print("mkdir " + dir);
 					executeCommand(host, "mkdir " + dir);
 					System.out.println("->mkdir over");
-					set.add(host + dir);
+					dirSet.add(host + dir);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -162,12 +165,13 @@ public class UploadOperate extends FindOperator {
 	}
 
 	public void uploadJarToLinux(String fromJar, String toJar) throws Exception {
-		ZipFileUtil.decompressJarToJar(fromJar, toJar, (jOutputStream) -> {
+//		ZipFileUtil.decompressJarToJar(fromJar, toJar, (jOutputStream) -> {
+		JarUtils.cpJar(fromJar, toJar, (jOutputStream) -> {
 			try {
 				FindOperator.processFile((s) -> {
+					if(s.endsWith("Controller.class"))return;
 					try {
-						System.out.println(s);
-						System.out.println(s.substring(s.indexOf("com\\idongri")));
+//						System.out.println(s.substring(s.indexOf("com\\idongri")));
 						jOutputStream.putNextEntry(new ZipEntry(s.substring(s.indexOf("com\\idongri"))));
 						byte[] bytes = Files.readAllBytes(Paths.get(s));
 						jOutputStream.write(bytes, 0, bytes.length);
@@ -179,7 +183,7 @@ public class UploadOperate extends FindOperator {
 				e.printStackTrace();
 			}
 		});
-		uploadToLinux(linux_lib_Path, toJar);
+//		uploadToLinux(linux_lib_Path, toJar);
 //		writeJar2("d://target//121.40.150.187-common-service-3.0-SNAPSHOT.jar","d://target//common-service-3.0-SNAPSHOT.jar");
 //		writeJar("D:\\target\\PlanFlowServiceImpl.class","d://target//common-service-3.0-SNAPSHOT.jar");
 	}

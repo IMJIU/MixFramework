@@ -23,6 +23,8 @@ import org.apache.commons.compress.utils.IOUtils;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
+import com.book.jdk18.Process;
+
 public class JarUtils {
 
 	final static Logger log = Logger.getLogger("jarUtils");
@@ -31,27 +33,27 @@ public class JarUtils {
 		cpJar();
 	}
 
-	public static String path1 = "d://target//121.40.150.187-common-service-3.0-SNAPSHOT.jar";
+	public static String path1 = "d://target//common-service-3.0-SNAPSHOT.jar";
 	public static String path2 = "d://target//common-service-3.0-SNAPSHOT2.jar";
 
-	public static void cpJar() {
+	public static void cpJar(String fromJar,String toJar,Process<JarOutputStream>process) {
 		try {
 			// JarFile f1 = new JarFile(path1);
-			JarInputStream jarIn = new JarInputStream(new FileInputStream(path1));
-			JarOutputStream jarOut = new JarOutputStream(new FileOutputStream(path2));
+			JarInputStream jInputStream = new JarInputStream(new FileInputStream(fromJar));
+			JarOutputStream jOutputStream = new JarOutputStream(new FileOutputStream(toJar));
 			byte[] buf = new byte[4096];
 			JarEntry entry;
-			while ((entry = jarIn.getNextJarEntry()) != null) {
-				jarOut.putNextEntry(entry);
+			while ((entry = jInputStream.getNextJarEntry()) != null) {
+				jOutputStream.putNextEntry(new ZipEntry(entry.getName()));
 				int read;
-				while ((read = jarIn.read(buf)) != -1) {
-					jarOut.write(buf, 0, read);
+				while ((read = jInputStream.read(buf)) != -1 && read!=0) {
+					jOutputStream.write(buf, 0, read);
 				}
-				jarOut.closeEntry();
 			}
-			jarOut.flush();
-			jarOut.close();
-			jarIn.close();
+			if(process!=null) process.process(jOutputStream);
+			jOutputStream.flush();
+			jOutputStream.close();
+			jInputStream.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

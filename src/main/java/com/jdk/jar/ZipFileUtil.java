@@ -14,6 +14,7 @@ import org.apache.commons.compress.archivers.zip.Zip64Mode;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
+import org.junit.Test;
 
 import com.book.jdk18.Process;
 
@@ -25,6 +26,77 @@ import sun.tools.jar.resources.jar;
  * @author Luxh
  */
 public class ZipFileUtil {
+	public static String path1 = "d://target//121.40.150.187-common-service-3.0-SNAPSHOT.jar";
+	public static String path2 = "d://target//common-service-3.0-SNAPSHOT2.jar";
+	
+	public static void main(String[] args) {
+//		testCompressFiles2Zip();
+//		testDecompressZip();
+	}	
+	
+	/**
+	 * jar copyTo jar
+	 */
+	public static void decompressJarToJar(String jarPath, String toJarPath,Process<JarOutputStream>process) {
+		if (isEndsWithZip(jarPath)) {
+			File file = new File(jarPath);
+			if (file.exists()) {
+				ZipArchiveInputStream zinputStream = null;
+				JarOutputStream jOutputStream = null;
+				try {
+					zinputStream = new ZipArchiveInputStream(new FileInputStream(file));
+					jOutputStream = new JarOutputStream(new FileOutputStream(toJarPath));
+					ArchiveEntry archiveEntry = null;
+					while ((archiveEntry = zinputStream.getNextEntry()) != null) {
+						byte[] content = new byte[(int) archiveEntry.getSize()];
+						zinputStream.read(content);
+						try {
+							if (archiveEntry == null)
+								break;
+							jOutputStream.putNextEntry(new ZipEntry(archiveEntry.getName()));
+							jOutputStream.write(content, 0, content.length);
+						} catch (IOException e) {
+							throw new IOException(e);
+						}
+					}
+					if(process!=null) process.process(jOutputStream);
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						if (zinputStream != null) {
+							zinputStream.close();
+						}
+						jOutputStream.flush();
+						jOutputStream.close();
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}
+		}
+	}
+	
+	public static void testCompressFiles2Zip() {
+		// 存放待压缩文件的目录
+		File srcFile = new File("D:/target");
+		// 压缩后的zip文件路径
+		String zipFilePath = "d:/test2/test.zip";
+		if (srcFile.exists()) {
+			File[] files = srcFile.listFiles();
+			ZipFileUtil.compressFiles2Zip(files, zipFilePath);
+		}
+	}
+
+	
+	public static void testDecompressZip() {
+		// 压缩包所在路径
+		String zipFilePath = path1;
+		// 解压后的文件存放目录
+		String saveFileDir = "d:/target/unzip/";
+		// 调用解压方法
+		ZipFileUtil.decompressZip(zipFilePath, saveFileDir);
+	}
 
 	/**
 	 * 把文件压缩成zip格式
@@ -169,55 +241,8 @@ public class ZipFileUtil {
 		return flag;
 	}
 
-	public static String path1 = "d://target//121.40.150.187-common-service-3.0-SNAPSHOT.jar";
-	public static String path2 = "d://target//common-service-3.0-SNAPSHOT2.jar";
+	
 
-	/**
-	 * 把zip文件解压到指定的文件夹
-	 * 
-	 * @param jarPath
-	 *            zip文件路径, 如 "D:/test/aa.zip"
-	 * @param saveFileDir
-	 *            解压后的文件存放路径, 如"D:/test/"
-	 */
-	public static void decompressJarToJar(String jarPath, String toJarPath,Process<JarOutputStream>process) {
-		if (isEndsWithZip(jarPath)) {
-			File file = new File(jarPath);
-			if (file.exists()) {
-				ZipArchiveInputStream zinputStream = null;
-				JarOutputStream jOutputStream = null;
-				try {
-					zinputStream = new ZipArchiveInputStream(new FileInputStream(file));
-					jOutputStream = new JarOutputStream(new FileOutputStream(toJarPath));
-					ArchiveEntry archiveEntry = null;
-					while ((archiveEntry = zinputStream.getNextEntry()) != null) {
-						byte[] content = new byte[(int) archiveEntry.getSize()];
-						zinputStream.read(content);
-						try {
-							if (archiveEntry == null)
-								break;
-							jOutputStream.putNextEntry(new ZipEntry(archiveEntry.getName()));
-							jOutputStream.write(content, 0, content.length);
-						} catch (IOException e) {
-							throw new IOException(e);
-						}
-					}
-					if(process!=null) process.process(jOutputStream);
-				} catch (Exception e) {
-					e.printStackTrace();
-				} finally {
-					try {
-						if (zinputStream != null) {
-							zinputStream.close();
-						}
-						jOutputStream.flush();
-						jOutputStream.close();
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					}
-				}
-			}
-		}
-	}
+	
 
 }

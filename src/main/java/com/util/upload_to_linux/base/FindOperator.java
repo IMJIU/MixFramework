@@ -42,6 +42,7 @@ public class FindOperator extends BaseContext {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filepath)));
 		String fileName = null;
 		while ((fileName = reader.readLine()) != null) {
+			System.out.println("finding:"+fileName);
 			findFile(fileName, func);
 		}
 		reader.close();

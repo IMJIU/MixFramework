@@ -1,1 +1,1 @@
-G:\svn\idongriV3\admin\src\main\webapp\js\admin\sys\dailyNewsGroup.js
+D:\svn_code\idongriV3\platform\src\main\webapp\html\plan\joinPlan.html

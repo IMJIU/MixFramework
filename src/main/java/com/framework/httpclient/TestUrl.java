@@ -96,8 +96,6 @@ public class TestUrl extends HttpTestBase {
 		//推荐医生列表
 //		result = exe(s236,customer,"/api/customer/getRecommendDoctorWithVideo?pageSize=10&pageNo=1",get);
 		
-		//流程信息
-//		result = exe(local,customer,"/api/customer/getPlanFlowInfo?pageSize=10&pageNo=1",get);
 		
 		//申请表信息
 //		result = exe(local,customer,"/api/customer/getApplicationInfo",get);
@@ -109,11 +107,22 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(local,customer,"/api/customer/addPrivateAssistantComment?privateAssistantId=1&replySpeedScore=1.5&attitudeScore=5.0&msg=kldfjladsfd",get);
 		
 		//保障计划流程信息
-//		result = exe(net,customer,"/api/customer/plan/getPlanFlowInfo",get);
+//		result = exe(local,customer,"/api/customer/plan/getPlanFlowInfo",get);
 		
 		//物流信息
-		result = exe(local,customer,"/api/customer/getLogisticsTrack?recordId=194",get);
+//		result = exe(cn,customer,"/api/customer/getLogisticsTrack?recordId=325",get);
+		result = exe(local,customer,"/api/customer/plan/getExpressInfo?drugRecordId=193",get);
+
+//		result = exe(net,customer,"/api/customer/plan/markJoinPlanState?recordId=194",get);
 		
+		//温馨提醒
+//		result = exe(local,customer,"/api/customer/plan/getAttention",get);
+		
+		
+		//温馨提醒
+//		result = exe(local,customer,"/api/customer/getHealthNewsList",get);
+		
+//		result = exe(net,customer,"/api/open/getCopywriterText?group=plan_pay_hint",get);
 	}
 	
 	public static void doctor() throws Exception{
@@ -284,7 +293,7 @@ public class TestUrl extends HttpTestBase {
 
 	public static void redo() throws Exception {
 		System.out.println("result"+result);
-		if (result == null || "".equals(result) || "null".equals(result)|| result.indexOf("<html>")!=-1||result.indexOf("code\"")!=-1) {
+		if (result == null || "".equals(result) || "null".equals(result)|| result.indexOf("<html>")!=-1) {
 			System.out.println("#### error ####\n" + result);
 			login();
 			System.out.println("relogin... relogin..................");

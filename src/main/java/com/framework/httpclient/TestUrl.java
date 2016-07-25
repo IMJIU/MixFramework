@@ -74,6 +74,9 @@ public class TestUrl extends HttpTestBase {
 
 		//v3.0  发送病案
 //		result = exe(local,customer,"/api/customer/saveAndSendCase?doctorId=0&caseId=9999&name=zlf&sex=1&birthday=190231203712&work=working&height=185&weight=64&describe=zzzz&solution=none&caseImageList=['xxxx.jpg','2222.jpg']&terminal=1&doctorId=137&type=text",get);
+		
+		//v4.0  发送病案
+//		result = exe(local,customer,"/api/customer/sendFollowUpCase?privateAssistantId=1&doctorId=0&caseId=9999&name=zlf&sex=1&birthday=190231203712&work=working&height=185&weight=64&describe=zzzz&questionsAndAnswers=[{},{}]&caseImageList=['xxxx.jpg','2222.jpg']",get);
 
 		// 根据服务购买记录id获取评价
 		//result = exe("/api/customer/getCommentListByRecord?serviceRecordId=2869",get);
@@ -101,13 +104,13 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(local,customer,"/api/customer/getApplicationInfo",get);
 		
 		//项目列表
-//		result = exe(net,customer,"/api/customer/plan/getPlanProjectList",get);
+		result = exe(net,customer,"/api/customer/plan/getPlanProjectList",get);
 		
 		//增加评论
 //		result = exe(local,customer,"/api/customer/addPrivateAssistantComment?privateAssistantId=1&replySpeedScore=1.5&attitudeScore=5.0&msg=kldfjladsfd",get);
 		
 		//保障计划流程信息
-		result = exe(net,customer,"/api/customer/plan/getPlanFlowInfo",get);
+//		result = exe(net,customer,"/api/customer/plan/getPlanFlowInfo",get);
 		
 		//物流信息
 //		result = exe(cn,customer,"/api/customer/getLogisticsTrack?recordId=325",get);

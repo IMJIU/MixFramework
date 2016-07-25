@@ -39,10 +39,9 @@ public class Upload_Download_With_Linux {
 		// D:\\svn_code\\idongriV3_packing\\
 		// G:\\svn\\idongriV3\\
 		BaseContext.svn_path = "d:\\svn_code\\idongriV3_packing\\";
-
 		BaseContext.moveToDir = "d:\\target\\";
+		
 		BaseContext.init();
-
 		upload = new UploadOperate();
 		download = new DownloadOperator();
 	}

@@ -34,13 +34,15 @@ public class Upload_Download_With_Linux {
 		BaseContext.app = "idongri"; /** admin|idongri */
 		BaseContext.findType = "html"; /** class | html */
 		BaseContext.isThread = true;
+		
+		// D:\\svn_code\\idongriV3\\
+		// D:\\svn_code\\idongriV3_packing\\
+		// G:\\svn\\idongriV3\\
+		BaseContext.svn_path = "d:\\svn_code\\idongriV3_packing\\";
 
-		BaseContext.svn_path = "D:\\svn_code\\idongriV3_packing\\";// D:\\svn_code\\idongriV3
-		// D:\\svn_code\\idongriV3_packing
-															// G:\\svn\\idongriV3\\
 		BaseContext.moveToDir = "d:\\target\\";
 		BaseContext.init();
-		
+
 		upload = new UploadOperate();
 		download = new DownloadOperator();
 	}
@@ -93,7 +95,7 @@ public class Upload_Download_With_Linux {
 		upload.uploadToLinux(BaseContext.linux_lib_Path, BaseContext.moveToDir + BaseContext.service_jar);
 
 	}
-	
+
 	/** 【上传jar】 */
 	@Test
 	public void t6_upload_war() throws Exception {
@@ -102,6 +104,7 @@ public class Upload_Download_With_Linux {
 		upload.uploadWarToLinux(BaseContext.linux_idongri_Path, BaseContext.local_platform_war_path);
 
 	}
+
 	/** 【上传jar】 */
 	@Test
 	public void t7_upload_jar() throws Exception {

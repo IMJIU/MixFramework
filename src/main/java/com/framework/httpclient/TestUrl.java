@@ -107,11 +107,11 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(local,customer,"/api/customer/addPrivateAssistantComment?privateAssistantId=1&replySpeedScore=1.5&attitudeScore=5.0&msg=kldfjladsfd",get);
 		
 		//保障计划流程信息
-//		result = exe(local,customer,"/api/customer/plan/getPlanFlowInfo",get);
+		result = exe(net,customer,"/api/customer/plan/getPlanFlowInfo",get);
 		
 		//物流信息
 //		result = exe(cn,customer,"/api/customer/getLogisticsTrack?recordId=325",get);
-		result = exe(local,customer,"/api/customer/plan/getExpressInfo?drugRecordId=193",get);
+//		result = exe(local,customer,"/api/customer/plan/getExpressInfo?drugRecordId=193",get);
 
 //		result = exe(net,customer,"/api/customer/plan/markJoinPlanState?recordId=194",get);
 		
@@ -119,8 +119,8 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(local,customer,"/api/customer/plan/getAttention",get);
 		
 		
-		//温馨提醒
-//		result = exe(local,customer,"/api/customer/getHealthNewsList",get);
+		//健康日报
+//		result = exe(net,customer,"/api/customer/getHealthNewsList",get);
 		
 //		result = exe(net,customer,"/api/open/getCopywriterText?group=plan_pay_hint",get);
 	}

@@ -170,9 +170,9 @@ public class SSHConnector {
 				public void end() {
 					go = false;
 					if(BaseContext.isThread){
-						System.out.print("." + (Math.round(((double) process / total) * 100)) + "%->upload over ->" + host );
+						System.out.println("." + (Math.round(((double) process / total) * 100)) + "%->upload over ->" + host );
 					}else{
-						System.out.print("." + (Math.round(((double) process / total) * 100)) + "%->upload over");
+						System.out.println("." + (Math.round(((double) process / total) * 100)) + "%->upload over");
 					}
 				}
 

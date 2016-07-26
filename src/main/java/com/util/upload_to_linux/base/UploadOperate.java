@@ -56,19 +56,23 @@ public class UploadOperate extends FindOperator {
 	}
 
 	void _mkDir(String dir) {
-		loopServer((channelSftp) -> {
-			try {
-				String host = channelSftp.getSession().getHost();
-				if (!dirSet.contains(host + dir)) {
-					System.out.print("host:"+host+" mkdir " + dir);
-					executeCommand(host, "mkdir " + dir);
-					System.out.println("->mkdir over");
-					dirSet.add(host + dir);
+	
+			loopServer((channelSftp) -> {
+				try {
+					String host = channelSftp.getSession().getHost();
+					if (!dirSet.contains(host + dir)) {
+						if(mkDir){
+							System.out.print("host:"+host+" mkdir " + dir);
+							executeCommand(host, "mkdir " + dir);
+							System.out.println("->mkdir over");
+							dirSet.add(host + dir);
+						}
+						
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
+			});
 
 	}
 
@@ -83,17 +87,19 @@ public class UploadOperate extends FindOperator {
 	 * @param file
 	 */
 	public void uploadDirToLinux(String baseDir, File file, String regex) {
-		String name1 = baseDir + file.getAbsolutePath().replace(BaseContext.local_platform_webapp_Path, "").replaceAll("\\\\", "/");
+		String name1 = baseDir + file.getAbsolutePath().replace(BaseContext.local_app_webapp_Path, "").replaceAll("\\\\", "/");
 		String path1 = name1.substring(0, name1.lastIndexOf("/"));
 		if (file.isDirectory()) {
 			_mkDir(path1);
 			for (File f : file.listFiles()) {
-				String name = baseDir + f.getAbsolutePath().replace(BaseContext.local_platform_webapp_Path, "").replaceAll("\\\\", "/");
+				String name = baseDir + f.getAbsolutePath().replace(BaseContext.local_app_webapp_Path, "").replaceAll("\\\\", "/");
 				String path = name.substring(0, name.lastIndexOf("/"));
 				_mkDir(path);
 				if (f.isDirectory()) {
 					uploadDirToLinux(baseDir, f, regex);
 				} else if (regex != null && f.getName().matches(regex)) {
+					uploadToLinux(path, f.getAbsolutePath());
+				} else {
 					uploadToLinux(path, f.getAbsolutePath());
 				}
 			}
@@ -184,7 +190,7 @@ public class UploadOperate extends FindOperator {
 				e.printStackTrace();
 			}
 		});
-//		uploadToLinux(linux_lib_Path, toJar);
+		uploadToLinux(linux_lib_Path, toJar);
 //		writeJar2("d://target//121.40.150.187-common-service-3.0-SNAPSHOT.jar","d://target//common-service-3.0-SNAPSHOT.jar");
 //		writeJar("D:\\target\\PlanFlowServiceImpl.class","d://target//common-service-3.0-SNAPSHOT.jar");
 	}

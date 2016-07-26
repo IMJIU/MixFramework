@@ -14,7 +14,8 @@ public abstract class BaseContext {
 	public static String findType = "html";// class | html
 
 	public static boolean isThread = false;
-
+	public static boolean mkDir = false;
+	
 	public  static String svn_path = "G:\\svn\\idongriV3\\";
 	public  static String moveToDir = "d:\\target\\";
 
@@ -27,12 +28,13 @@ public abstract class BaseContext {
 	public static String classListFilePath = current_path + "class_list.properties";
 	public static String htmlListFilePath = current_path + "html_list.properties";
 
-	public static String uploadHtmlFilePath = "g:\\github\\MixTest\\src\\main\\resources\\upload_html_list.txt";
+	public static String uploadHtmlFilePath = System.getProperty("user.dir") + "\\src\\main\\resources\\upload_html_list.txt";
 
-	public  static String local_platform_webapp_Path =  svn_path + "platform\\src\\main\\webapp\\";
-	public static String local_platform_war_path = svn_path + "platform\\target\\";
-	public static String local_admin_war_path = svn_path + "admin\\target\\";
-
+	public  static String local_app_webapp_Path =  svn_path  + app + "\\src\\main\\webapp\\";
+	public static String local_app_war_path = svn_path  + app + "\\target\\";
+	
+	public static String local_webapp_Path;
+	
 	public static void main(String[] args) {
 		BaseContext.init();
 		System.out.println(BaseContext.uploadHtmlFilePath);
@@ -41,11 +43,14 @@ public abstract class BaseContext {
 	public static void init() {
 		linux_webapp_Path = linux_idongri_Path + "webapps/" + app + "/";
 		linux_class_Path = linux_idongri_Path + "webapps/" + app + "/WEB-INF/classes/";
+
 		linux_lib_Path = linux_idongri_Path + "webapps/" + app + "/WEB-INF/lib/";
+		if(app.equals("platform"))
+			linux_lib_Path = linux_idongri_Path + "webapps/idongri/WEB-INF/lib/";
 		
-		local_platform_war_path = svn_path + "platform\\target\\";
-		local_admin_war_path = svn_path + "admin\\target\\";
-		local_platform_webapp_Path =  svn_path + "platform\\src\\main\\webapp\\";
+		local_app_war_path = svn_path  + app + "\\target\\";
+		local_app_webapp_Path =  svn_path  + app + "\\src\\main\\webapp\\";
+		local_webapp_Path =  svn_path + app +"\\src\\main\\webapp\\";
 		
 		classListFilePath = current_path + "class_list.properties";
 		htmlListFilePath = current_path + "html_list.properties";

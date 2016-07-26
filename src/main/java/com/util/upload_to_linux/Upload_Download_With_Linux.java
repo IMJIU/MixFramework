@@ -20,19 +20,15 @@ import scala.util.regexp.Base;
 
 public class Upload_Download_With_Linux {
 
-	static {
-
-	}
-
-	UploadOperate upload;
-	DownloadOperator download;
+	private UploadOperate upload;
+	private DownloadOperator download;
 
 	@Before
 	public void init() {
 		// 配置
 		BaseContext.server = ".net"; /** .net|.cn */
-		BaseContext.app = "idongri"; /** admin|idongri */
-		BaseContext.findType = "html"; /** class | html */
+		BaseContext.app = "platform"; /** admin|platform */
+		BaseContext.findType = "class"; /** class | html */
 		BaseContext.isThread = true;
 		
 		// D:\\svn_code\\idongriV3\\
@@ -97,28 +93,34 @@ public class Upload_Download_With_Linux {
 
 	/** 【上传jar】 */
 	@Test
-	public void t6_upload_war() throws Exception {
+	public void t6_upload_WAR() throws Exception {
 		// upload.uploadWarToLinux(BaseContext.linux_idongri_Path,
 		// BaseContext.local_admin_war_path);
-		upload.uploadWarToLinux(BaseContext.linux_idongri_Path, BaseContext.local_platform_war_path);
-
+//		BaseContext.app = "platform";
+//		BaseContext.server = ".net";
+//		BaseContext.init();
+		upload.uploadWarToLinux(BaseContext.linux_idongri_Path, BaseContext.local_app_war_path);
 	}
 
 	/** 【上传jar】 */
 	@Test
-	public void t7_upload_jar() throws Exception {
-		upload.uploadJarToLinux(BaseContext.moveToDir + BaseContext.host236 + "-" + BaseContext.service_jar, BaseContext.moveToDir + BaseContext.service_jar);
+	public void t7_upload_JAR() throws Exception {
+		upload.uploadJarToLinux(BaseContext.moveToDir + BaseContext.host187 + "-" + BaseContext.service_jar, BaseContext.moveToDir + BaseContext.service_jar);
 	}
 
 	/** 【上传文件夹】 */
 	@Test
-	public void t8_upload_dir() throws Exception {
+	public void t8_upload_DIR() throws Exception {
 		// UploadOperate.uploadDirToLinux(BaseContext.linux_webapp_Path, new
 		// File(BaseContext.local_platform_webapp_Path + "html/card"));
 		// upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new
 		// File(BaseContext.local_platform_webapp_Path +
 		// "html/activity"),"decocti\\S+");
-		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_platform_webapp_Path + "images/activity"), "daily\\S+");
+		BaseContext.app = "admin";
+		BaseContext.server = ".net";
+		BaseContext.init();
+//		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_app_webapp_Path + "extension"), "daily\\S+");
+		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_app_webapp_Path + "extension"), null);
 		/** 【上传文件夹】 */
 		// UploadOperate.uploadDirToLinux(BaseContext.linux_webapp_Path, new
 		// File(BaseContext.local_platform_webapp_Path + "html/card"));

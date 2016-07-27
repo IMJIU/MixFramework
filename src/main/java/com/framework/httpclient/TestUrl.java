@@ -17,7 +17,7 @@ public class TestUrl extends HttpTestBase {
 		if (userType == 2) {// 医生 11111111115 12088888888 12988888888 13159637313 13084935126 13793899137 13645041346
 			exe(http + "/api/open/doctorLogin2?terminal=1&versionCode=1&phoneNumber=13645041346&password=123456", GET);
 		} else {// 病人18650450008 13645041346 13011111111 13099999999
-			exe(http + "/api/open/customerLogin2?phoneNumber=13645041346&password=123456&terminal=12&versionCode=10&version=12", GET);
+			exe(http + "/api/open/customerLogin2?phoneNumber=15060717072&password=123456&terminal=12&versionCode=10&version=12", GET);
 		}
 	}
 	

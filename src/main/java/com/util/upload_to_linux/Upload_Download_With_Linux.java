@@ -117,7 +117,8 @@ public class Upload_Download_With_Linux {
 		// File(BaseContext.local_platform_webapp_Path +
 		// "html/activity"),"decocti\\S+");
 		BaseContext.app = "admin";
-		BaseContext.server = ".net";
+		BaseContext.server = ".cn";
+		BaseContext.mkDir = true;
 		BaseContext.init();
 //		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_app_webapp_Path + "extension"), "daily\\S+");
 		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_app_webapp_Path + "extension"), null);

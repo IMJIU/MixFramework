@@ -43,11 +43,12 @@ public abstract class BaseContext {
 	public static void init() {
 		linux_webapp_Path = linux_idongri_Path + "webapps/" + app + "/";
 		linux_class_Path = linux_idongri_Path + "webapps/" + app + "/WEB-INF/classes/";
-
 		linux_lib_Path = linux_idongri_Path + "webapps/" + app + "/WEB-INF/lib/";
-		if(app.equals("platform"))
+		if(app.equals("platform")){
 			linux_lib_Path = linux_idongri_Path + "webapps/idongri/WEB-INF/lib/";
-		
+			linux_webapp_Path = linux_idongri_Path + "webapps/idongri/";
+			linux_class_Path = linux_idongri_Path + "webapps/idongri/WEB-INF/classes/";
+		}
 		local_app_war_path = svn_path  + app + "\\target\\";
 		local_app_webapp_Path =  svn_path  + app + "\\src\\main\\webapp\\";
 		local_webapp_Path =  svn_path + app +"\\src\\main\\webapp\\";

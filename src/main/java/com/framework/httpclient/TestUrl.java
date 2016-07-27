@@ -17,7 +17,7 @@ public class TestUrl extends HttpTestBase {
 		if (userType == 2) {// 医生 11111111115 12088888888 12988888888 13159637313 13084935126 13793899137 13645041346
 			exe(http + "/api/open/doctorLogin2?terminal=1&versionCode=1&phoneNumber=13645041346&password=123456", GET);
 		} else {// 病人18650450008 13645041346 13011111111 13099999999
-			exe(http + "/api/open/customerLogin2?phoneNumber=15060717072&password=123456&terminal=12&versionCode=10&version=12", GET);
+			exe(http + "/api/open/customerLogin2?phoneNumber=13645041346&password=123456&terminal=12&versionCode=10&version=12", GET);
 		}
 	}
 	
@@ -110,11 +110,10 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(local,customer,"/api/customer/addPrivateAssistantComment?privateAssistantId=1&replySpeedScore=1.5&attitudeScore=5.0&msg=kldfjladsfd",get);
 		
 		//保障计划流程信息
-		result = exe(net,customer,"/api/customer/plan/getPlanFlowInfo",get);
+//		result = exe(local,customer,"/api/customer/plan/getPlanFlowInfo",get);
 		
 		//物流信息
-//		result = exe(cn,customer,"/api/customer/getLogisticsTrack?recordId=325",get);
-//		result = exe(local,customer,"/api/customer/plan/getExpressInfo?drugRecordId=193",get);
+		result = exe(local,customer,"/api/customer/getLogisticsInfo?drugRecordId=194",get);
 
 //		result = exe(net,customer,"/api/customer/plan/markJoinPlanState?recordId=194",get);
 		

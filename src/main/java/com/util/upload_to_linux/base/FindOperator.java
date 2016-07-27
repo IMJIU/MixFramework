@@ -16,15 +16,16 @@ public class FindOperator extends BaseContext {
 	 * @param func
 	 * @throws Exception
 	 */
-	public  void localProcessFile(File dir, Process<File> func) throws Exception {
+	public void localProcessFile(File dir, Process<File> func) throws Exception {
 		for (File f : dir.listFiles()) {
 			if (f.isDirectory()) {
 				localProcessFile(f, func);
-			}else{
+			} else {
 				func.process(f);
 			}
 		}
 	}
+
 	/**
 	 * 处理文件入口-实调用搜索，回调处理
 	 * 
@@ -42,7 +43,7 @@ public class FindOperator extends BaseContext {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filepath)));
 		String fileName = null;
 		while ((fileName = reader.readLine()) != null) {
-			System.out.println("finding:"+fileName);
+			System.out.println("finding:" + fileName);
 			findFile(fileName, func);
 		}
 		reader.close();
@@ -55,7 +56,7 @@ public class FindOperator extends BaseContext {
 	 * @param func
 	 * @throws Exception
 	 */
-	private  static void findFile(String fileName, Process<String> func) throws Exception {
+	private static void findFile(String fileName, Process<String> func) throws Exception {
 		File dir = new File(svn_path);
 		for (File f : dir.listFiles()) {
 			if (f.isDirectory()) {
@@ -65,7 +66,13 @@ public class FindOperator extends BaseContext {
 				else
 					target = new File(f.getAbsolutePath() + "\\src\\main\\webapp\\");
 				if (target.exists()) {
-					findFile(target, fileName, func);
+					if (fileName.endsWith("xml")) {
+						if (f.getName().equals("platform")) {
+							findFile(target, fileName, func);
+						}
+					} else {
+						findFile(target, fileName, func);
+					}
 				}
 			}
 		}
@@ -78,7 +85,7 @@ public class FindOperator extends BaseContext {
 	 * @param func
 	 * @throws Exception
 	 */
-	private  static void findFile(File dir, String fileName, Process<String> func) throws Exception {
+	private static void findFile(File dir, String fileName, Process<String> func) throws Exception {
 		for (File f : dir.listFiles()) {
 			if (f.isDirectory()) {
 				findFile(f, fileName, func);

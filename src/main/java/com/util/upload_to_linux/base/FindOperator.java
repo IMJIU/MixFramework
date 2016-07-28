@@ -70,7 +70,10 @@ public class FindOperator extends BaseContext {
 						if (f.getName().equals("platform")) {
 							findFile(target, fileName, func);
 						}
-					} else {
+					} else if(BaseContext.app.equals("platform")){
+						if(!f.getName().equals("admin"))
+							findFile(target, fileName, func);
+					}else {
 						findFile(target, fileName, func);
 					}
 				}

@@ -6,15 +6,25 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.ConnectException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -38,15 +48,16 @@ import org.apache.http.protocol.HttpContext;
 import com.alibaba.fastjson.JSONObject;
 import com.framework.httpclient.JsonTool;
 import com.framework.httpclient.Test_weixin;
+import com.framework.weixin.MyTrustManager;
 
 public class HttpWeiXinBase extends HttpTestBase {
 
 	//测试
-	public static String appid = "wx8517971af979361b";
-	public static String appsecret = "d4624c36b6795d1d99dcf0547af5443d";
+//	public static String appid = "wx8517971af979361b";
+//	public static String appsecret = "d4624c36b6795d1d99dcf0547af5443d";
 	//线上
-//	public static String appid = "wxec2698856db6a0f6";
-//	public static String appsecret = "9ccc25b7468a87f3ab317ae46c016a1d";
+	public static String appid = "wxec2698856db6a0f6";
+	public static String appsecret = "9ccc25b7468a87f3ab317ae46c016a1d";
 	
 	//app线上
 //	public static String appid = "wx33b3f9fc372960ce";
@@ -68,6 +79,18 @@ public class HttpWeiXinBase extends HttpTestBase {
 			} else {
 				isPass = check(executePost(url, true));
 			}
+		}
+	}
+	public static void doPost(String url,String param) throws Exception {
+		String[] ps = param.split("&");
+		Map map = new HashMap<>();
+		for (String pp : ps) {
+			String[] kv = pp.split("=");
+			map.put(kv[0], kv[1]);
+		}
+		url = url.replaceAll("ACCESS_TOKEN", getToken());
+		if(check(executePost(url, map, true))){
+			executePost(url, map, true);
 		}
 	}
 	public static boolean check(String result) throws Exception {
@@ -94,6 +117,76 @@ public class HttpWeiXinBase extends HttpTestBase {
 	 * @return
 	 */
 	public static String getToken() {
-		return readFileContent("token.tmp");
+		String token =  readFileContent("token.tmp");
+		if(token == null){
+			try {
+				requestToken();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return readFileContent("token.tmp");
+		}else{
+			return token;
+		}
+		
+		
+	}
+	
+	
+	/**
+	 */
+	public static String httpRequest(String requestUrl, String requestMethod, String outputStr) {
+		StringBuffer buffer = new StringBuffer();
+		try {
+			// 创建SSLContext对象，并使用我们指定的信任管理器初始化
+			TrustManager[] tm = { new MyTrustManager() };
+			SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+			sslContext.init(null, tm, new java.security.SecureRandom());
+			// 从上述SSLContext对象中得到SSLSocketFactory对象
+			SSLSocketFactory ssf = sslContext.getSocketFactory();
+
+			URL url = new URL(requestUrl);
+			HttpsURLConnection httpUrlConn = (HttpsURLConnection) url.openConnection();
+			httpUrlConn.setSSLSocketFactory(ssf);
+
+			httpUrlConn.setDoOutput(true);
+			httpUrlConn.setDoInput(true);
+			httpUrlConn.setUseCaches(false);
+			// 设置请求方式（GET/POST）
+			httpUrlConn.setRequestMethod(requestMethod);
+
+			if ("GET".equalsIgnoreCase(requestMethod))
+				httpUrlConn.connect();
+
+			// 当有数据需要提交时
+			if (null != outputStr) {
+				OutputStream outputStream = httpUrlConn.getOutputStream();
+				// 注意编码格式，防止中文乱码
+				outputStream.write(outputStr.getBytes("UTF-8"));
+				outputStream.close();
+			}
+
+			// 将返回的输入流转换成字符串
+			InputStream inputStream = httpUrlConn.getInputStream();
+			InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");
+			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+			String str = null;
+			while ((str = bufferedReader.readLine()) != null) {
+				buffer.append(str);
+			}
+			bufferedReader.close();
+			inputStreamReader.close();
+			// 释放资源
+			inputStream.close();
+			inputStream = null;
+			httpUrlConn.disconnect();
+			return buffer.toString();
+		} catch (ConnectException ce) {
+			ce.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

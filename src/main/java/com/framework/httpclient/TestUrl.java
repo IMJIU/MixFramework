@@ -110,10 +110,10 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(local,customer,"/api/customer/addPrivateAssistantComment?privateAssistantId=1&replySpeedScore=1.5&attitudeScore=5.0&msg=kldfjladsfd",get);
 		
 		//保障计划流程信息
-//		result = exe(local,customer,"/api/customer/plan/getPlanFlowInfo",get);
+		result = exe(net,customer,"/api/customer/plan/getPlanFlowInfo",get);
 		
 		//物流信息
-		result = exe(local,customer,"/api/customer/getLogisticsInfo?drugRecordId=194",get);
+//		result = exe(net,customer,"/api/customer/getLogisticsInfo?drugRecordId=194",get);
 
 //		result = exe(net,customer,"/api/customer/plan/markJoinPlanState?recordId=194",get);
 		

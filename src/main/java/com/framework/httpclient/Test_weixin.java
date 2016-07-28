@@ -23,13 +23,15 @@ public class Test_weixin extends HttpWeiXinBase {
 	private static String getUnionId =  "https://api.weixin.qq.com/cgi-bin/user/info?lang=zh_CN&access_token=ACCESS_TOKEN";
 	private static String getUnionId2 = "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID";
 	
+	private static String getMediaList = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=ACCESS_TOKEN";
 	private static String getMedia = "https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=ACCESS_TOKEN";
-	
+	private static String getMediaCount = "https://api.weixin.qq.com/cgi-bin/material/get_materialcount?access_token=ACCESS_TOKEN";
 	private static String addMedia = "https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=ACCESS_TOKEN";
 	
 //	private static String getUnionId = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
 
 	public static void main(String[] args) throws Exception {
+		isWeixin = true;
 		// 服务器ip
 		// getServerIp();
 
@@ -46,8 +48,9 @@ public class Test_weixin extends HttpWeiXinBase {
 		// 获取用户信息
 		// "olWfQvnUV9f2pqPZIytGe8fadCjM", "olWfQvq3N-MbcORz0F3Io8Jlm7gI", "olWfQvrcCc4MshqJBQNaSAdKlHE8","olWfQviWmcItsYioOWzK-4AWpuo0",
 		// "olWfQvkR37KZmP9FkGaKVozunE94", "olWfQvqbEOdzEavbHpNS3N16UScY", "olWfQvkBHUPRGsA9oK61BuF0cnkY"
-		getUserInfo("o1jbawvprUdxodOgZ7kJtiP5cRw8");// "unionid" : "o6xZEswwSR1gOxRMyzJEBdyclu0A",o1jbawvprUdxodOgZ7kJtiP5cRw8
+//		getUserInfo("o1jbawvprUdxodOgZ7kJtiP5cRw8");// "unionid" : "o6xZEswwSR1gOxRMyzJEBdyclu0A",o1jbawvprUdxodOgZ7kJtiP5cRw8
 //		微信 o1jbawvprUdxodOgZ7kJtiP5cRw8  第三方 okROztxflbQLOLJt636lWkB87eik
+		
 		//请求token
 //		requestToken();
 		
@@ -58,7 +61,15 @@ public class Test_weixin extends HttpWeiXinBase {
 //		getUnionId("okROztxflbQLOLJt636lWkB87eik");//olWfQvkgTmrK600Lni0vmvIHmlMo o6xZEs7nMA3lWoSK2g42UP7DXhUo
 //		getUnionId2(getToken(),"okROztxflbQLOLJt636lWkB87eik");
 //		getMedia();
-		 
+		/**  "type":TYPE,"offset":OFFSET,"count":COUNT
+    		 图片（image）、视频（video）、语音 （voice）、图文（news）
+		 */
+//		go(getMediaList+"&" , post);
+		doPost(getMediaList, "type=image&offset=2&count=20");
+//		go(getMediaCount , get);
+
+//		String result = httpRequest(getMediaList.replaceAll("ACCESS_TOKEN", getToken()), "POST", "&type=news&offset=0&count=20");
+//		System.out.println(result);
 	}
 	
 	public static void getMedia() throws Exception {

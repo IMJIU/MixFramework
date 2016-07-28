@@ -6,7 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -27,6 +29,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.params.CookiePolicy;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.cookie.BasicClientCookie;
@@ -35,10 +38,11 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 
+import com.alibaba.fastjson.JSONObject;
 import com.framework.httpclient.JsonTool;
 
 public  class HttpTestBase {
-
+	public static boolean isWeixin = false;
 //	public static final String COOKIE_IDONGRI = "Set-Cookie/tidongriSessionId";
 	public static int env = 2; // 0.com 生产 环境 1.net环境 2.local本地
 	public static int userType = 1; // 0.admin 1.customer 2.doctor
@@ -145,6 +149,8 @@ public  class HttpTestBase {
 		return result;
 	}
 	public static String executePost(String url,Map<String,String>kv, boolean isFormat) throws Exception {
+		System.out.println(url);
+		System.out.println(kv);
 		return executePost(generateHttp(url,kv), isFormat);
 	}
 	public static String executePost(String urlAndParameters, boolean isFormat) throws Exception {
@@ -188,16 +194,24 @@ public  class HttpTestBase {
 		return pageContent;
 	}
 	private static HttpPost generateHttp(String url,Map<String, String> paramMap) throws UnsupportedEncodingException {
-		HttpPost http = http = new HttpPost(url);;
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		for (String key : paramMap.keySet()) {
-			nameValuePairs.add(new BasicNameValuePair(key, paramMap.get(key)));
+		HttpPost http = http = new HttpPost(url);
+		if(isWeixin){
+			http.setEntity(new StringEntity(JSONObject.toJSONString(paramMap),HTTP.UTF_8));
+		}else{
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+			for (String key : paramMap.keySet()) {
+				nameValuePairs.add(new BasicNameValuePair(key, paramMap.get(key)));
+			}
+			http.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
 		}
-		http.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
 		return http;
 	}
+	
 	private static HttpPost generateHttp(String urlAndParameters) throws UnsupportedEncodingException {
 		int index = urlAndParameters.indexOf('?');
+		if(isWeixin){
+			index = urlAndParameters.indexOf('&');
+		}
 		HttpPost http = null;
 		if (index == -1) {
 			http = new HttpPost(urlAndParameters);
@@ -231,6 +245,7 @@ public  class HttpTestBase {
 			}
 
 			http.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
+
 		}
 		return http;
 	}

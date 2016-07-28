@@ -34,7 +34,8 @@ public class Upload_Download_With_Linux {
 		// D:\\svn_code\\idongriV3\\
 		// D:\\svn_code\\idongriV3_packing\\
 		// G:\\svn\\idongriV3\\
-		BaseContext.svn_path = "d:\\svn_code\\idongriV3_packing\\";
+		// D:\\svn_code\\V3.7.1\\
+		BaseContext.svn_path = "D:\\svn_code\\V3.7.1\\";
 		BaseContext.moveToDir = "d:\\target\\";
 		
 		BaseContext.init();
@@ -56,7 +57,10 @@ public class Upload_Download_With_Linux {
 	/** 【上传class】 */
 	@Test
 	public void t2_upload_class() throws Exception {
+		BaseContext.server=".cn";
 		BaseContext.findType = "class"; /** class | html */
+		BaseContext.app = "platform";
+		BaseContext.init();
 		FindOperator.processFile((s) -> upload.doUploadClass(s));
 	}
 

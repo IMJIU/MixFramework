@@ -60,7 +60,17 @@ public abstract class Constants {
 		htmlListFilePath = current_path + "html_list.properties";
 		uploadHtmlFilePath = System.getProperty("user.dir") + "\\src\\main\\resources\\upload_html_list.txt";
 	}
-
+	public static void init(String s,String a,String t) {
+		server = s;
+		app = a;
+		findType = t;
+		init();
+	}
+	public static void init(String s,String a) {
+		server = s;
+		app = a;
+		init();
+	}
 	public final static String dao_jar = "common-dao-3.0-SNAPSHOT.jar";
 	public final static String service_jar = "common-service-3.0-SNAPSHOT.jar";
 	public final static String lib_jar = "common-lib-3.0-SNAPSHOT.jar";

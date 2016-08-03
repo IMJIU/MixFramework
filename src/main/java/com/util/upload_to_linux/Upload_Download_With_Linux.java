@@ -26,19 +26,16 @@ public class Upload_Download_With_Linux extends Constants {
 	@Before
 	public void before() {
 		// 配置
-		BaseContext.server = net; /** .net|.cn */
-		BaseContext.app = platform; /** admin|platform */
-		BaseContext.findType = classs; /** class | html */
 		BaseContext.isThread = true;
-
 		// D:\\svn_code\\idongriV3\\
 		// D:\\svn_code\\idongriV3_packing\\
 		// G:\\svn\\idongriV3\\
 		// D:\\svn_code\\V3.7.1\\
 		BaseContext.svn_path = "D:\\svn_code\\idongriV3_packing\\";
 		BaseContext.moveToDir = "d:\\target\\";
-
-		BaseContext.init();
+		
+		BaseContext.init(net, platform, html);
+		
 		upload = new UploadOperate();
 		download = new DownloadOperator();
 	}
@@ -57,52 +54,39 @@ public class Upload_Download_With_Linux extends Constants {
 	/** 【上传class】 */
 	@Test
 	public void t2_upload_class() throws Exception {
-		BaseContext.server = net;
-		BaseContext.findType = classs; /** class | html */
-		BaseContext.app = platform;
-		BaseContext.init();
+		BaseContext.init(net, platform, classs);
 		FindOperator.processFile((s) -> upload.doUploadClass(s));
 	}
 
 	/** 【扫描需要上传的html】 */
 	@Test
 	public void t3_scan_html() throws Exception {
-		BaseContext.server = net;
-		BaseContext.findType = html; /** class | html */
-		BaseContext.app = admin;
-		BaseContext.init();
+		BaseContext.init(net, platform, html);
 		FindOperator.processFile((s) -> UploadOperate.findUploadHtmlWriteToFile(s));
 	}
 
 	/** 【上传html文件】 */
 	@Test
 	public void t4_upload_html() throws Exception {
-		BaseContext.server = net;
-		BaseContext.findType = html; /** class | html */
-		BaseContext.app = admin;
-		BaseContext.init();
+		BaseContext.init(net, admin, html);
 		upload.doUploadHtmlFileListToLinux();
 	}
 
 	/** 【下载jar】 */
 	@Test
 	public void t5_download() throws Exception {
+		BaseContext.init(cn, platform);
+		download.download(BaseContext.linux_lib_Path, BaseContext.service_jar, BaseContext.moveToDir);
 		// DownloadOperator.download(BaseContext.linux_lib_Path,
 		// BaseContext.dao_jar, BaseContext.moveToDir);
-		BaseContext.server = cn;
-		BaseContext.app = platform;
-		BaseContext.init();
-		download.download(BaseContext.linux_lib_Path, BaseContext.service_jar, BaseContext.moveToDir);
 	}
 
 	/** 【上传jar】 */
 	@Test
 	public void t6_upload() throws Exception {
+		BaseContext.init(cn, platform);
 		// upload.uploadToLinux(BaseContext.linux_lib_Path,
 		// BaseContext.moveToDir + BaseContext.dao_jar);
-		BaseContext.server = cn;
-		BaseContext.app = platform;
-		BaseContext.init();
 		upload.uploadToLinux(BaseContext.linux_lib_Path, BaseContext.moveToDir + BaseContext.service_jar);
 
 	}
@@ -110,38 +94,35 @@ public class Upload_Download_With_Linux extends Constants {
 	/** 【上传jar】 */
 	@Test
 	public void t6_upload_WAR() throws Exception {
+		BaseContext.init(net, platform);
+		upload.uploadWarToLinux(BaseContext.linux_idongri_Path, BaseContext.local_app_war_path);
 		// upload.uploadWarToLinux(BaseContext.linux_idongri_Path,
 		// BaseContext.local_admin_war_path);
-		BaseContext.app = platform;
-		BaseContext.server = net;
-		BaseContext.init();
-		upload.uploadWarToLinux(BaseContext.linux_idongri_Path, BaseContext.local_app_war_path);
 	}
 
 	/** 【上传jar】 */
 	@Test
 	public void t7_upload_JAR() throws Exception {
+		BaseContext.init(net, platform);
 		upload.uploadJarToLinux(BaseContext.moveToDir + BaseContext.host187 + "-" + BaseContext.service_jar, BaseContext.moveToDir + BaseContext.service_jar);
 	}
 
 	/** 【上传文件夹】 */
 	@Test
 	public void t8_upload_DIR() throws Exception {
-		// UploadOperate.uploadDirToLinux(BaseContext.linux_webapp_Path, new
-		// File(BaseContext.local_platform_webapp_Path + "html/card"));
-		// upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new
-		// File(BaseContext.local_platform_webapp_Path +
-		// "html/activity"),"decocti\\S+");
-		BaseContext.app = platform;
-		BaseContext.server = cn;
 		BaseContext.mkDir = false;
-		BaseContext.init();
+		BaseContext.init(net, platform, html);
 		// upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new
 		// File(BaseContext.local_app_webapp_Path + "extension"), "daily\\S+");
 		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_app_webapp_Path + "html/card"), null);
 		/** 【上传文件夹】 */
 		// UploadOperate.uploadDirToLinux(BaseContext.linux_webapp_Path, new
 		// File(BaseContext.local_platform_webapp_Path + "html/card"));
+		// UploadOperate.uploadDirToLinux(BaseContext.linux_webapp_Path, new
+		// File(BaseContext.local_platform_webapp_Path + "html/card"));
+		// upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new
+		// File(BaseContext.local_platform_webapp_Path +
+		// "html/activity"),"decocti\\S+");
 	}
 
 	public static String path1 = "d://target//121.40.150.187-common-service-3.0-SNAPSHOT.jar";

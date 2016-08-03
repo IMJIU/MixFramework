@@ -1,13 +1,7 @@
 package com.util.upload_to_linux.base;
 
-import java.util.HashSet;
-import java.util.Vector;
 
-import com.book.jdk18.Process;
-import com.jcraft.jsch.ChannelSftp;
-import com.linux.ftp.SSHConnector;
-
-public abstract class Constants {
+public abstract class BaseConstants {
 	public static final String platform = "platform";
 	public static final String admin = "admin";
 	public static final String net = ".net";
@@ -19,8 +13,6 @@ public abstract class Constants {
 	public static String app = platform;
 	public static String findType = html;// class | html
 	
-	
-
 	public static boolean isThread = false;
 	public static boolean mkDir = false;
 	
@@ -43,34 +35,6 @@ public abstract class Constants {
 	
 	public static String local_webapp_Path;
 	
-	public static void init() {
-		linux_webapp_Path = linux_idongri_Path + "webapps/" + app + "/";
-		linux_class_Path = linux_idongri_Path + "webapps/" + app + "/WEB-INF/classes/";
-		linux_lib_Path = linux_idongri_Path + "webapps/" + app + "/WEB-INF/lib/";
-		if(app.equals("platform")){
-			linux_lib_Path = linux_idongri_Path + "webapps/idongri/WEB-INF/lib/";
-			linux_webapp_Path = linux_idongri_Path + "webapps/idongri/";
-			linux_class_Path = linux_idongri_Path + "webapps/idongri/WEB-INF/classes/";
-		}
-		local_app_war_path = svn_path  + app + "\\target\\";
-		local_app_webapp_Path =  svn_path  + app + "\\src\\main\\webapp\\";
-		local_webapp_Path =  svn_path + app +"\\src\\main\\webapp\\";
-		
-		classListFilePath = current_path + "class_list.properties";
-		htmlListFilePath = current_path + "html_list.properties";
-		uploadHtmlFilePath = System.getProperty("user.dir") + "\\src\\main\\resources\\upload_html_list.txt";
-	}
-	public static void init(String s,String a,String t) {
-		server = s;
-		app = a;
-		findType = t;
-		init();
-	}
-	public static void init(String s,String a) {
-		server = s;
-		app = a;
-		init();
-	}
 	public final static String dao_jar = "common-dao-3.0-SNAPSHOT.jar";
 	public final static String service_jar = "common-service-3.0-SNAPSHOT.jar";
 	public final static String lib_jar = "common-lib-3.0-SNAPSHOT.jar";

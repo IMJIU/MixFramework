@@ -18,7 +18,7 @@ import com.util.upload_to_linux.base.*;
 
 import scala.util.regexp.Base;
 
-public class Upload_Download_With_Linux extends Constants {
+public class Upload_Download_With_Linux extends BaseConstants {
 
 	private UploadOperate upload;
 	private DownloadOperator download;

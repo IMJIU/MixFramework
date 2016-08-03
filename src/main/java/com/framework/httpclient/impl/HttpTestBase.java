@@ -149,8 +149,8 @@ public  class HttpTestBase {
 		return result;
 	}
 	public static String executePost(String url,Map<String,String>kv, boolean isFormat) throws Exception {
-		System.out.println(url);
-		System.out.println(kv);
+		System.out.println("url:"+url);
+		System.out.println("map:"+kv);
 		return executePost(generateHttp(url,kv), isFormat);
 	}
 	public static String executePost(String urlAndParameters, boolean isFormat) throws Exception {
@@ -196,7 +196,9 @@ public  class HttpTestBase {
 	private static HttpPost generateHttp(String url,Map<String, String> paramMap) throws UnsupportedEncodingException {
 		HttpPost http = http = new HttpPost(url);
 		if(isWeixin){
-			http.setEntity(new StringEntity(JSONObject.toJSONString(paramMap),HTTP.UTF_8));
+			String param = JSONObject.toJSONString(paramMap);
+			System.out.println("param:"+param);
+			http.setEntity(new StringEntity(param,HTTP.UTF_8));
 		}else{
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			for (String key : paramMap.keySet()) {

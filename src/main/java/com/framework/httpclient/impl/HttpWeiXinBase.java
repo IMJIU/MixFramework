@@ -1,24 +1,14 @@
 package com.framework.httpclient.impl;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -26,38 +16,27 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.client.params.CookiePolicy;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.cookie.BasicClientCookie;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.protocol.HttpContext;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.framework.httpclient.JsonTool;
-import com.framework.httpclient.Test_weixin;
 import com.framework.weixin.MyTrustManager;
 
 public class HttpWeiXinBase extends HttpTestBase {
 
 	//测试
-//	public static String appid = "wx8517971af979361b";
-//	public static String appsecret = "d4624c36b6795d1d99dcf0547af5443d";
+	public static String appid = "wx8517971af979361b";
+	public static String appsecret = "d4624c36b6795d1d99dcf0547af5443d";
+	
 	//线上
-	public static String appid = "wxec2698856db6a0f6";
-	public static String appsecret = "9ccc25b7468a87f3ab317ae46c016a1d";
+//	public static String appid = "wxec2698856db6a0f6";
+//	public static String appsecret = "9ccc25b7468a87f3ab317ae46c016a1d";
 	
 	//app线上
 //	public static String appid = "wx33b3f9fc372960ce";
@@ -81,6 +60,13 @@ public class HttpWeiXinBase extends HttpTestBase {
 			}
 		}
 	}
+	
+	public static void doGet(String url) throws Exception {
+		url = url.replaceAll("ACCESS_TOKEN", getToken());
+		if (!check(executeGet(url, true))) {
+			executeGet(url, true);
+		}
+	}
 	public static void doPost(String url,String param) throws Exception {
 		String[] ps = param.split("&");
 		Map map = new HashMap<>();
@@ -89,9 +75,59 @@ public class HttpWeiXinBase extends HttpTestBase {
 			map.put(kv[0], kv[1]);
 		}
 		url = url.replaceAll("ACCESS_TOKEN", getToken());
-		if(check(executePost(url, map, true))){
+		if(!check(executePost(url, map, true))){
 			executePost(url, map, true);
 		}
+	}
+	public static void doPost2(String url,String param) throws Exception {
+		System.out.println(url);
+		System.out.println(param);
+		String ps = convertUrlParamToJson(param);
+		System.out.println(ps);
+		CloseableHttpClient httpClient = getHttpClient();
+		try {
+			HttpPost post = new HttpPost(url.replaceAll("ACCESS_TOKEN", getToken())); // 这里用上本机的某个工程做测试
+			post.setEntity(new StringEntity(ps, "utf-8"));
+			// 执行请求
+			CloseableHttpResponse httpResponse = httpClient.execute(post);
+			try {
+				HttpEntity entity = httpResponse.getEntity();
+				if (null != entity) {
+					System.out.println(JsonTool.formatJson(EntityUtils.toString(entity,"utf-8").trim(), "  "));
+				}
+			} finally {
+				httpResponse.close();
+			}
+
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				closeHttpClient(httpClient);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	private static CloseableHttpClient getHttpClient() {
+		return HttpClients.createDefault();
+	}
+
+	private static void closeHttpClient(CloseableHttpClient client) throws IOException {
+		if (client != null) {
+			client.close();
+		}
+	}
+	public static String convertUrlParamToJson(String param){
+		String[] ps = param.split("&");
+		Map map = new HashMap();
+		for (String pp : ps) {
+			String[] kv = pp.split("=");
+			map.put(kv[0], kv[1]);
+		}
+		return JSONObject.toJSONString(map);
 	}
 	public static boolean check(String result) throws Exception {
 		// {"errcode":42001,"errmsg":"access_token expired hint: [_azUMA0760vr19]"}

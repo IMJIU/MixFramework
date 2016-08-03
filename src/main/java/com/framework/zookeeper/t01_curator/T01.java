@@ -25,6 +25,8 @@ import org.apache.zookeeper.data.Stat;
 public class T01 {
 
 	private CuratorFramework client;
+	
+	private static String ip = "192.168.72.128"; 
 
 	public static void main(String[] args) {
 		T01 t = null;
@@ -32,8 +34,10 @@ public class T01 {
 			t = new T01(null);
 			// t.createNode("/curator/test/node1", "t1-data".getBytes());// /base/curator/test
 			// t.addNodeDataWather("/curator/test/node1");
-			t.deleteNode("/webServiceCenter", 99);
-			t.deleteNode("/lock_path", 99);
+			t.deleteNode("/config", 99);
+			t.deleteNode("/brokers", 99);
+			t.deleteNode("/consumers", 99);
+			t.deleteNode("/controller_epoch", 99);
 			// t.readNode("/curator/test");
 			// t.updateNode("/curator/test/node1", "zzzz".getBytes(), -1);
 			// t.addChildWather("/curator/test");
@@ -48,9 +52,9 @@ public class T01 {
 	public T01(String base) {
 		RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
 		if (base != null) {
-			client = CuratorFrameworkFactory.builder().connectString("localhost:2181").sessionTimeoutMs(1000).retryPolicy(retryPolicy).namespace(base).build();
+			client = CuratorFrameworkFactory.builder().connectString(ip+":2181").sessionTimeoutMs(1000).retryPolicy(retryPolicy).namespace(base).build();
 		} else {
-			client = CuratorFrameworkFactory.builder().connectString("localhost:2181").sessionTimeoutMs(1000).retryPolicy(retryPolicy).build();
+			client = CuratorFrameworkFactory.builder().connectString(ip+":2181").sessionTimeoutMs(1000).retryPolicy(retryPolicy).build();
 		}
 		client.start();
 	}

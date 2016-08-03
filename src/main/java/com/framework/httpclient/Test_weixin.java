@@ -27,6 +27,8 @@ public class Test_weixin extends HttpWeiXinBase {
 	private static String getMedia = "https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=ACCESS_TOKEN";
 	private static String getMediaCount = "https://api.weixin.qq.com/cgi-bin/material/get_materialcount?access_token=ACCESS_TOKEN";
 	private static String addMedia = "https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=ACCESS_TOKEN";
+	private static String getMediaTemp = "https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN";
+	
 	
 //	private static String getUnionId = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
 
@@ -65,7 +67,9 @@ public class Test_weixin extends HttpWeiXinBase {
     		 图片（image）、视频（video）、语音 （voice）、图文（news）
 		 */
 //		go(getMediaList+"&" , post);
-		doPost(getMediaList, "type=image&offset=2&count=20");
+		doPost(getMediaList, "type=image&offset=0&count=232");
+//		go(getMediaTemp+"&media_id=L7Nk65u5MDkHHEU6dmoXJuwK6oIfIkTWA4SQ0KZI1xg",get);
+//		doPost(getMedia, "media_id=L7Nk65u5MDkHHEU6dmoXJuwK6oIfIkTWA4SQ0KZI1xg");
 //		go(getMediaCount , get);
 
 //		String result = httpRequest(getMediaList.replaceAll("ACCESS_TOKEN", getToken()), "POST", "&type=news&offset=0&count=20");

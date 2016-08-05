@@ -75,11 +75,6 @@ public class LockUtil2 {
 				return;// 如果节点创建成功，即说明获取锁成功
 			} catch (Exception e) {
 				logger.info("此次获取锁没有成功");
-				try {
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-					logger.error("", e1);
-				}
 			}
 		}
 	}

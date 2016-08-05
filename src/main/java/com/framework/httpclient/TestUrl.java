@@ -125,6 +125,10 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(net,customer,"/api/customer/getHealthNewsList",get);
 		
 //		result = exe(net,customer,"/api/open/getCopywriterText?group=plan_pay_hint",get);
+		
+		//最新基本新
+//		result = exe(local,customer,"/api/customer/getLatestCustomerCaseBaseInfo",get);
+		
 	}
 	
 	public static void doctor() throws Exception{
@@ -267,7 +271,7 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(net,open,"/api/open/customerRegister2?phoneNumber=18559229825&password=123456&code=chanel&useType=2&terminal=1&pageNo=1&pageSize=20&versionCode=213&mobileType=1&systemType=ios&imeiCode=123&versionName=123",post);
         
 		//保障计划-评分信息
-		result = exe(local,open,"/api/open/getPlanScoreInfo",get);
+//		result = exe(local,open,"/api/open/getPlanScoreInfo",get);
 	}
 
 	private static Map<String, String> toMap2(String string) {

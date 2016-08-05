@@ -97,8 +97,9 @@ public class UploadOperate extends FindOperator {
 				_mkDir(path);
 				if (f.isDirectory()) {
 					uploadDirToLinux(baseDir, f, regex);
-				} else if (regex != null && f.getName().matches(regex)) {
-					uploadToLinux(path, f.getAbsolutePath());
+				} else if (regex != null) {
+					if(f.getName().matches(regex))
+						uploadToLinux(path, f.getAbsolutePath());
 				} else {
 					uploadToLinux(path, f.getAbsolutePath());
 				}
@@ -136,8 +137,8 @@ public class UploadOperate extends FindOperator {
 				for (String filePath : Files.readAllLines(Paths.get(uploadHtmlFilePath))) {
 					path = filePath.substring(filePath.indexOf("webapp") + 6).replaceAll("\\\\", "/");
 					path = path.substring(1, path.lastIndexOf("/"));
-//					System.out.println(linux_webapp_Path + "00000" + path);
-					_mkDir(linux_webapp_Path + path);
+					if(mkDir)
+						_mkDir(linux_webapp_Path + path);
 					_uploadToLinux(linux_webapp_Path + path, filePath, channelSftp);
 				}
 			} catch (Exception e) {

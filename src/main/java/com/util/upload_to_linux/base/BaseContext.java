@@ -59,14 +59,16 @@ public abstract class BaseContext extends BaseConstants{
 	}
 
 	public void loopServer(Process<ChannelSftp> callback) {
-		if (app.equals("admin")) {
-			if (server.equals(".net")) {
+		if (app.equals(admin)) {
+			if (server.equals(net)) {
 				callback.process(s71());
 			} else {
 				callback.process(s115());
 			}
-		} else {
-			if (server.equals(".net")) {
+		} else if(app.equals(wx)){
+			callback.process(s128());
+		}else {
+			if (server.equals(net)) {
 				callback.process(s187());
 			} else {
 				threadCall(callback, s162(), isThread);
@@ -129,7 +131,11 @@ public abstract class BaseContext extends BaseConstants{
 			connector.connect(host71, 22, "root", "Drny2015");
 		return connector.getSftpChannel(host71);
 	}
-
+	public ChannelSftp s128() {
+		if (connector.getSftpChannel(host128) == null)
+			connector.connect(host128, 22, "root", "Idongri2016");
+		return connector.getSftpChannel(host128);
+	}
 	public void closeSession() {
 		for (String server : connector.getSessionMap().keySet()) {
 			connector.getSession(server).disconnect();

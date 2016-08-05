@@ -2,12 +2,13 @@ package com.util.upload_to_linux.base;
 
 
 public abstract class BaseConstants {
-	public static final String platform = "platform";
-	public static final String admin = "admin";
-	public static final String net = ".net";
-	public static final String cn = ".cn";
-	public static final String html = "html";
-	public static final String classs = "class";
+	public final static String platform = "platform";
+	public final static String wx = "wx";
+	public final static String admin = "admin";
+	public final static String net = ".net";
+	public final static String cn = ".cn";
+	public final static String html = "html";
+	public final static String classs = "class";
 	
 	public final static String dao_jar = "common-dao-3.0-SNAPSHOT.jar";
 	public final static String service_jar = "common-service-3.0-SNAPSHOT.jar";
@@ -15,12 +16,13 @@ public abstract class BaseConstants {
 	public final static String core_jar = "common-core-3.0-SNAPSHOT.jar";
 	public final static String util_jar = "common-util-3.0-SNAPSHOT.jar";
 
-	public static final String host162 = "120.55.88.162";
-	public static final String host112 = "121.43.99.112";
-	public static final String host236 = "121.40.224.236";
-	public static final String host187 = "121.40.150.187";
-	public static final String host115 = "120.26.92.115";
-	public static final String host71 = "121.41.55.71";
+	public final static String host162 = "120.55.88.162";
+	public final static String host112 = "121.43.99.112";
+	public final static String host236 = "121.40.224.236";
+	public final static String host187 = "121.40.150.187";
+	public final static String host115 = "120.26.92.115";
+	public final static String host71 = "121.41.55.71";
+	public final static String host128 = "121.41.23.18";
 	
 	public final static String linux_idongri_Path = "/usr/local/idongri/";
 	public final static String current_path = Class.class.getClass().getResource("/").getPath();

@@ -61,14 +61,15 @@ public class Upload_Download_With_Linux extends BaseConstants {
 	/** 【扫描需要上传的html】 */
 	@Test
 	public void t3_scan_html() throws Exception {
-		BaseContext.init(net, platform, html);
+		BaseContext.init(cn, platform, html);
 		FindOperator.processFile((s) -> UploadOperate.findUploadHtmlWriteToFile(s));
 	}
 
 	/** 【上传html文件】 */
 	@Test
 	public void t4_upload_html() throws Exception {
-		BaseContext.init(net, admin, html);
+		BaseContext.mkDir=false;
+		BaseContext.init(cn, platform, html);
 		upload.doUploadHtmlFileListToLinux();
 	}
 
@@ -110,11 +111,10 @@ public class Upload_Download_With_Linux extends BaseConstants {
 	/** 【上传文件夹】 */
 	@Test
 	public void t8_upload_DIR() throws Exception {
-		BaseContext.mkDir = false;
-		BaseContext.init(net, platform, html);
+		BaseContext.init(cn, platform, html);
 		// upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new
 		// File(BaseContext.local_app_webapp_Path + "extension"), "daily\\S+");
-		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_app_webapp_Path + "html/card"), null);
+//		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_app_webapp_Path + "html/card"), null);
 		/** 【上传文件夹】 */
 		// UploadOperate.uploadDirToLinux(BaseContext.linux_webapp_Path, new
 		// File(BaseContext.local_platform_webapp_Path + "html/card"));
@@ -123,6 +123,7 @@ public class Upload_Download_With_Linux extends BaseConstants {
 		// upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new
 		// File(BaseContext.local_platform_webapp_Path +
 		// "html/activity"),"decocti\\S+");
+		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_app_webapp_Path + "images/activity"), "qixi\\S+");
 	}
 
 	public static String path1 = "d://target//121.40.150.187-common-service-3.0-SNAPSHOT.jar";

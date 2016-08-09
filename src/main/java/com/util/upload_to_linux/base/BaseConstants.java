@@ -24,6 +24,11 @@ public abstract class BaseConstants {
 	public final static String host71 = "121.41.55.71";
 	public final static String host128 = "121.41.23.18";
 	
+	// D:\\svn_code\\V3.7.1\\
+	public final static String svn_my_pc =  "G:\\svn\\idongriV3\\";
+	public final static String svn_com_packing =  "D:\\svn_code\\idongriV3_packing\\";
+	public final static String svn_com_coding =  "D:\\svn_code\\idongriV3\\";
+	
 	public final static String linux_idongri_Path = "/usr/local/idongri/";
 	public final static String current_path = Class.class.getClass().getResource("/").getPath();
 	

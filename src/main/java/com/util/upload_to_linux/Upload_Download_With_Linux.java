@@ -1,8 +1,6 @@
 package com.util.upload_to_linux;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
@@ -10,13 +8,14 @@ import java.util.zip.ZipEntry;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation.Bean;
 
-import com.jdk.jar.JarUtils;
 import com.jdk.jar.ZipFileUtil;
-import com.util.upload_to_linux.base.*;
-
-import scala.util.regexp.Base;
+import com.util.upload_to_linux.base.BaseConstants;
+import com.util.upload_to_linux.base.BaseContext;
+import com.util.upload_to_linux.base.DownloadOperator;
+import com.util.upload_to_linux.base.FindOperator;
+import com.util.upload_to_linux.base.MoveOperate;
+import com.util.upload_to_linux.base.UploadOperate;
 
 public class Upload_Download_With_Linux extends BaseConstants {
 
@@ -27,11 +26,7 @@ public class Upload_Download_With_Linux extends BaseConstants {
 	public void before() {
 		// 配置
 		BaseContext.isThread = true;
-		// D:\\svn_code\\idongriV3\\
-		// D:\\svn_code\\idongriV3_packing\\
-		// G:\\svn\\idongriV3\\
-		// D:\\svn_code\\V3.7.1\\
-		BaseContext.svn_path = "D:\\svn_code\\idongriV3_packing\\";
+		BaseContext.svn_path = svn_my_pc;
 		BaseContext.moveToDir = "d:\\target\\";
 		
 		BaseContext.init(net, platform, html);
@@ -95,7 +90,7 @@ public class Upload_Download_With_Linux extends BaseConstants {
 	/** 【上传jar】 */
 	@Test
 	public void t6_upload_WAR() throws Exception {
-		BaseContext.init(net, platform);
+		BaseContext.init(net, admin);
 		upload.uploadWarToLinux(BaseContext.linux_idongri_Path, BaseContext.local_app_war_path);
 		// upload.uploadWarToLinux(BaseContext.linux_idongri_Path,
 		// BaseContext.local_admin_war_path);

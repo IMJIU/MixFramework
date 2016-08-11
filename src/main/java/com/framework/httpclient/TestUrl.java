@@ -104,7 +104,7 @@ public class TestUrl extends HttpTestBase {
 //		result = exe(local,customer,"/api/customer/getApplicationInfo",get);
 		
 		//项目列表
-//		result = exe(net,customer,"/api/customer/plan/getPlanProjectList",get);
+//		result = exe(local,customer,"/api/customer/plan/getPlanProjectList",get);
 		
 		//增加评论
 //		result = exe(local,customer,"/api/customer/addPrivateAssistantComment?privateAssistantId=1&replySpeedScore=1.5&attitudeScore=5.0&msg=kldfjladsfd",get);
@@ -245,7 +245,7 @@ public class TestUrl extends HttpTestBase {
 		//义诊列表
 //		result = exe(cn,open,"/api/open/getPromotionServiceList?terminal=1&versionCode=3",get);
 		
-//		result = exe(s162,open,"/api/open/getFirst?useType=2&terminal=2&pageNo=1&pageSize=20&versionCode=213&mobileType=1&systemType=ios&imeiCode=123&versionName=123",get);
+		result = exe(local,open,"/api/open/getFirst?useType=2&terminal=2&pageNo=1&pageSize=20&versionCode=213&mobileType=1&systemType=ios&imeiCode=123&versionName=123",get);
 		
 //		result = exe(local,open,"/api/open/createServiceOrderV36?customerPhone=13645041346",get);
 		//获取支持药状

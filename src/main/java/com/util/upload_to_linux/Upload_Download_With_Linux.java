@@ -26,7 +26,15 @@ public class Upload_Download_With_Linux extends BaseConstants {
 	public void before() {
 		// 配置
 		BaseContext.isThread = true;
+<<<<<<< HEAD
 		BaseContext.svn_path = svn_my_pc;
+=======
+		// D:\\svn_code\\idongriV3\\
+		// D:\\svn_code\\idongriV3_packing\\
+		// G:\\svn\\idongriV3\\
+		// D:\\svn_code\\V3.7.1\\
+		BaseContext.svn_path = "D:\\svn_code\\idongriV3\\";
+>>>>>>> 5c6d1b63d6f5371b7f18ad4257b1cc5de0b033f1
 		BaseContext.moveToDir = "d:\\target\\";
 		
 		BaseContext.init(net, platform, html);

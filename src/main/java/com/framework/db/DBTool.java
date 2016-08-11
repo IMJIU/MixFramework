@@ -29,7 +29,7 @@ public class DBTool {
 		// DBTool.compare(db2, db1, "", "idongri_cn", "idongri_v3",null,"nodiff");//CN-V3
 
 		// 字符集
-		alterChangeCharset("idongri_v3", 1);
+		alterChangeCharset("idongri_cn", 1);
 
 	}
 
@@ -40,7 +40,7 @@ public class DBTool {
 		// datasource.setUrl("jdbc:mysql://192.168.99.166:3306/idongri_v3");
 		// datasource.setUsername("root");
 		// datasource.setPassword("idongri");
-		datasource.setUrl("jdbc:mysql://192.168.99.166:3306/idongri_v3");
+		datasource.setUrl("jdbc:mysql://121.43.100.2:3306/idongri_cn");
 		datasource.setUsername("root");
 		datasource.setPassword("idongri");
 

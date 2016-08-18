@@ -100,7 +100,7 @@ public  class HttpTestBase {
 			http = "http://121.43.99.112:8080";
 			break;
 		case s236:
-			http = "http://121.40.224.236:8080";
+			http = "http://121.40.224.236:80";
 			break;
 		default:
 			break;

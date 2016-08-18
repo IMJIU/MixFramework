@@ -31,7 +31,7 @@ public class Upload_Download_With_Linux extends BaseConstants {
 		// D:\\svn_code\\idongriV3_packing\\
 		// G:\\svn\\idongriV3\\
 		// D:\\svn_code\\V3.7.1\\
-		BaseContext.svn_path = svn_com_packing;
+		BaseContext.svn_path = svn_com_coding;
 		BaseContext.moveToDir = "d:\\target\\";
 		
 		BaseContext.init(net, platform, html);
@@ -95,7 +95,7 @@ public class Upload_Download_With_Linux extends BaseConstants {
 	/** 【上传jar】 */
 	@Test
 	public void t6_upload_WAR() throws Exception {
-		BaseContext.init(net, admin);
+		BaseContext.init(cn, wx);
 		upload.uploadWarToLinux(BaseContext.linux_idongri_Path, BaseContext.local_app_war_path);
 		// upload.uploadWarToLinux(BaseContext.linux_idongri_Path,
 		// BaseContext.local_admin_war_path);
@@ -123,7 +123,7 @@ public class Upload_Download_With_Linux extends BaseConstants {
 		// upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new
 		// File(BaseContext.local_platform_webapp_Path +
 		// "html/activity"),"decocti\\S+");
-		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_app_webapp_Path + "images/activity"), "qixi\\S+");
+		upload.uploadDirToLinux(BaseContext.linux_webapp_Path, new File(BaseContext.local_app_webapp_Path + "images/activity"), "gynaecology\\S+");
 	}
 
 	public static String path1 = "d://target//121.40.150.187-common-service-3.0-SNAPSHOT.jar";

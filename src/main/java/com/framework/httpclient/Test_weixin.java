@@ -57,7 +57,7 @@ public class Test_weixin extends HttpWeiXinBase {
 //		requestToken();
 		
 		//删除菜单
-//		removeMenu();
+		removeMenu();
 		 
 		 //获取union id okROztxflbQLOLJt636lWkB87eik
 //		getUnionId("okROztxflbQLOLJt636lWkB87eik");//olWfQvkgTmrK600Lni0vmvIHmlMo o6xZEs7nMA3lWoSK2g42UP7DXhUo
@@ -67,7 +67,7 @@ public class Test_weixin extends HttpWeiXinBase {
     		 图片（image）、视频（video）、语音 （voice）、图文（news）
 		 */
 //		go(getMediaList+"&" , post);
-		doPost(getMediaList, "type=image&offset=0&count=232");
+//		doPost(getMediaList, "type=image&offset=0&count=232");
 //		go(getMediaTemp+"&media_id=L7Nk65u5MDkHHEU6dmoXJuwK6oIfIkTWA4SQ0KZI1xg",get);
 //		doPost(getMedia, "media_id=L7Nk65u5MDkHHEU6dmoXJuwK6oIfIkTWA4SQ0KZI1xg");
 //		go(getMediaCount , get);

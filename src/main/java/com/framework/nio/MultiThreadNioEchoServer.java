@@ -29,51 +29,7 @@ public class MultiThreadNioEchoServer {
 
 	private Executor tp = Executors.newCachedThreadPool();
 
-	class EchoClient {
-
-		private LinkedList<ByteBuffer> outq;
-
-		public EchoClient() {
-			outq = new LinkedList<>();
-		}
-
-		@Override
-		public String toString() {
-			return "EchoClient [outq=" + outq + "]";
-		}
-
-		public void enqueue(ByteBuffer bb) {
-			outq.addFirst(bb);
-		}
-
-		public LinkedList<ByteBuffer> getOutputQueue() {
-			return outq;
-		}
-	}
-
-	class HandleMessage implements Runnable {
-
-		private SelectionKey selectionKey;
-
-		private ByteBuffer byteBuffer;
-
-		public HandleMessage(SelectionKey selectionKey, ByteBuffer byteBuffer) {
-			this.selectionKey = selectionKey;
-			this.byteBuffer = byteBuffer;
-		}
-
-		@Override
-		public void run() {
-			EchoClient echoClient = (EchoClient) selectionKey.attachment();
-			echoClient.enqueue(byteBuffer);
-
-			// We've enqueued data to written to the client, we must not set interest in OP_WRITE
-			selectionKey.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);
-			// 强迫 selector 立即返回
-			selector.wakeup();
-		}
-	}
-
+	
 	private void startServer() throws IOException {
 		ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 		serverSocketChannel.configureBlocking(false);
@@ -149,11 +105,11 @@ public class MultiThreadNioEchoServer {
 	 */
 	private void doRead(SelectionKey selectionKey) {
 		SocketChannel channel = (SocketChannel) selectionKey.channel();
-		ByteBuffer bb = ByteBuffer.allocate(8192);
+		ByteBuffer byteBuffer = ByteBuffer.allocate(8192);
 		int len = 0;
 
 		try {
-			len = channel.read(bb);
+			len = channel.read(byteBuffer);
 			if (len < 0) {
 				disconnect(selectionKey);
 				return;
@@ -165,8 +121,8 @@ public class MultiThreadNioEchoServer {
 			return;
 		}
 
-		bb.flip();
-		tp.execute(new HandleMessage(selectionKey, bb));
+		byteBuffer.flip();
+		tp.execute(new HandleMessage(selectionKey, byteBuffer,selector));
 	}
 
 	private void disconnect(SelectionKey selectionKey) {

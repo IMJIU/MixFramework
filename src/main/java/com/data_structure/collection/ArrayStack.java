@@ -1,4 +1,4 @@
-package com.framework.collection;
+package com.data_structure.collection;
 /**
  * 一个基于数组的栈实现
  * 

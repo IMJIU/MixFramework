@@ -1,4 +1,4 @@
-package com.framework.collection.stack;
+package com.data_structure.collection.stack;
 
 public interface Stack<T> {
 

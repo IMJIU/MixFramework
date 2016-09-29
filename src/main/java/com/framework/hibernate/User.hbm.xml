@@ -1,0 +1,17 @@
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
+<hibernate-mapping>  
+    <!--生成默认为user的数据库表-->  
+    <class name="com.framework.hibernate.User">  
+        <id name="id">  
+            <!-- 算法的核心思想是结合机器的网卡、当地时间、一个随机数来生成GUID -->  
+            <generator class="uuid"></generator>  
+        </id>  
+        <property name="name" length="30"></property>  
+        <property name="password" length="30"></property>  
+        <property name="createTime" type="date"></property>  
+        <property name="expireTime" type="date"></property>  
+    </class>  
+      
+</hibernate-mapping>

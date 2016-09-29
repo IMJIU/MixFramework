@@ -15,12 +15,54 @@
 	
   <dependencies>
   
+  <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi-ooxml</artifactId>
+    <version>3.8</version>
+</dependency>
+  <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-schemas -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi-ooxml-schemas</artifactId>
+    <version>3.8</version>
+</dependency>
+  
+      <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+	<dependency>
+	    <groupId>org.postgresql</groupId>
+	    <artifactId>postgresql</artifactId>
+	    <version>9.4.1211.jre7</version>
+	</dependency>
+  
   <dependency>
     <groupId>redis.clients</groupId>
     <artifactId>jedis</artifactId> 
     <version>2.9.0</version>
-</dependency>
+  </dependency>
   
+  
+
+<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-core</artifactId>
+    <version>4.3.11.Final</version>
+</dependency>
+
+  <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-annotations -->
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-annotations</artifactId>
+    <version>3.5.6-Final</version>
+</dependency>
+  <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-validator</artifactId>
+    <version>4.3.2.Final</version>
+</dependency>
+
   
   <dependency>
 	<groupId>com.github.cverges</groupId>
@@ -202,6 +244,7 @@
 	<artifactId>netty-all</artifactId>
 	<version>4.0.33.Final</version>
 </dependency>
+
       <dependency>
           <groupId>org.apache.zookeeper</groupId>
           <artifactId>zookeeper</artifactId>

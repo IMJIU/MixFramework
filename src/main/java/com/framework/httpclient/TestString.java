@@ -31,9 +31,11 @@ public class TestString {
 		// }
 
 		// System.out.println(getCommonString("🚹IM JIU🎤"));
-
-		System.out.println("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxec2698856db6a0f6&redirect_uri="
-				+ URLEncoder.encode("http://weixin.idongri.cn/wx/web/auth/consult.do") + "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect");
+//
+//		System.out.println("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxec2698856db6a0f6&redirect_uri="
+//				+ URLEncoder.encode("http://weixin.idongri.cn/wx/web/auth/consult.do") + "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect");
+		String code = "content\\\":\"\\[\\{";
+		System.out.println(code.replaceAll("content\\\":\\\"[","content\\\":\\["));
 
 	}
 

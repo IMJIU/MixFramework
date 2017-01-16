@@ -26,7 +26,7 @@ public class T01 {
 
 	private CuratorFramework client;
 	
-	private static String ip = "192.168.199.210"; 
+	private static String ip = "localhost"; 
 
 	public static void main(String[] args) {
 		T01 t = null;
@@ -35,6 +35,7 @@ public class T01 {
 			// t.createNode("/curator/test/node1", "t1-data".getBytes());// /base/curator/test
 			// t.addNodeDataWather("/curator/test/node1");
 			t.deleteNode("/mytopic", 99);
+			t.deleteNode("/admin", 99);
 			t.deleteNode("/config", 99);
 			t.deleteNode("/brokers", 99);
 			t.deleteNode("/consumers", 99);
@@ -43,6 +44,7 @@ public class T01 {
 			t.deleteNode("/t1", 99);
 			t.deleteNode("/c1", 99);
 			t.deleteNode("/controller_epoch", 99);
+			t.deleteNode("/master_path", 99);
 			// t.readNode("/curator/test");
 			// t.updateNode("/curator/test/node1", "zzzz".getBytes(), -1);
 			// t.addChildWather("/curator/test");

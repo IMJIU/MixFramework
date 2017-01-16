@@ -67,9 +67,9 @@ public class ScanLoad {
 			System.out.println("------------------size=");
 			/**
 			 * service=/api/open/test1.do
-service=/api/open/test2.do
-service=/api/open/test3.do
-------------------size=
+				service=/api/open/test2.do
+				service=/api/open/test3.do
+				------------------size=
 			 */
 			
 			

@@ -27,9 +27,9 @@ public class T06_getChildren_Async implements Watcher {
 //		
 //		zookeeper.create(path+"/c1", "".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
 //		zookeeper.create(path+"/c2", "".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
-		
-		zookeeper.getChildren(path, true,new IChildren2Callback(),null);
-		
+		IChildren2Callback i = new IChildren2Callback();
+		zookeeper.getChildren(path, true,i,null);
+		zookeeper.getChildren(path, true,i,null);
 		Thread.sleep(Integer.MAX_VALUE);
 		
 	}

@@ -2,8 +2,8 @@ package com.util.upload_to_linux.base;
 
 import java.util.Vector;
 
-import com.book.jdk18.Process;
 import com.jcraft.jsch.ChannelSftp;
+import com.jdk.jdk8.Process;
 import com.linux.ftp.SSHConnector;
 
 public abstract class BaseContext extends BaseConstants{

@@ -1,4 +1,4 @@
-package com.book.jdk18;
+package com.jdk.jdk8;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -12,7 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import org.apache.commons.dbcp.BasicDataSource;
-import com.book.jdk18.Func;
+
+import com.jdk.jdk8.Func;
 
 public class DBTool {
 

@@ -2,10 +2,10 @@ package com.util.upload_to_linux.base;
 
 import java.io.*;
 
-import com.book.jdk18.Func;
-import com.book.jdk18.Process;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
+import com.jdk.jdk8.Func;
+import com.jdk.jdk8.Process;
 import com.linux.ftp.SSHConnector;
 
 public class FindOperator extends BaseContext {

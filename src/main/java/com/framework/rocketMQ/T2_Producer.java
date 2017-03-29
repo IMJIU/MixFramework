@@ -33,28 +33,28 @@ public class T2_Producer {
 		for (int i = 0; i < 10; i++) {
 			try {
 				{
-					Message msg = new Message("TopicTest1",// topic
-					        "TagA",// tag
-					        "OrderID001",// key
-					        ("Hello MetaQA").getBytes());// body
+					Message msg = new Message("TopicTest1", // topic
+							"TagA", // tag
+							"OrderID001", // key
+							("Hello MetaQA").getBytes());// body
 					SendResult sendResult = producer.send(msg);
 					System.out.println(sendResult);
 				}
 
 				{
-					Message msg = new Message("TopicTest2",// topic
-					        "TagB",// tag
-					        "OrderID0034",// key
-					        ("Hello MetaQB").getBytes());// body
+					Message msg = new Message("TopicTest2", // topic
+							"TagB", // tag
+							"OrderID0034", // key
+							("Hello MetaQB").getBytes());// body
 					SendResult sendResult = producer.send(msg);
 					System.out.println(sendResult);
 				}
 
 				{
-					Message msg = new Message("TopicTest3",// topic
-					        "TagC",// tag
-					        "OrderID061",// key
-					        ("Hello MetaQC").getBytes());// body
+					Message msg = new Message("TopicTest3", // topic
+							"TagC", // tag
+							"OrderID061", // key
+							("Hello MetaQC").getBytes());// body
 					SendResult sendResult = producer.send(msg);
 					System.out.println(sendResult);
 				}

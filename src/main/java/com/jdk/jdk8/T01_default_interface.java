@@ -1,4 +1,4 @@
-package com.book.jdk18;
+package com.jdk.jdk8;
 
 interface T01_default_interface {
 

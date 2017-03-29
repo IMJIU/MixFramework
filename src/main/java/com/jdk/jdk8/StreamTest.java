@@ -42,17 +42,17 @@ public class StreamTest {
 	
 	private static void groupBy2() {
 		// 清单 26. 按照未成年人和成年人归组
-		Map<Boolean, List<Person>> children = Stream.generate(new PersonSupplier()).limit(100).collect(Collectors.partitioningBy(p -> p.getAge() < 18));
+		Map<Boolean, List<Human>> children = Stream.generate(new PersonSupplier()).limit(100).collect(Collectors.partitioningBy(p -> p.getAge() < 18));
 		System.out.println("Children number: " + children.get(true).size());
 		System.out.println("Adult number: " + children.get(false).size());
 	}
 	
 	private static void groupBy() {
 		// 清单 25. 按照年龄归组
-		Map<Integer, List<Person>> personGroups = Stream.generate(new PersonSupplier()).limit(100).collect(Collectors.groupingBy(Person::getAge));
+		Map<Integer, List<Human>> personGroups = Stream.generate(new PersonSupplier()).limit(100).collect(Collectors.groupingBy(Human::getAge));
 		Iterator it = personGroups.entrySet().iterator();
 		while (it.hasNext()) {
-			Map.Entry<Integer, List<Person>> persons = (Map.Entry) it.next();
+			Map.Entry<Integer, List<Human>> persons = (Map.Entry) it.next();
 			System.out.println("Age " + persons.getKey() + " = " + persons.getValue().size());
 		}
 	}
@@ -73,12 +73,12 @@ public class StreamTest {
 
 	private static void test_match() {
 		// 清单 21. 使用 Match
-		List<Person> persons = new ArrayList();
-		persons.add(new Person(1, "name" + 1, 10));
-		persons.add(new Person(2, "name" + 2, 21));
-		persons.add(new Person(3, "name" + 3, 34));
-		persons.add(new Person(4, "name" + 4, 6));
-		persons.add(new Person(5, "name" + 5, 55));
+		List<Human> persons = new ArrayList();
+		persons.add(new Human(1, "name" + 1, 10));
+		persons.add(new Human(2, "name" + 2, 21));
+		persons.add(new Human(3, "name" + 3, 34));
+		persons.add(new Human(4, "name" + 4, 6));
+		persons.add(new Human(5, "name" + 5, 55));
 		boolean isAllAdult = persons.stream().allMatch(p -> p.getAge() > 18);
 		System.out.println("All are adult? " + isAllAdult);
 		boolean isThereAnyChild = persons.stream().anyMatch(p -> p.getAge() < 12);
@@ -98,33 +98,33 @@ public class StreamTest {
 		concat = Stream.of("a", "B", "c", "D", "e", "F").filter(x -> x.compareTo("Z") > 0).reduce("", String::concat);
 	}
 	public static void testLimitAndSkip() {
-		List<Person> persons = new ArrayList();
+		List<Human> persons = new ArrayList();
 		for (int i = 1; i <= 10000; i++) {
-			Person person = new Person(i, "name" + i);
+			Human person = new Human(i, "name" + i);
 			persons.add(person);
 		}
-		List<String> personList2 = persons.stream().map(Person::getName).limit(10).skip(3).collect(Collectors.toList());
+		List<String> personList2 = persons.stream().map(Human::getName).limit(10).skip(3).collect(Collectors.toList());
 		System.out.println(personList2);
 	}
 
 	public static void t02_sort() {
-		List<Person> persons = new ArrayList();
+		List<Human> persons = new ArrayList();
 		for (int i = 1; i <= 5; i++) {
-			Person person = new Person(i, "name" + i);
+			Human person = new Human(i, "name" + i);
 			persons.add(person);
 		}
-		List<Person> personList2 = persons.stream().sorted((p1, p2) -> p1.getName().compareTo(p2.getName())).limit(2).collect(Collectors.toList());
+		List<Human> personList2 = persons.stream().sorted((p1, p2) -> p1.getName().compareTo(p2.getName())).limit(2).collect(Collectors.toList());
 		System.out.println(personList2);
 	}
 	
 	// 有效
 	public static void t03_sort() {
-		List<Person> persons = new ArrayList();
+		List<Human> persons = new ArrayList();
 		for (int i = 1; i <= 5; i++) {
-			Person person = new Person(i, "name" + i);
+			Human person = new Human(i, "name" + i);
 			persons.add(person);
 		}
-		List<Person> personList2 = persons.stream().limit(2).sorted((p1, p2) -> p1.getName().compareTo(p2.getName())).collect(Collectors.toList());
+		List<Human> personList2 = persons.stream().limit(2).sorted((p1, p2) -> p1.getName().compareTo(p2.getName())).collect(Collectors.toList());
 		System.out.println(personList2);
 	}
 	
@@ -157,7 +157,7 @@ public class StreamTest {
 	}
 }
 
-class Person {
+class Human {
 
 	public int no;
 
@@ -184,11 +184,11 @@ class Person {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Person(int no, String name) {
+	public Human(int no, String name) {
 		this.no = no;
 		this.name = name;
 	}
-	public Person(int i, String string, int j) {
+	public Human(int i, String string, int j) {
 		// TODO Auto-generated constructor stub
 	}
 	public String getName() {
@@ -197,14 +197,14 @@ class Person {
 	}
 }
 
-class PersonSupplier implements Supplier<Person> {
+class PersonSupplier implements Supplier<Human> {
 
 	private int index = 0;
 
 	private Random random = new Random();
 
 	@Override
-	public Person get() {
-		return new Person(index++, "StormTestUser" + index, random.nextInt(100));
+	public Human get() {
+		return new Human(index++, "StormTestUser" + index, random.nextInt(100));
 	}
 }

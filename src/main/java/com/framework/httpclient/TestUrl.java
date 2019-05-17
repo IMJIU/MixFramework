@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.json.util.JSONUtils;
 
 import com.framework.httpclient.impl.HttpTestBase;
 

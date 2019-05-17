@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
 
+import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -61,7 +61,7 @@ public class Oauth2Servlet extends HttpServlet {
 
 		String json = getUrl(get_access_token_url);
 
-		JSONObject jsonObject = JSONObject.fromObject(json);
+		JSONObject jsonObject = JSONObject.parseObject(json);
 		String access_token = jsonObject.getString("access_token");
 		String openid = jsonObject.getString("openid");
 
@@ -70,7 +70,7 @@ public class Oauth2Servlet extends HttpServlet {
 
 		String userInfoJson = getUrl(get_userinfo);
 
-		JSONObject userInfoJO = JSONObject.fromObject(userInfoJson);
+		JSONObject userInfoJO = JSONObject.parseObject(userInfoJson);
 
 		String user_openid = userInfoJO.getString("openid");
 		String user_nickname = userInfoJO.getString("nickname");

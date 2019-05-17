@@ -106,8 +106,8 @@ public class MyTestJson {
 			MyUser value = (MyUser) myUserMapData.get(key);
 			System.out.println(key + " : " + value.getUserid() + "&" + value.getUsername() + "&" + value.isSex() + "&" + value.getBirthday());
 		}
-		for (Entry<String, MyUser> userMapData : myJsonGroupMapUser.getMapuser().entrySet()) {
-			Entry entry = (Entry) userMapData;
+		for (Map.Entry<String, MyUser> userMapData : myJsonGroupMapUser.getMapuser().entrySet()) {
+			Map.Entry entry = userMapData;
 			String key = (String) entry.getKey();
 			MyUser value = (MyUser) entry.getValue();
 			System.out.println(key + " : " + value.getUserid() + "&" + value.getUsername() + "&" + value.isSex() + "&" + value.getBirthday());

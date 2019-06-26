@@ -5,9 +5,14 @@ import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import expect4j.ExpectEmulation.SleepCommand;
+import org.apache.poi.ss.formula.functions.T;
 import org.junit.Test;
 
 /**
@@ -126,29 +131,62 @@ public class TestWeakReference {
 
     /**
      * 虚引用纯粹是为了调用finalize
+     *
      * @throws Exception
      */
     @Test
     public void t5_PhantomReference2() throws Exception {
         Car car = new Car(22000, "silver");
-        PhantomReference<Car> weakCar = new PhantomReference(car,null);//虚引用加入队列没有意义
+        PhantomReference<Car> weakCar = new PhantomReference(car, null);//虚引用加入队列没有意义
         int i = 0;
-        while(true){
-            if(!TestWeakReference.release){
-                new Car(i++,"ddd");
+        while (true) {
+            if (!TestWeakReference.release) {
+                new Car(i++, "ddd");
 //                System.out.println();
-            }else{
+            } else {
                 System.out.println("release");
                 break;
             }
         }
         Thread.sleep(1000);
     }
+
+    @Test
+    public void t_threadlocal() throws InterruptedException {
+        ExecutorService exe = Executors.newFixedThreadPool(2);
+        int count = 200000;
+        Thread.sleep(1000);
+        System.out.println("start....");
+        ThreadLocal<Car> local = new ThreadLocal<>();
+        for (int i = 0; i < count; i++) {
+            final int fi = i;
+            exe.submit(new Runnable() {
+
+                @Override
+                public void run() {
+//                    if (local.get() == null) {
+                    local.set(new Car());
+//                    }
+//                    local.get();
+                }
+            });
+            if (fi % 1000 == 0) {
+                System.out.println("gc");
+                System.gc();
+                System.out.println();
+            }
+            Thread.sleep(3);
+        }
+        Thread.sleep(120 * 1000);
+    }
 }
 
 class Car {
     int _n = 0;
     String _str = "";
+
+    public Car() {
+    }
 
     public Car(int n, String str) {
         _n = n;
@@ -164,6 +202,6 @@ class Car {
     protected void finalize() throws Throwable {
         System.out.println("finalize()" + _n);
         super.finalize();
-        TestWeakReference.release=true;
+        TestWeakReference.release = true;
     }
 }
